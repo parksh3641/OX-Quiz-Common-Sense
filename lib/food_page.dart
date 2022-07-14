@@ -102,7 +102,82 @@ class _MyWidgetState extends State<FoodPage> {
         ],
       ),
       drawer: Drawer(
-        child: Column(children: []),
+        child: Column(children: [
+          DrawerHeader(
+            margin: EdgeInsets.all((0)),
+            decoration: BoxDecoration(
+              color: Colors.amber,
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(children: [
+                CircleAvatar(
+                  radius: 36,
+                  backgroundColor: Colors.white,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Image.network(
+                      "https://i.ibb.co/CwzHq4z/trans-logo-512.png",
+                      width: 62,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  "닉네임",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                Text(
+                  "Hello@world.com",
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                )
+              ]),
+            ),
+          ),
+          AspectRatio(
+            aspectRatio: 12 / 4,
+            child: PageView(children: [
+              Image.network(
+                "https://i.ibb.co/Q97cmkg/sale-event-banner1.jpg",
+              ),
+              Image.network(
+                "https://i.ibb.co/GV78j68/sale-event-banner2.jpg",
+              ),
+              Image.network(
+                "https://i.ibb.co/R3P3RHw/sale-event-banner3.jpg",
+              ),
+              Image.network(
+                "https://i.ibb.co/LRb1VYs/sale-event-banner4.jpg",
+              ),
+            ]),
+          ),
+          ListTile(
+            title: Text(
+              '구매내역',
+              style: TextStyle(fontSize: 18),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.black,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text(
+              '저장한 레시피',
+              style: TextStyle(fontSize: 18),
+            ),
+            trailing: Icon(
+              Icons.arrow_forward_ios,
+              color: Colors.black,
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          )
+        ]),
       ),
     );
   }
