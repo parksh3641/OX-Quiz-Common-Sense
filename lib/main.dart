@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gosuoflife/favorite_cat.dart';
 import 'package:gosuoflife/food_page.dart';
 import 'package:gosuoflife/home_page2.dart';
 import 'package:gosuoflife/home_page3.dart';
@@ -11,6 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bucket_service.dart';
 import 'home_page.dart';
 import 'food_page.dart';
+import 'number_quiz.dart';
 
 late SharedPreferences prefs;
 
@@ -22,7 +25,8 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => BucketService()),
+        //ChangeNotifierProvider(create: (context) => BucketService()),
+        ChangeNotifierProvider(create: (context) => CatService(prefs)),
       ],
       child: const MyApp(),
     ),
@@ -41,8 +45,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.getTextTheme('Jua'),
       ),
-      //home: isOnBoarded ? HomePage2() : OnboardingPage(),
-      home: HomePage3(),
+      home: FavoriteCat(),
     );
   }
 }
