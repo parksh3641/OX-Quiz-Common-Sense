@@ -1,0 +1,76 @@
+{
+  "project_info": {
+    "project_number": "266701313002",
+    "project_id": "touch-party-67378457",
+    "storage_bucket": "touch-party-67378457.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266701313002:android:8c5d19027cd15e5f6c1893",
+        "android_client_info": {
+          "package_name": "com.flutter.gosuoflife"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266701313002-pi3jnfs4n6bibm574iagubc28o1dcptf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266701313002-pi3jnfs4n6bibm574iagubc28o1dcptf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266701313002:android:837b1e2a967120606c1893",
+        "android_client_info": {
+          "package_name": "com.unity3d.toucharcade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266701313002-o2s1svvtibqum21ktjbf3op86vvaut1n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unity3d.toucharcade",
+            "certificate_hash": "3f989675c4188cbaf5bc65c5d9a2ed2d29d527e7"
+          }
+        },
+        {
+          "client_id": "266701313002-pi3jnfs4n6bibm574iagubc28o1dcptf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266701313002-pi3jnfs4n6bibm574iagubc28o1dcptf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

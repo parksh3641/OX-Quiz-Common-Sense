@@ -14,7 +14,7 @@ class HomePage2 extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-              prefs.clear();
+              //prefs.clear();
             },
             icon: Icon(Icons.delete),
           )

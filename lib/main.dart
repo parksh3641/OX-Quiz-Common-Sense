@@ -1,32 +1,18 @@
-import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:gosuoflife/favorite_cat.dart';
-import 'package:gosuoflife/food_page.dart';
-import 'package:gosuoflife/home_page2.dart';
-import 'package:gosuoflife/home_page3.dart';
-import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'bucket_service.dart';
-import 'home_page.dart';
-import 'food_page.dart';
-import 'number_quiz.dart';
-
-late SharedPreferences prefs;
+import 'auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  prefs = await SharedPreferences.getInstance();
-
+  await Firebase.initializeApp();
   runApp(
     MultiProvider(
       providers: [
-        //ChangeNotifierProvider(create: (context) => BucketService()),
-        ChangeNotifierProvider(create: (context) => CatService(prefs)),
+        ChangeNotifierProvider(create: (context) => AuthService()),
       ],
       child: const MyApp(),
     ),
@@ -38,71 +24,225 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isOnBoarded = prefs.getBool("isOnBoared") ?? false;
-
+    User? user = context.read<AuthService>().currentUser();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        textTheme: GoogleFonts.getTextTheme('Jua'),
-      ),
-      home: FavoriteCat(),
+      home: user == null ? LoginPage() : HomePage(),
     );
   }
 }
 
-class OnboardingPage extends StatelessWidget {
-  const OnboardingPage({Key? key}) : super(key: key);
+/// 로그인 페이지
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<AuthService>(builder: (context, authService, child) {
+      User? user = authService.currentUser();
+      return Scaffold(
+        appBar: AppBar(title: Text("로그인")),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              /// 현재 유저 로그인 상태
+              Center(
+                child: Text(
+                  user == null ? "로그인해 주세요 🙂" : "${user.email}님 안녕하세요 👋",
+                  style: TextStyle(
+                    fontSize: 24,
+                  ),
+                ),
+              ),
+              SizedBox(height: 32),
+
+              /// 이메일
+              TextField(
+                controller: emailController,
+                decoration: InputDecoration(hintText: "이메일"),
+              ),
+
+              /// 비밀번호
+              TextField(
+                controller: passwordController,
+                obscureText: false, // 비밀번호 안보이게
+                decoration: InputDecoration(hintText: "비밀번호"),
+              ),
+              SizedBox(height: 32),
+
+              /// 로그인 버튼
+              ElevatedButton(
+                child: Text("로그인", style: TextStyle(fontSize: 21)),
+                onPressed: () {
+// 로그인
+                  authService.signIn(
+                    email: emailController.text,
+                    password: passwordController.text,
+                    onSuccess: () {
+                      // 로그인 성공
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("로그인 성공"),
+                      ));
+
+                      // HomePage로 이동
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
+                    onError: (err) {
+                      // 에러 발생
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(err),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+
+              /// 회원가입 버튼
+              ElevatedButton(
+                child: Text("회원가입", style: TextStyle(fontSize: 21)),
+                onPressed: () {
+                  authService.signUp(
+                    email: emailController.text,
+                    password: passwordController.text,
+                    onSuccess: () {
+                      // 회원가입 성공
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text("회원가입 성공"),
+                      ));
+                    },
+                    onError: (err) {
+                      // 에러 발생
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(err),
+                      ));
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+}
+
+/// 홈페이지
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  TextEditingController jobController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IntroductionScreen(
-        pages: [
-          PageViewModel(
-            title: "빠른 개발",
-            body: "Flutter의 hot reload는 쉽고 UI 빌드를 도와줍니다.",
-            image: Padding(
-              padding: EdgeInsets.all(32),
-              child: Image.network(
-                  'https://user-images.githubusercontent.com/26322627/143761841-ba5c8fa6-af01-4740-81b8-b8ff23d40253.png'),
+      appBar: AppBar(
+        title: Text("버킷 리스트"),
+        actions: [
+          TextButton(
+            child: Text(
+              "로그아웃",
+              style: TextStyle(
+                color: Colors.white,
+              ),
             ),
-            decoration: PageDecoration(
-              titleTextStyle: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-              bodyTextStyle: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-              ),
+            onPressed: () {
+              // 로그아웃
+              context.read<AuthService>().signOut();
+              // 로그인 페이지로 이동
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+              );
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        children: [
+          /// 입력창
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: Row(
+              children: [
+                /// 텍스트 입력창
+                Expanded(
+                  child: TextField(
+                    controller: jobController,
+                    decoration: InputDecoration(
+                      hintText: "하고 싶은 일을 입력해주세요.",
+                    ),
+                  ),
+                ),
+
+                /// 추가 버튼
+                ElevatedButton(
+                  child: Icon(Icons.add),
+                  onPressed: () {
+                    // create bucket
+                    if (jobController.text.isNotEmpty) {
+                      print("create bucket");
+                    }
+                  },
+                ),
+              ],
             ),
           ),
-          PageViewModel(
-            title: "표현력 있고 유연한 UI",
-            body: "Flutter에 내장된 아름다운 위젯들로 사용자를 기쁘게 하세요.",
-            image: Image.network(
-                'https://user-images.githubusercontent.com/26322627/143762620-8cc627ce-62b5-426b-bc81-a8f578e8549c.png'),
-            decoration: PageDecoration(
-              titleTextStyle: TextStyle(
-                color: Colors.blueAccent,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-              bodyTextStyle: TextStyle(
-                color: Colors.black,
-                fontSize: 18,
-              ),
+          Divider(height: 1),
+
+          /// 버킷 리스트
+          Expanded(
+            child: ListView.builder(
+              itemCount: 5,
+              itemBuilder: (context, index) {
+                String job = "$index";
+                bool isDone = false;
+                return ListTile(
+                  title: Text(
+                    job,
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: isDone ? Colors.grey : Colors.black,
+                      decoration: isDone
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
+                  ),
+                  // 삭제 아이콘 버튼
+                  trailing: IconButton(
+                    icon: Icon(CupertinoIcons.delete),
+                    onPressed: () {
+                      // 삭제 버튼 클릭시
+                    },
+                  ),
+                  onTap: () {
+                    // 아이템 클릭하여 isDone 업데이트
+                  },
+                );
+              },
             ),
           ),
         ],
-        next: Text("Next", style: TextStyle(fontWeight: FontWeight.w600)),
-        done: Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
-        onDone: () {
-          prefs.setBool("isOnBoared", true);
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => HomePage2()));
-        },
       ),
     );
   }
