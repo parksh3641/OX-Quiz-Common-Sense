@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class BucketService extends ChangeNotifier {
+class RankService extends ChangeNotifier {
   final bucketCollection = FirebaseFirestore.instance.collection('bucket');
 
   Future<QuerySnapshot> read(String uid) async {
