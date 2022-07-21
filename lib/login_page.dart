@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gosuoflife/auth_service.dart';
+import 'package:gosuoflife/onboard_page.dart';
 import 'package:provider/provider.dart';
 
 import 'home_page.dart';
@@ -21,7 +22,19 @@ class _LoginPageState extends State<LoginPage> {
     return Consumer<AuthService>(
       builder: (context, authService, child) {
         return Scaffold(
-          appBar: AppBar(title: Center(child: Text("로그인"))),
+          appBar: AppBar(
+            title: Text("로그인"),
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.help),
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => OnboardingPage()),
+                );
+              },
+            ),
+          ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -64,10 +77,31 @@ class _LoginPageState extends State<LoginPage> {
                           style: TextStyle(fontSize: 21),
                         ),
                         onPressed: () {
-                          // 로그인 성공시 HomePage로 이동
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (_) => HomePage()),
+// 로그인
+                          authService.signIn(
+                            email: emailController.text,
+                            password: passwordController.text,
+                            onSuccess: () {
+                              // 로그인 성공
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text("로그인 성공"),
+                              ));
+
+                              // HomePage로 이동
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomePage()),
+                              );
+                            },
+                            onError: (err) {
+                              // 에러 발생
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text(err),
+                              ));
+                            },
                           );
                         },
                       ),
@@ -86,11 +120,17 @@ class _LoginPageState extends State<LoginPage> {
                               password: passwordController.text,
                               onSuccess: () {
                                 // 회원가입 성공
-                                print("회원가입 성공");
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text("회원가입 성공"),
+                                ));
                               },
                               onError: (err) {
                                 // 에러 발생
-                                print("회원가입 실패 : $err");
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content: Text(err),
+                                ));
                               },
                             );
                           },
@@ -110,9 +150,19 @@ class _LoginPageState extends State<LoginPage> {
                           "구글 로그인",
                           style: TextStyle(fontSize: 21),
                         ),
-                        onPressed: () {
-                          print('sign ln with google');
-                          authService.signInWithGoogle();
+                        onPressed: () async {
+                          await authService.signInWithGoogle();
+                          final user = authService.currentUser();
+                          if (user != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text("구글 로그인 성공"),
+                            ));
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()),
+                            );
+                          }
                         },
                       ),
                     ),

@@ -108,6 +108,7 @@ class AuthService extends ChangeNotifier {
       idToken: googleAuth?.idToken,
     );
 
+    notifyListeners();
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
