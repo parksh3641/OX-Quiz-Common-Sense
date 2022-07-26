@@ -49,7 +49,7 @@ packages:
       name: cloud_firestore_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.6.0"
+    version: "5.7.0"
   cloud_firestore_web:
     dependency: transitive
     description:
@@ -126,7 +126,7 @@ packages:
       name: firebase_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.3.2"
+    version: "6.4.0"
   firebase_auth_web:
     dependency: transitive
     description:
