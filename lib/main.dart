@@ -41,12 +41,12 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.getTextTheme('Jua'),
       ),
       debugShowCheckedModeBanner: false,
-      home: Miso(),
-      // home: isOnBoarded
-      //     ? user == null
-      //         ? LoginPage()
-      //         : HomePage()
-      //     : OnboardingPage(),
+      //home: Miso(),
+      home: isOnBoarded
+          ? user == null
+              ? LoginPage()
+              : HomePage()
+          : OnboardingPage(),
     );
   }
 }
