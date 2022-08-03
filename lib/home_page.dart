@@ -6,6 +6,8 @@ import 'package:gosuoflife/login_page.dart';
 import 'package:gosuoflife/quiz1.dart';
 import 'package:provider/provider.dart';
 
+import 'main.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -14,8 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int currentIndex = 1;
-
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> dataList = [
@@ -30,6 +30,11 @@ class _HomePageState extends State<HomePage> {
       },
     ];
 
+    List<int> quizScore = [];
+
+    for (int i = 0; i < dataList.length; i++) {
+      quizScore.add(prefs.getInt("QuizScore$i") ?? 0);
+    }
     return Consumer<AuthService>(
       builder: (context, authService, child) {
         final user = authService.currentUser()!;
@@ -103,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     Text(
-                                      "최고 점수 : 999",
+                                      "최고 점수 : " + quizScore[index].toString(),
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 36),
                                     ),
