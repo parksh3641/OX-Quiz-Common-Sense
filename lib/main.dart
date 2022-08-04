@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gosuoflife/home_page.dart';
+import 'package:gosuoflife/market_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
       home: isOnBoarded
           ? user == null
               ? LoginPage()
-              : HomePage()
+              : MarketPage()
           : OnboardingPage(),
     );
   }

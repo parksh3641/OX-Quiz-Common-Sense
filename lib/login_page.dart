@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gosuoflife/auth_service.dart';
+import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/onboard_page.dart';
 import 'package:provider/provider.dart';
 
@@ -92,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => HomePage()),
+                                    builder: (context) => MarketPage()),
                               );
                             },
                             onError: (err) {
@@ -160,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomePage()),
+                                  builder: (context) => MarketPage()),
                             );
                           }
                         },

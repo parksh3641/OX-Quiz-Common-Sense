@@ -4,6 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:gosuoflife/auth_service.dart';
 import 'package:gosuoflife/login_page.dart';
 import 'package:gosuoflife/quiz1.dart';
+import 'package:gosuoflife/ranking_page.dart';
+import 'package:gosuoflife/setting_page.dart';
 import 'package:provider/provider.dart';
 
 import 'main.dart';

@@ -120,9 +120,9 @@ class _Quiz1State extends State<Quiz1> {
     );
   }
 
-  void Initialize(BuildContext context) {
+  void Initialize(BuildContext context) async {
     if (index + 1 > dataList.length - 1) {
-      Navigator.push(
+      score = await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ResultPage()),
       );
