@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -18,11 +19,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final common = 'CommonSenseQuiz'.tr();
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> dataList = [
       {
-        "category": "상식퀴즈",
+        "category": "$common",
         "imgUrl": "https://picsum.photos/250?image=9",
       },
       {
@@ -44,21 +46,9 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             title: Center(
               child: Text(
-                "메뉴 선택",
+                "홈",
               ),
             ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.logout),
-                onPressed: () {
-                  authService.signOut();
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
-                },
-              )
-            ],
           ),
           body: Column(children: [
             Expanded(
@@ -125,33 +115,33 @@ class _HomePageState extends State<HomePage> {
               },
             ))
           ]),
-          drawer: Drawer(
-            child: Column(children: [
-              DrawerHeader(
-                margin: EdgeInsets.all(0),
-                decoration: BoxDecoration(color: Colors.amber),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    children: [
-                      CircleAvatar(
-                        radius: 36,
-                        backgroundColor: Colors.white,
-                        child: Padding(
-                          padding: EdgeInsets.all(8),
-                          child: Image.asset("images/GoogleIcon.png"),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16,
-                      ),
-                      Text("${user.email}님 안녕하세요")
-                    ],
-                  ),
-                ),
-              )
-            ]),
-          ),
+          // drawer: Drawer(
+          //   child: Column(children: [
+          //     DrawerHeader(
+          //       margin: EdgeInsets.all(0),
+          //       decoration: BoxDecoration(color: Colors.amber),
+          //       child: SizedBox(
+          //         width: double.infinity,
+          //         child: Column(
+          //           children: [
+          //             CircleAvatar(
+          //               radius: 36,
+          //               backgroundColor: Colors.white,
+          //               child: Padding(
+          //                 padding: EdgeInsets.all(8),
+          //                 child: Image.asset("images/GoogleIcon.png"),
+          //               ),
+          //             ),
+          //             SizedBox(
+          //               height: 16,
+          //             ),
+          //             Text("${user.email}님 안녕하세요")
+          //           ],
+          //         ),
+          //       ),
+          //     )
+          //   ]),
+          // ),
         );
       },
     );

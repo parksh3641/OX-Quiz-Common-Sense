@@ -43,6 +43,7 @@ dependencies:
   cloud_firestore: 3.1.18
   firebase_core_platform_interface: 4.4.1
   google_sign_in: ^5.4.0
+  easy_localization: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +67,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - assets/translations/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

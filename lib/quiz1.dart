@@ -46,6 +46,10 @@ class _Quiz1State extends State<Quiz1> {
         child: Column(
           children: [
             Text(
+              "현재 점수 : $score",
+              style: TextStyle(color: Colors.black, fontSize: 26),
+            ),
+            Text(
               dataList[index],
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.black, fontSize: 26),
@@ -56,14 +60,9 @@ class _Quiz1State extends State<Quiz1> {
                 onPressed: () {
                   setState(() {
                     if (answerList1[index] == answer[index]) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("정답입니다!"),
-                      ));
-                      score++;
+                      Success(context);
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("오답입니다"),
-                      ));
+                      Failed(context);
                     }
                     Initialize(context);
                   });
@@ -77,14 +76,10 @@ class _Quiz1State extends State<Quiz1> {
                 onPressed: () {
                   setState(() {
                     if (answerList2[index] == answer[index]) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("정답입니다!"),
-                      ));
+                      Success(context);
                       score++;
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("오답입니다"),
-                      ));
+                      Failed(context);
                     }
 
                     Initialize(context);
@@ -99,14 +94,9 @@ class _Quiz1State extends State<Quiz1> {
                 onPressed: () {
                   setState(() {
                     if (answerList3[index] == answer[index]) {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("정답입니다!"),
-                      ));
-                      score++;
+                      Success(context);
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text("오답입니다"),
-                      ));
+                      Failed(context);
                     }
                     Initialize(context);
                   });
@@ -122,6 +112,7 @@ class _Quiz1State extends State<Quiz1> {
 
   void Initialize(BuildContext context) async {
     if (index + 1 > dataList.length - 1) {
+      ScaffoldMessenger.of(context).clearSnackBars();
       score = await Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ResultPage()),
@@ -133,5 +124,20 @@ class _Quiz1State extends State<Quiz1> {
     } else {
       index++;
     }
+  }
+
+  void Success(BuildContext context) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("정답입니다!"),
+    ));
+    score++;
+  }
+
+  void Failed(BuildContext context) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("오답입니다"),
+    ));
   }
 }

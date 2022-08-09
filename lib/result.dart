@@ -15,30 +15,33 @@ class ResultPage extends StatelessWidget {
         centerTitle: true,
         title: Text("결과"),
       ),
-      body: Column(
-        children: [
-          Text(
-            "점수 : $score",
-            style: TextStyle(fontSize: 32),
-          ),
-          Container(
-            child: SizedBox(
-              height: 100,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Text(
+              "점수 : $score",
+              style: TextStyle(fontSize: 32),
             ),
-          ),
-          Container(
-            width: double.infinity,
-            child: ElevatedButton(
-              child: Text("메인화면"),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => MarketPage()),
-                );
-              },
+            Container(
+              child: SizedBox(
+                height: 100,
+              ),
             ),
-          )
-        ],
+            Container(
+              width: double.infinity,
+              child: ElevatedButton(
+                child: Text("메인화면"),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => MarketPage()),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
