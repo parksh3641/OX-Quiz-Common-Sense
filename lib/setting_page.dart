@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gosuoflife/auth_service.dart';
+import 'package:provider/provider.dart';
 
 import 'login_page.dart';
 
@@ -18,6 +20,7 @@ class _SettingPageState extends State<SettingPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("설정"),
+        automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: Padding(
@@ -73,6 +76,7 @@ void OpenLogOutDialog(BuildContext context) {
                 children: [
                   ElevatedButton(
                     onPressed: () {
+                      context.read<AuthService>().signOut();
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),

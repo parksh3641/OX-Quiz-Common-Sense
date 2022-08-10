@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text("로그인"),
+            automaticallyImplyLeading: false,
             centerTitle: true,
             leading: IconButton(
               icon: Icon(Icons.help),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/result.dart';
 
+import 'login_page.dart';
 import 'main.dart';
 
 class Quiz1 extends StatefulWidget {
@@ -40,6 +42,15 @@ class _Quiz1State extends State<Quiz1> {
       appBar: AppBar(
         centerTitle: true,
         title: Text("상식 퀴즈"),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+            onPressed: () {
+              OpenDialog(context);
+            },
+            icon: Icon(Icons.clear),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8),
@@ -140,4 +151,41 @@ class _Quiz1State extends State<Quiz1> {
       content: Text("오답입니다"),
     ));
   }
+}
+
+void OpenDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: ((context) {
+        return AlertDialog(
+            title: Text("중단하기"),
+            content: Text("퀴즈를 종료할까요?"),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => MarketPage()),
+                      );
+                    },
+                    child: Text(
+                      "네",
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "아니요",
+                    ),
+                  )
+                ],
+              ),
+            ]);
+      }));
 }

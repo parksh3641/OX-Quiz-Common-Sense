@@ -1,9 +1,9 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gosuoflife/auth_service.dart';
 import 'package:gosuoflife/login_page.dart';
+import 'package:gosuoflife/onboard_page.dart';
 import 'package:gosuoflife/quiz1.dart';
 import 'package:gosuoflife/ranking_page.dart';
 import 'package:gosuoflife/setting_page.dart';
@@ -19,12 +19,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final common = 'CommonSenseQuiz'.tr();
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> dataList = [
       {
-        "category": "$common",
+        "category": "상식퀴즈",
         "imgUrl": "https://picsum.photos/250?image=9",
       },
       {
@@ -39,11 +38,14 @@ class _HomePageState extends State<HomePage> {
     for (int i = 0; i < dataList.length; i++) {
       quizScore.add(prefs.getInt("QuizScore$i") ?? 0);
     }
+
     return Consumer<AuthService>(
       builder: (context, authService, child) {
         final user = authService.currentUser()!;
         return Scaffold(
           appBar: AppBar(
+            centerTitle: true,
+            automaticallyImplyLeading: false,
             title: Center(
               child: Text(
                 "홈",

@@ -14,6 +14,7 @@ class ResultPage extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text("결과"),
+        automaticallyImplyLeading: false,
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
