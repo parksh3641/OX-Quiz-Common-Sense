@@ -6,7 +6,8 @@ import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/quiz1.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({Key? key}) : super(key: key);
+  int score = 0;
+  ResultPage(this.score, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,7 @@ class ResultPage extends StatelessWidget {
               child: ElevatedButton(
                 child: Text("메인화면"),
                 onPressed: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => MarketPage()),
                   );

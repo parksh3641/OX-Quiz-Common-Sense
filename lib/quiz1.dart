@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gosuoflife/auth_service.dart';
 import 'package:gosuoflife/market_page.dart';
+import 'package:gosuoflife/rank_service.dart';
 import 'package:gosuoflife/result.dart';
+import 'package:provider/provider.dart';
 
 import 'login_page.dart';
 import 'main.dart';
@@ -122,35 +125,38 @@ class _Quiz1State extends State<Quiz1> {
   }
 
   void Initialize(BuildContext context) async {
+    final user = context.read<AuthService>().currentUser()!;
     if (index + 1 > dataList.length - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
-      score = await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ResultPage()),
-      );
       int number = prefs.getInt("QuizeScore0") ?? 0;
       if (score > number) {
         prefs.setInt("QuizScore0", score);
+        rankService.create(QuizType.Quiz1, score, user.uid);
       }
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ResultPage(score)),
+      );
     } else {
       index++;
     }
   }
+}
 
-  void Success(BuildContext context) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("정답입니다!"),
-    ));
-    score++;
-  }
+void Success(BuildContext context) {
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text("정답입니다!"),
+  ));
+  score++;
+}
 
-  void Failed(BuildContext context) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("오답입니다"),
-    ));
-  }
+void Failed(BuildContext context) {
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text("오답입니다"),
+  ));
 }
 
 void OpenDialog(BuildContext context) {

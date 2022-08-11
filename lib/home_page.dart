@@ -24,12 +24,19 @@ class _HomePageState extends State<HomePage> {
     List<Map<String, dynamic>> dataList = [
       {
         "category": "상식퀴즈",
-        "imgUrl": "https://picsum.photos/250?image=9",
+        "imgUrl": "https://picsum.photos/200?image=10",
       },
       {
         "category": "음식퀴즈",
-        "imgUrl":
-            "https://docs.flutter.dev/assets/images/dash/dash-fainting.gif",
+        "imgUrl": "https://picsum.photos/250?image=20",
+      },
+      {
+        "category": "인물퀴즈",
+        "imgUrl": "https://picsum.photos/250?image=30",
+      },
+      {
+        "category": "나라퀴즈",
+        "imgUrl": "https://picsum.photos/250?image=40",
       },
     ];
 
@@ -44,14 +51,22 @@ class _HomePageState extends State<HomePage> {
         final user = authService.currentUser()!;
         return Scaffold(
           appBar: AppBar(
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            title: Center(
-              child: Text(
-                "홈",
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              title: Center(
+                child: Text(
+                  "홈",
+                ),
               ),
-            ),
-          ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.restore),
+                  onPressed: () {
+                    prefs.clear();
+                    print("저장소 초기화 완료");
+                  },
+                ),
+              ]),
           body: Column(children: [
             Expanded(
                 child: ListView.builder(

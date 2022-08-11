@@ -28,19 +28,19 @@ class _SettingPageState extends State<SettingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  child: Text(
-                    "언어 선택",
-                    style: TextStyle(fontSize: 22),
-                  ),
-                  onPressed: () {
-                    OpenLanguageDialog(context);
-                  },
-                ),
-              ),
+              // Container(
+              //   width: double.infinity,
+              //   height: 50,
+              //   child: ElevatedButton(
+              //     child: Text(
+              //       "언어 선택",
+              //       style: TextStyle(fontSize: 22),
+              //     ),
+              //     onPressed: () {
+              //       OpenLanguageDialog(context);
+              //     },
+              //   ),
+              // ),
               Container(
                 width: double.infinity,
                 height: 50,
