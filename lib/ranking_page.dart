@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gosuoflife/main.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({Key? key}) : super(key: key);
@@ -18,13 +19,13 @@ class RankContent {
 }
 
 List<RankContent> rankContentList = [
-  RankContent("Parker", 20),
-  RankContent("Petter", 10),
+  // RankContent("Parker", 20),
+  // RankContent("Petter", 10),
 ];
 
 class _RankingPageState extends State<RankingPage> {
   @override
-  void initState() {
+  void initState() async {
     super.initState();
   }
 

@@ -5,6 +5,7 @@ import 'package:gosuoflife/auth_service.dart';
 import 'package:gosuoflife/login_page.dart';
 import 'package:gosuoflife/onboard_page.dart';
 import 'package:gosuoflife/quiz1.dart';
+import 'package:gosuoflife/quiz2.dart';
 import 'package:gosuoflife/ranking_page.dart';
 import 'package:gosuoflife/setting_page.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +64,10 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.restore),
                   onPressed: () {
                     prefs.clear();
-                    print("저장소 초기화 완료");
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("저장소 초기화 완료!"),
+                    ));
                   },
                 ),
               ]),
@@ -84,10 +88,22 @@ class _HomePageState extends State<HomePage> {
                       GestureDetector(
                         onTap: () {
                           print("클릭 $index");
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => Quiz1()),
-                          );
+                          switch (index) {
+                            case 0:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Quiz1()),
+                              );
+                              break;
+                            case 1:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Quiz2()),
+                              );
+                              break;
+                          }
                         },
                         child: Stack(
                           children: [

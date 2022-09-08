@@ -14,8 +14,8 @@ class OnboardingPage extends StatelessWidget {
         pages: [
 // 첫 번째 페이지
           PageViewModel(
-            title: "빠른 개발",
-            body: "Flutter의 hot reload는 쉽고 UI 빌드를 도와줍니다.",
+            title: "인생 퀴즈",
+            body: "자신의 인생 지식를 파악할 수 있습니다.",
             image: Padding(
               padding: EdgeInsets.all(32),
               child: Image.network(
@@ -35,8 +35,8 @@ class OnboardingPage extends StatelessWidget {
           ),
           // 두 번째 페이지
           PageViewModel(
-            title: "표현력 있고 유연한 UI",
-            body: "Flutter에 내장된 아름다운 위젯들로 사용자를 기쁘게 하세요.",
+            title: "돌림판",
+            body: "자신의 인생의 행운 지수를 파악합니다.",
             image: Image.network(
                 'https://user-images.githubusercontent.com/26322627/143762620-8cc627ce-62b5-426b-bc81-a8f578e8549c.png'),
             decoration: PageDecoration(

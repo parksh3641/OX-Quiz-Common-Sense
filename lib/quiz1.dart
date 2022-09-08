@@ -41,84 +41,87 @@ class _Quiz1State extends State<Quiz1> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("상식 퀴즈"),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-            onPressed: () {
-              OpenDialog(context);
-            },
-            icon: Icon(Icons.clear),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          children: [
-            Text(
-              "현재 점수 : $score",
-              style: TextStyle(color: Colors.black, fontSize: 26),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("상식 퀴즈"),
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                OpenDialog(context);
+              },
+              icon: Icon(Icons.clear),
             ),
-            Text(
-              dataList[index],
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black, fontSize: 26),
-            ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    if (answerList1[index] == answer[index]) {
-                      Success(context);
-                    } else {
-                      Failed(context);
-                    }
-                    Initialize(context);
-                  });
-                },
-                child: Text(answerList1[index]),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    if (answerList2[index] == answer[index]) {
-                      Success(context);
-                      score++;
-                    } else {
-                      Failed(context);
-                    }
-
-                    Initialize(context);
-                  });
-                },
-                child: Text(answerList2[index]),
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    if (answerList3[index] == answer[index]) {
-                      Success(context);
-                    } else {
-                      Failed(context);
-                    }
-                    Initialize(context);
-                  });
-                },
-                child: Text(answerList3[index]),
-              ),
-            )
           ],
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            children: [
+              Text(
+                "현재 점수 : $score",
+                style: TextStyle(color: Colors.black, fontSize: 26),
+              ),
+              Text(
+                dataList[index],
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.black, fontSize: 26),
+              ),
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      if (answerList1[index] == answer[index]) {
+                        Success(context);
+                      } else {
+                        Failed(context);
+                      }
+                      Initialize(context);
+                    });
+                  },
+                  child: Text(answerList1[index]),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      if (answerList2[index] == answer[index]) {
+                        Success(context);
+                        score++;
+                      } else {
+                        Failed(context);
+                      }
+
+                      Initialize(context);
+                    });
+                  },
+                  child: Text(answerList2[index]),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      if (answerList3[index] == answer[index]) {
+                        Success(context);
+                      } else {
+                        Failed(context);
+                      }
+                      Initialize(context);
+                    });
+                  },
+                  child: Text(answerList3[index]),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -128,10 +131,14 @@ class _Quiz1State extends State<Quiz1> {
     final user = context.read<AuthService>().currentUser()!;
     if (index + 1 > dataList.length - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
-      int number = prefs.getInt("QuizeScore0") ?? 0;
+      int number = prefs.getInt("QuizScore0") ?? 0;
       if (score > number) {
+        if (number == 0) {
+          rankService.create(QuizType.Quiz1, "Parker", score, user.uid);
+        } else {
+          rankService.update(QuizType.Quiz1, "Parker", score, user.uid);
+        }
         prefs.setInt("QuizScore0", score);
-        rankService.create(QuizType.Quiz1, score, user.uid);
       }
 
       Navigator.push(

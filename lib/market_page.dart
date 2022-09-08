@@ -30,26 +30,29 @@ class _MarketPageState extends State<MarketPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: widgetOptions.elementAt(selectedIndex)),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "홈",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.star),
-            label: "랭킹",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "설정",
-          ),
-        ],
-        currentIndex: selectedIndex,
-        selectedItemColor: Colors.lightGreen,
-        onTap: ChangePage,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        body: Center(child: widgetOptions.elementAt(selectedIndex)),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "홈",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.star),
+              label: "랭킹",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: "설정",
+            ),
+          ],
+          currentIndex: selectedIndex,
+          selectedItemColor: Colors.lightGreen,
+          onTap: ChangePage,
+        ),
       ),
     );
   }
