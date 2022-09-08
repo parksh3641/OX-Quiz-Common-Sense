@@ -1,16 +1,10 @@
-# 인생의고수
+# 인생의 
+### 개발 기간 : 2022/06 ~
+### 작성된 언어 : Dart
+### 출시된 기기 : Android, IOS(출시 예정)
+-------------
+**[구글 플레이 스토어 다운 받기]()**
 
-A new Flutter project.
+**[앱 스토어 다운 받기]()**
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+-------------
