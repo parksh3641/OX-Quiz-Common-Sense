@@ -27,15 +27,15 @@ class _LoginPageState extends State<LoginPage> {
             title: Text("로그인"),
             automaticallyImplyLeading: false,
             centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.help),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => OnboardingPage()),
-                );
-              },
-            ),
+            // leading: IconButton(
+            //   icon: Icon(Icons.help),
+            //   onPressed: () {
+            //     Navigator.pushReplacement(
+            //       context,
+            //       MaterialPageRoute(builder: (context) => OnboardingPage()),
+            //     );
+            //   },
+            // ),
           ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16),
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
                 /// 현재 유저 로그인 상태
                 Center(
                   child: Text(
-                    "인생의 고수 : Just Do It",
+                    "퀴즈의 고수",
                     style: TextStyle(
                       fontSize: 24,
                     ),
@@ -140,6 +140,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 20,
                 ),
                 Column(
                   children: [

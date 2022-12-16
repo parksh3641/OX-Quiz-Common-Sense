@@ -6,6 +6,8 @@ import 'package:gosuoflife/login_page.dart';
 import 'package:gosuoflife/onboard_page.dart';
 import 'package:gosuoflife/quiz1.dart';
 import 'package:gosuoflife/quiz2.dart';
+import 'package:gosuoflife/quiz3.dart';
+import 'package:gosuoflife/quiz4.dart';
 import 'package:gosuoflife/ranking_page.dart';
 import 'package:gosuoflife/setting_page.dart';
 import 'package:provider/provider.dart';
@@ -24,19 +26,19 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> dataList = [
       {
-        "category": "상식퀴즈",
+        "category": "상식 퀴즈",
         "imgUrl": "https://picsum.photos/200?image=10",
       },
       {
-        "category": "음식퀴즈",
+        "category": "사자성어 퀴즈",
         "imgUrl": "https://picsum.photos/250?image=20",
       },
       {
-        "category": "인물퀴즈",
+        "category": "나라 퀴즈",
         "imgUrl": "https://picsum.photos/250?image=30",
       },
       {
-        "category": "나라퀴즈",
+        "category": "OX 퀴즈",
         "imgUrl": "https://picsum.photos/250?image=40",
       },
     ];
@@ -52,25 +54,26 @@ class _HomePageState extends State<HomePage> {
         final user = authService.currentUser()!;
         return Scaffold(
           appBar: AppBar(
-              centerTitle: true,
-              automaticallyImplyLeading: false,
-              title: Center(
-                child: Text(
-                  "홈",
-                ),
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            title: Center(
+              child: Text(
+                "홈",
               ),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.restore),
-                  onPressed: () {
-                    prefs.clear();
-                    ScaffoldMessenger.of(context).clearSnackBars();
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text("저장소 초기화 완료!"),
-                    ));
-                  },
-                ),
-              ]),
+            ),
+            // actions: [
+            //   IconButton(
+            //     icon: Icon(Icons.restore),
+            //     onPressed: () {
+            //       prefs.clear();
+            //       ScaffoldMessenger.of(context).clearSnackBars();
+            //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            //         content: Text("저장소 초기화 완료!"),
+            //       ));
+            //     },
+            //   ),
+            // ]
+          ),
           body: Column(children: [
             Expanded(
                 child: ListView.builder(
@@ -103,6 +106,20 @@ class _HomePageState extends State<HomePage> {
                                     builder: (context) => Quiz2()),
                               );
                               break;
+                            case 2:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Quiz3()),
+                              );
+                              break;
+                            case 3:
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => Quiz4()),
+                              );
+                              break;
                           }
                         },
                         child: Stack(
@@ -119,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                             // 좋아요
                             Container(
                                 width: double.infinity,
-                                height: 120,
+                                height: 130,
                                 color: Colors.black.withOpacity(0.5),
                                 child: Column(
                                   mainAxisAlignment:
@@ -135,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                                     Text(
                                       "최고 점수 : " + quizScore[index].toString(),
                                       style: TextStyle(
-                                          color: Colors.white, fontSize: 36),
+                                          color: Colors.white, fontSize: 26),
                                     ),
                                   ],
                                 )),

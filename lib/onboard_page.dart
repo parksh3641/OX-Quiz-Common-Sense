@@ -14,8 +14,8 @@ class OnboardingPage extends StatelessWidget {
         pages: [
 // 첫 번째 페이지
           PageViewModel(
-            title: "인생 퀴즈",
-            body: "자신의 인생 지식를 파악할 수 있습니다.",
+            title: "다양한 퀴즈",
+            body: "다양한 퀴즈를 풀면서 새로운 지식을 습득할 수 있습니다",
             image: Padding(
               padding: EdgeInsets.all(32),
               child: Image.network(
@@ -35,8 +35,8 @@ class OnboardingPage extends StatelessWidget {
           ),
           // 두 번째 페이지
           PageViewModel(
-            title: "돌림판",
-            body: "자신의 인생의 행운 지수를 파악합니다.",
+            title: "사람들과 경쟁",
+            body: "다른 사람들과 퀴즈 점수를 경쟁할 수 있습니다",
             image: Image.network(
                 'https://user-images.githubusercontent.com/26322627/143762620-8cc627ce-62b5-426b-bc81-a8f578e8549c.png'),
             decoration: PageDecoration(

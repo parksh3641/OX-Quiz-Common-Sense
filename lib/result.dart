@@ -21,9 +21,16 @@ class ResultPage extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
+            SizedBox(
+              height: 10,
+            ),
             Text(
-              "점수 : $score",
+              "점수 : $score / 10",
               style: TextStyle(fontSize: 32),
+            ),
+            Text(
+              "수고하셨습니다",
+              style: TextStyle(fontSize: 26),
             ),
             Container(
               child: SizedBox(
@@ -33,7 +40,14 @@ class ResultPage extends StatelessWidget {
             Container(
               width: double.infinity,
               child: ElevatedButton(
-                child: Text("메인화면"),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.blue,
+                  minimumSize: const Size(100, 80),
+                ),
+                child: Text(
+                  "메인화면",
+                  style: TextStyle(fontSize: 30),
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
