@@ -20,6 +20,7 @@ class Quiz2 extends StatefulWidget {
 
 int index = 0;
 int score = 0;
+int maxQuiz = 15;
 
 List<int> numberList = [];
 
@@ -380,15 +381,15 @@ class _Quiz2State extends State<Quiz2> {
 
   void Initialize(BuildContext context) async {
     final user = context.read<AuthService>().currentUser()!;
-    if (index > 9) {
+    if (index > maxQuiz - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
       int number = prefs.getInt("QuizScore1") ?? 0;
       if (score > number) {
-        // if (number == 0) {
-        //   rankService.create(QuizType.Quiz1, "Parker", score, user.uid);
-        // } else {
-        //   rankService.update(QuizType.Quiz1, "Parker", score, user.uid);
-        // }
+        if (number == 0) {
+          rankService.create(QuizType.Quiz2, "NickName", score, user.uid);
+        } else {
+          rankService.update(QuizType.Quiz2, "NickName", score, user.uid);
+        }
         prefs.setInt("QuizScore1", score);
       }
 

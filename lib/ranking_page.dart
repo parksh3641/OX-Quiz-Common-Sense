@@ -59,7 +59,7 @@ class _RankingPageState extends State<RankingPage> {
                             tabs: [
                               Tab(text: '상식'),
                               Tab(text: '사자성어'),
-                              Tab(text: '나라'),
+                              Tab(text: '수도'),
                               Tab(text: 'OX'),
                             ],
                           ),
@@ -110,34 +110,34 @@ class _RankingPageState extends State<RankingPage> {
                               //         }))),
                               Container(
                                 child: Center(
-                                  child: Text('업데이트 예정',
+                                  child: Text('정보 없음',
                                       style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold)),
+                                        fontSize: 22,
+                                      )),
                                 ),
                               ),
                               Container(
                                 child: Center(
-                                  child: Text('업데이트 예정',
+                                  child: Text('정보 없음',
                                       style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold)),
+                                        fontSize: 22,
+                                      )),
                                 ),
                               ),
                               Container(
                                 child: Center(
-                                  child: Text('업데이트 예정',
+                                  child: Text('정보 없음',
                                       style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold)),
+                                        fontSize: 22,
+                                      )),
                                 ),
                               ),
                               Container(
                                 child: Center(
-                                  child: Text('업데이트 예정',
+                                  child: Text('정보 없음',
                                       style: TextStyle(
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold)),
+                                        fontSize: 22,
+                                      )),
                                 ),
                               ),
                             ]))

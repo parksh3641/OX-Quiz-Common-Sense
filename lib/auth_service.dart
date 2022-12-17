@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthService extends ChangeNotifier {
   User? currentUser() {
@@ -94,6 +95,10 @@ class AuthService extends ChangeNotifier {
     notifyListeners(); // 로그인 상태 변경 알림
   }
 
+  Future<UserCredential> signInWithGuest() async {
+    return await FirebaseAuth.instance.signInAnonymously();
+  }
+
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
@@ -111,5 +116,19 @@ class AuthService extends ChangeNotifier {
     notifyListeners();
     // Once signed in, return the UserCredential
     return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<UserCredential> signInWithApple() async {
+    //애플 크리덴셜 읽어왓! => 로그인!
+    final appleCredential = await SignInWithApple.getAppleIDCredential(
+      scopes: [AppleIDAuthorizationScopes.email], //이메일 들여다 볼거임!
+    );
+    //애플 크리덴셜 Oauth 크리덴셜로 바꿔!
+    final oauthCredential = OAuthProvider("apple.com").credential(
+      idToken: appleCredential.identityToken,
+      accessToken: appleCredential.authorizationCode,
+    );
+    //firebase에 Signin 하자구!
+    return await FirebaseAuth.instance.signInWithCredential(oauthCredential);
   }
 }

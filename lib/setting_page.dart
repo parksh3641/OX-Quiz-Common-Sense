@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gosuoflife/auth_service.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'login_page.dart';
+import 'main.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -14,6 +16,13 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  String versionInfo = "";
+  @override
+  void initState() {
+    super.initState();
+    getVersionInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,21 +35,24 @@ class _SettingPageState extends State<SettingPage> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Container(
-              //   width: double.infinity,
-              //   height: 50,
-              //   child: ElevatedButton(
-              //     child: Text(
-              //       "언어 선택",
-              //       style: TextStyle(fontSize: 22),
-              //     ),
-              //     onPressed: () {
-              //       OpenLanguageDialog(context);
-              //     },
-              //   ),
-              // ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  child: Text(
+                    "언어 선택",
+                    style: TextStyle(fontSize: 22),
+                  ),
+                  onPressed: () {
+                    OpenLanguageDialog(context);
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -53,12 +65,26 @@ class _SettingPageState extends State<SettingPage> {
                     OpenLogOutDialog(context);
                   },
                 ),
-              )
+              ),
+              SizedBox(
+                height: 80,
+              ),
+              Text(
+                "앱 버전 : v" + versionInfo,
+                style: TextStyle(fontSize: 22),
+              ),
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> getVersionInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      versionInfo = packageInfo.version;
+    });
   }
 }
 
@@ -77,6 +103,7 @@ void OpenLogOutDialog(BuildContext context) {
                   ElevatedButton(
                     onPressed: () {
                       context.read<AuthService>().signOut();
+                      prefs.setString("LoginType", "Null");
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
@@ -121,16 +148,16 @@ void OpenLanguageDialog(BuildContext context) {
                       child: Text("한국어"),
                     ),
                   ),
-                  Container(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        SetSnackBar(context, "Change to English");
-                        Navigator.of(context).pop();
-                      },
-                      child: Text("English"),
-                    ),
-                  ),
+                  // Container(
+                  //   width: double.infinity,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       SetSnackBar(context, "영어로 변경됨");
+                  //       Navigator.of(context).pop();
+                  //     },
+                  //     child: Text("English"),
+                  //   ),
+                  // ),
                 ],
               ),
             ]);

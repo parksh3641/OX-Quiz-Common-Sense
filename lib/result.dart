@@ -25,7 +25,7 @@ class ResultPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "점수 : $score / 10",
+              "점수 : $score / 15",
               style: TextStyle(fontSize: 32),
             ),
             Text(

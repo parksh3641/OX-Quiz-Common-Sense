@@ -20,6 +20,7 @@ class Quiz3 extends StatefulWidget {
 
 int index = 0;
 int score = 0;
+int maxQuiz = 15;
 
 List<int> numberList = [];
 
@@ -38,6 +39,15 @@ List<String> dataList = [
   "베네수엘라의 수도는?",
   "쿠바의 수도는?",
   "영국의 수도는?",
+  "태국의 수도는?",
+  "덴마크의 수도는?",
+  "브라질의 수도는?",
+  "스페인의 수도는?",
+  "대한민국의 수도는?",
+  "일본의 수도는?",
+  "체코의 수도는?",
+  "그리스의 수도는?",
+  "이집트의 수도는?"
 ];
 
 List<String> answerList1 = [
@@ -56,6 +66,15 @@ List<String> answerList1 = [
   "포르토프랭스",
   "웰링턴",
   "블라디보스톡",
+  "치앙마이",
+  "코펜하겐",
+  "마드리드",
+  "마드리드",
+  "도쿄",
+  "아테네",
+  "부다페스트",
+  "아테네",
+  "알렌산드리아"
 ];
 List<String> answerList2 = [
   "스톡홀름",
@@ -73,6 +92,15 @@ List<String> answerList2 = [
   "킹스턴",
   "더블린",
   "모스크바",
+  "방콕",
+  "상파울루",
+  "상파울루",
+  "프라하",
+  "서울",
+  "카이로",
+  "프라하",
+  "테살로니키",
+  "쿠알라룸푸르"
 ];
 List<String> answerList3 = [
   "코펜하겐",
@@ -90,6 +118,15 @@ List<String> answerList3 = [
   "하바나",
   "런던",
   "상트페테르부르크",
+  "미얀마",
+  "더블린",
+  "브라질리아",
+  "바르셀로나",
+  "베이징",
+  "도쿄",
+  "테살로니키",
+  "카이로",
+  "카이로"
 ];
 
 List<String> answer = [
@@ -108,6 +145,15 @@ List<String> answer = [
   "하바나",
   "런던",
   "모스크바",
+  "방콕",
+  "코펜하겐",
+  "브라질리아",
+  "마드리드",
+  "서울",
+  "도쿄",
+  "프라하",
+  "아테네",
+  "카이로"
 ];
 
 class _Quiz3State extends State<Quiz3> {
@@ -254,15 +300,15 @@ class _Quiz3State extends State<Quiz3> {
 
   void Initialize(BuildContext context) async {
     final user = context.read<AuthService>().currentUser()!;
-    if (index > 9) {
+    if (index > maxQuiz - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
       int number = prefs.getInt("QuizScore2") ?? 0;
       if (score > number) {
-        // if (number == 0) {
-        //   rankService.create(QuizType.Quiz1, "Parker", score, user.uid);
-        // } else {
-        //   rankService.update(QuizType.Quiz1, "Parker", score, user.uid);
-        // }
+        if (number == 0) {
+          rankService.create(QuizType.Quiz3, "NickName", score, user.uid);
+        } else {
+          rankService.update(QuizType.Quiz3, "NickName", score, user.uid);
+        }
         prefs.setInt("QuizScore2", score);
       }
 

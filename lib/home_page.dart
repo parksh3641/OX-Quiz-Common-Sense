@@ -14,6 +14,9 @@ import 'package:provider/provider.dart';
 
 import 'main.dart';
 
+String loginType = "";
+String imagePath = "";
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -22,6 +25,28 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void initState() {
+    super.initState();
+    loginType = prefs.getString("LoginType") ?? "Null";
+    switch (loginType) {
+      case "Email":
+        imagePath = "images/Guest.png";
+        break;
+      case "Guest":
+        imagePath = "images/Guest.png";
+        break;
+      case "Google":
+        imagePath = "images/Google.png";
+        break;
+      case "Apple":
+        imagePath = "images/Apple.png";
+        break;
+      case "Null":
+        imagePath = "images/Guest.png";
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> dataList = [
@@ -34,7 +59,7 @@ class _HomePageState extends State<HomePage> {
         "imgUrl": "https://picsum.photos/250?image=20",
       },
       {
-        "category": "나라 퀴즈",
+        "category": "수도 퀴즈",
         "imgUrl": "https://picsum.photos/250?image=30",
       },
       {
@@ -54,26 +79,25 @@ class _HomePageState extends State<HomePage> {
         final user = authService.currentUser()!;
         return Scaffold(
           appBar: AppBar(
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            title: Center(
-              child: Text(
-                "홈",
+              centerTitle: true,
+              //automaticallyImplyLeading: false,
+              title: Center(
+                child: Text(
+                  "퀴즈 선택",
+                ),
               ),
-            ),
-            // actions: [
-            //   IconButton(
-            //     icon: Icon(Icons.restore),
-            //     onPressed: () {
-            //       prefs.clear();
-            //       ScaffoldMessenger.of(context).clearSnackBars();
-            //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            //         content: Text("저장소 초기화 완료!"),
-            //       ));
-            //     },
-            //   ),
-            // ]
-          ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.help),
+                  onPressed: () {
+                    //prefs.clear();
+                    ScaffoldMessenger.of(context).clearSnackBars();
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("퀴즈를 선택하세요!"),
+                    ));
+                  },
+                ),
+              ]),
           body: Column(children: [
             Expanded(
                 child: ListView.builder(
@@ -165,33 +189,84 @@ class _HomePageState extends State<HomePage> {
               },
             ))
           ]),
-          // drawer: Drawer(
-          //   child: Column(children: [
-          //     DrawerHeader(
-          //       margin: EdgeInsets.all(0),
-          //       decoration: BoxDecoration(color: Colors.amber),
-          //       child: SizedBox(
-          //         width: double.infinity,
-          //         child: Column(
-          //           children: [
-          //             CircleAvatar(
-          //               radius: 36,
-          //               backgroundColor: Colors.white,
-          //               child: Padding(
-          //                 padding: EdgeInsets.all(8),
-          //                 child: Image.asset("images/GoogleIcon.png"),
-          //               ),
-          //             ),
-          //             SizedBox(
-          //               height: 16,
-          //             ),
-          //             Text("${user.email}님 안녕하세요")
-          //           ],
-          //         ),
-          //       ),
-          //     )
-          //   ]),
-          // ),
+          drawer: Drawer(
+            child: Column(children: [
+              DrawerHeader(
+                margin: EdgeInsets.all(0),
+                decoration: BoxDecoration(color: Colors.amber),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 36,
+                        backgroundColor: Colors.white,
+                        child: Padding(
+                          padding: EdgeInsets.all(8),
+                          child: Image.asset(imagePath),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      //Text("${user.email}님 안녕하세요")
+                      Text(
+                        "환영합니다",
+                        style: TextStyle(fontSize: 26),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              // AspectRatio(
+              //   aspectRatio: 12 / 4,
+              //   child: PageView(
+              //     children: [
+              //       Image.network(
+              //         "https://i.ibb.co/Q97cmkg/sale-event-banner1.jpg",
+              //       ),
+              //       Image.network(
+              //         "https://i.ibb.co/GV78j68/sale-event-banner2.jpg",
+              //       ),
+              //       Image.network(
+              //         "https://i.ibb.co/R3P3RHw/sale-event-banner3.jpg",
+              //       ),
+              //       Image.network(
+              //         "https://i.ibb.co/LRb1VYs/sale-event-banner4.jpg",
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              ListTile(
+                title: Text(
+                  '내 정보',
+                  style: TextStyle(fontSize: 18),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.black,
+                ),
+                onTap: () {
+                  // 클릭시 drawer 닫기
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  '설정',
+                  style: TextStyle(fontSize: 18),
+                ),
+                trailing: Icon(
+                  Icons.arrow_forward_ios,
+                  color: Colors.black,
+                ),
+                onTap: () {
+                  // 클릭시 drawer 닫기
+                  Navigator.pop(context);
+                },
+              ),
+            ]),
+          ),
         );
       },
     );

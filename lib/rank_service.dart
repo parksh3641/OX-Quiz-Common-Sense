@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 enum QuizType { Quiz1, Quiz2, Quiz3, Quiz4 }
 
 class RankService extends ChangeNotifier {
-  final quizType1 = FirebaseFirestore.instance.collection('quiztype1');
-  final quizType2 = FirebaseFirestore.instance.collection('quiztype2');
+  final quizType1 = FirebaseFirestore.instance.collection('QuizType1');
+  final quizType2 = FirebaseFirestore.instance.collection('QuizType2');
+  final quizType3 = FirebaseFirestore.instance.collection('QuizType3');
+  final quizType4 = FirebaseFirestore.instance.collection('QuizType4');
 
   Future<void> getData() async {
     QuerySnapshot querySnapshot = await quizType1.get();
@@ -35,8 +37,16 @@ class RankService extends ChangeNotifier {
         });
         break;
       case QuizType.Quiz3:
+        await quizType3.doc(nickName).set({
+          'uid': uid,
+          'score': score,
+        });
         break;
       case QuizType.Quiz4:
+        await quizType4.doc(nickName).set({
+          'uid': uid,
+          'score': score,
+        });
         break;
     }
     notifyListeners();
@@ -55,8 +65,14 @@ class RankService extends ChangeNotifier {
         });
         break;
       case QuizType.Quiz3:
+        await quizType3.doc(nickName).update({
+          'score': score,
+        });
         break;
       case QuizType.Quiz4:
+        await quizType4.doc(nickName).update({
+          'score': score,
+        });
         break;
     }
     notifyListeners();

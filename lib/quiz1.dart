@@ -20,6 +20,7 @@ class Quiz1 extends StatefulWidget {
 
 int index = 0;
 int score = 0;
+int maxQuiz = 15;
 
 List<int> numberList = [];
 
@@ -38,7 +39,11 @@ List<String> dataList = [
   "인류 최초의 감미료라고 불리며 이집트에서는 미라 보존을 위해 방부제로 사용한 것은?",
   "낙타 혹 안에 들어있는 것은?",
   "훈민정음 창제 당시 자음과 모음의 글자 수는?",
-  "조선시대 자격루를 발명한 사람은?"
+  "조선시대 자격루를 발명한 사람은?",
+  "세계에서 가장 넓은 나라는?",
+  "순결, 변함없는 사랑의 꽃말을 가진 꽃은?",
+  "백조의 호수를 작곡한 차이코프스키는 어느나라의 작곡가일까요?",
+  "다음 중 '동계올림픽'의 종목이 아닌것은?"
 ];
 
 List<String> answerList1 = [
@@ -56,7 +61,11 @@ List<String> answerList1 = [
   "꿀",
   "단백질",
   "27자",
-  "장영실"
+  "장영실",
+  "중국",
+  "해바라기",
+  "러시아",
+  "스키점프"
 ];
 List<String> answerList2 = [
   "혜문왕",
@@ -73,7 +82,11 @@ List<String> answerList2 = [
   "설탕",
   "탄수화물",
   "28자",
-  "김종서"
+  "김종서",
+  "러시아",
+  "장미",
+  "오스트리아",
+  "트라이애슬론"
 ];
 List<String> answerList3 = [
   "효문왕",
@@ -90,7 +103,11 @@ List<String> answerList3 = [
   "소금",
   "지방",
   "29자",
-  "황희"
+  "황희",
+  "미국",
+  "백합",
+  "독일",
+  "스켈레톤"
 ];
 
 List<String> answer = [
@@ -108,7 +125,11 @@ List<String> answer = [
   "꿀",
   "지방",
   "28자",
-  "장영실"
+  "장영실",
+  "러시아",
+  "백합",
+  "러시아",
+  "트라이애슬론"
 ];
 
 class _Quiz1State extends State<Quiz1> {
@@ -255,15 +276,15 @@ class _Quiz1State extends State<Quiz1> {
 
   void Initialize(BuildContext context) async {
     final user = context.read<AuthService>().currentUser()!;
-    if (index > 9) {
+    if (index > maxQuiz - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
       int number = prefs.getInt("QuizScore0") ?? 0;
       if (score > number) {
-        // if (number == 0) {
-        //   rankService.create(QuizType.Quiz1, "Parker", score, user.uid);
-        // } else {
-        //   rankService.update(QuizType.Quiz1, "Parker", score, user.uid);
-        // }
+        if (number == 0) {
+          rankService.create(QuizType.Quiz1, "NickName", score, user.uid);
+        } else {
+          rankService.update(QuizType.Quiz1, "NickName", score, user.uid);
+        }
         prefs.setInt("QuizScore0", score);
       }
 
