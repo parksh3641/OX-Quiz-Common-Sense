@@ -25,8 +25,11 @@ class ResultPage extends StatelessWidget {
               height: 10,
             ),
             Text(
-              "점수 : $score / 15",
+              "최종 점수 : $score / 15",
               style: TextStyle(fontSize: 32),
+            ),
+            SizedBox(
+              height: 40,
             ),
             Text(
               "수고하셨습니다",
@@ -42,11 +45,11 @@ class ResultPage extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue,
-                  minimumSize: const Size(100, 80),
+                  minimumSize: const Size(100, 60),
                 ),
                 child: Text(
                   "메인화면",
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(fontSize: 20),
                 ),
                 onPressed: () {
                   Navigator.push(

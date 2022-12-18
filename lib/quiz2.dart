@@ -5,7 +5,9 @@ import 'package:gosuoflife/auth_service.dart';
 import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/rank_service.dart';
 import 'package:gosuoflife/result.dart';
+import 'package:gosuoflife/setting_page.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 import 'dart:math';
 
 import 'login_page.dart';
@@ -278,12 +280,15 @@ class _Quiz2State extends State<Quiz2> {
                 "$index 번째 문제",
                 style: TextStyle(color: Colors.black, fontSize: 36),
               ),
+              SizedBox(
+                height: 10,
+              ),
               Text(
                 "현재 점수 : $score",
                 style: TextStyle(color: Colors.black, fontSize: 26),
               ),
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               Text(
                 dataList[numberList[index - 1]],
@@ -298,7 +303,7 @@ class _Quiz2State extends State<Quiz2> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
-                    minimumSize: const Size(100, 80),
+                    minimumSize: const Size(100, 60),
                   ),
                   onPressed: () {
                     setState(() {
@@ -313,7 +318,7 @@ class _Quiz2State extends State<Quiz2> {
                   },
                   child: Text(
                     answerList1[numberList[index - 1]],
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 22),
                   ),
                 ),
               ),
@@ -325,7 +330,7 @@ class _Quiz2State extends State<Quiz2> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
-                    minimumSize: const Size(100, 80),
+                    minimumSize: const Size(100, 60),
                   ),
                   onPressed: () {
                     setState(() {
@@ -341,7 +346,7 @@ class _Quiz2State extends State<Quiz2> {
                   },
                   child: Text(
                     answerList2[numberList[index - 1]],
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 22),
                   ),
                 ),
               ),
@@ -353,7 +358,7 @@ class _Quiz2State extends State<Quiz2> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Colors.blue,
-                    minimumSize: const Size(100, 80),
+                    minimumSize: const Size(100, 60),
                   ),
                   onPressed: () {
                     setState(() {
@@ -368,7 +373,7 @@ class _Quiz2State extends State<Quiz2> {
                   },
                   child: Text(
                     answerList3[numberList[index - 1]],
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 22),
                   ),
                 ),
               )
@@ -412,6 +417,7 @@ void Success(BuildContext context) {
 }
 
 void Failed(BuildContext context) {
+  if (vibration) Vibration.vibrate(duration: 1000);
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text("오답입니다"),

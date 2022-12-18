@@ -4,6 +4,9 @@
         android:label="Gosu of Quiz"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        <meta-data
+        android:name="com.google.android.gms.ads.APPLICATION_ID"
+        android:value="ca-app-pub-6754544778509872~9556098577"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

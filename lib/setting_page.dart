@@ -1,12 +1,17 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:gosuoflife/auth_service.dart';
+import 'package:gosuoflife/market_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 import 'login_page.dart';
 import 'main.dart';
+
+late bool music = prefs.getBool("Music") ?? true;
+late bool vibration = prefs.getBool(("Vibration")) ?? true;
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -17,6 +22,7 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   String versionInfo = "";
+
   @override
   void initState() {
     super.initState();
@@ -41,6 +47,64 @@ class _SettingPageState extends State<SettingPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: (music) ? Colors.blue : Colors.grey,
+                  ),
+                  child: (music)
+                      ? Text(
+                          "음악 ON",
+                          style: TextStyle(fontSize: 22),
+                        )
+                      : Text("음악 OFF", style: TextStyle(fontSize: 22)),
+                  onPressed: () {
+                    setState(() {
+                      if (music) {
+                        music = false;
+                        StopMusic();
+                      } else {
+                        music = true;
+                        PlayMusic();
+                      }
+                      prefs.setBool("Music", music);
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: (vibration) ? Colors.blue : Colors.grey,
+                  ),
+                  child: (vibration)
+                      ? Text(
+                          "진동 ON",
+                          style: TextStyle(fontSize: 22),
+                        )
+                      : Text("진동 OFF", style: TextStyle(fontSize: 22)),
+                  onPressed: () {
+                    setState(() {
+                      if (vibration) {
+                        vibration = false;
+                      } else {
+                        vibration = true;
+                      }
+                      prefs.setBool("Vibration", vibration);
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
                   child: Text(
                     "언어 선택",
                     style: TextStyle(fontSize: 22),
@@ -57,6 +121,9 @@ class _SettingPageState extends State<SettingPage> {
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                  ),
                   child: Text(
                     "로그아웃",
                     style: TextStyle(fontSize: 22),
@@ -71,7 +138,7 @@ class _SettingPageState extends State<SettingPage> {
               ),
               Text(
                 "앱 버전 : v" + versionInfo,
-                style: TextStyle(fontSize: 22),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
               ),
             ],
           ),

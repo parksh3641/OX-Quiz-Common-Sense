@@ -23,20 +23,11 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer.newPlayer();
-
   bool ios = false;
 
   @override
   void initState() {
     super.initState();
-
-    _assetsAudioPlayer.open(
-      Audio("assets/audios/Background.mp3"),
-      autoStart: true,
-      showNotification: true,
-    );
-    _assetsAudioPlayer.play();
 
     if (Platform.isAndroid) ios = false;
     if (Platform.isIOS) ios = true;
@@ -86,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                 /// 비밀번호
                 TextField(
                   controller: passwordController,
-                  obscureText: false, // 비밀번호 안보이게
+                  obscureText: true, // 비밀번호 안보이게
                   decoration: InputDecoration(labelText: "비밀번호"),
                 ),
                 SizedBox(height: 32),
