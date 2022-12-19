@@ -24,7 +24,7 @@ class _MarketPageState extends State<MarketPage> {
   final List<Widget> widgetOptions = <Widget>[
     HomePage(),
     RankingPage(),
-    ShopPage(),
+    //ShopPage(),
     SettingPage()
   ];
 
@@ -46,9 +46,9 @@ class _MarketPageState extends State<MarketPage> {
     music = prefs.getBool("Music") ?? true;
 
     if (music) {
-      _assetsAudioPlayer.play();
+      if (!_assetsAudioPlayer.isPlaying.value) _assetsAudioPlayer.play();
     } else {
-      _assetsAudioPlayer.stop();
+      if (_assetsAudioPlayer.isPlaying.value) _assetsAudioPlayer.pause();
     }
   }
 
@@ -68,10 +68,10 @@ class _MarketPageState extends State<MarketPage> {
               icon: Icon(Icons.star),
               label: "랭킹",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.shop),
-              label: "상점",
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.shop),
+            //   label: "상점",
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
               label: "설정",

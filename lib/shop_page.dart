@@ -1,27 +1,39 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gosuoflife/main.dart';
 
-class ShopPage extends StatelessWidget {
+class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
+
+  @override
+  State<ShopPage> createState() => _ShopPageState();
+}
+
+class _ShopPageState extends State<ShopPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> dataList = [
       {
-        "title": "광고 제거",
-        "price": "1 USD",
+        "title": "상식 퀴즈 구매",
+        "price": "코인 1000",
       },
       {
         "title": "광고 제거",
-        "price": "1 USD",
+        "price": "코인 1500",
       },
       {
         "title": "광고 제거",
-        "price": "1 USD",
+        "price": "코인 2000",
       },
       {
         "title": "광고 제거",
-        "price": "1 USD",
+        "price": "코인 2500",
       },
     ];
 
@@ -35,7 +47,7 @@ class ShopPage extends StatelessWidget {
         child: Column(children: [
           Expanded(
               child: ListView.builder(
-            itemCount: 1,
+            itemCount: 4,
             itemBuilder: (context, index) {
               Map<String, dynamic> data = dataList[index];
               String title = data["title"];
@@ -54,7 +66,7 @@ class ShopPage extends StatelessWidget {
                         children: [
                           ElevatedButton.icon(
                               style: ElevatedButton.styleFrom(
-                                  primary: Colors.green,
+                                  primary: Colors.blue,
                                   minimumSize:
                                       const Size(double.infinity, 100)),
                               onPressed: () {},

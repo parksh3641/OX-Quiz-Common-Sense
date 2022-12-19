@@ -29,7 +29,7 @@ const Map<String, String> UNIT_ID = kReleaseMode
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //MobileAds.instance.initialize();
+  MobileAds.instance.initialize();
 
   prefs = await SharedPreferences.getInstance();
 
@@ -59,7 +59,9 @@ class MyApp extends StatelessWidget {
       request: AdRequest(),
       listener: BannerAdListener(
         onAdFailedToLoad: (Ad ad, LoadAdError error) {},
-        onAdLoaded: (_) {},
+        onAdLoaded: (_) {
+          print("배너 광고 로드 완료");
+        },
       ),
     )..load();
 
