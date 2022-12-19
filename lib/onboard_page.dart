@@ -23,17 +23,17 @@ class OnboardingPage extends StatelessWidget {
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
                 color: Colors.blueAccent,
-                fontSize: 36,
+                fontSize: 30,
               ),
               bodyTextStyle: TextStyle(
                 color: Colors.black,
-                fontSize: 26,
+                fontSize: 20,
               ),
             ),
           ),
           // 두 번째 페이지
           PageViewModel(
-            title: "사람들과 경쟁",
+            title: "사람들과 점수 경쟁",
             body: "다른 사람들과 퀴즈 점수를 경쟁할 수 있습니다",
             image: Image(
               width: 200,
@@ -42,11 +42,11 @@ class OnboardingPage extends StatelessWidget {
             decoration: PageDecoration(
               titleTextStyle: TextStyle(
                 color: Colors.blueAccent,
-                fontSize: 36,
+                fontSize: 30,
               ),
               bodyTextStyle: TextStyle(
                 color: Colors.black,
-                fontSize: 26,
+                fontSize: 20,
               ),
             ),
           ),

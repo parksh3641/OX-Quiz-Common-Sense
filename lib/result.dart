@@ -32,7 +32,7 @@ class ResultPage extends StatelessWidget {
               height: 40,
             ),
             Text(
-              "수고하셨습니다",
+              "두뇌력 + 10",
               style: TextStyle(fontSize: 26),
             ),
             Container(
@@ -58,7 +58,29 @@ class ResultPage extends StatelessWidget {
                   );
                 },
               ),
-            )
+            ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // Container(
+            //   width: double.infinity,
+            //   child: ElevatedButton(
+            //     style: ElevatedButton.styleFrom(
+            //       primary: Colors.blue,
+            //       minimumSize: const Size(100, 60),
+            //     ),
+            //     child: Text(
+            //       "결과 공유",
+            //       style: TextStyle(fontSize: 20),
+            //     ),
+            //     onPressed: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(builder: (context) => MarketPage()),
+            //       );
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

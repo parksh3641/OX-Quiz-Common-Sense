@@ -41,7 +41,7 @@ class _SettingPageState extends State<SettingPage> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 width: double.infinity,
@@ -70,9 +70,6 @@ class _SettingPageState extends State<SettingPage> {
                   },
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -98,9 +95,6 @@ class _SettingPageState extends State<SettingPage> {
                   },
                 ),
               ),
-              SizedBox(
-                height: 40,
-              ),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -113,9 +107,6 @@ class _SettingPageState extends State<SettingPage> {
                     OpenLanguageDialog(context);
                   },
                 ),
-              ),
-              SizedBox(
-                height: 40,
               ),
               Container(
                 width: double.infinity,
@@ -133,8 +124,21 @@ class _SettingPageState extends State<SettingPage> {
                   },
                 ),
               ),
-              SizedBox(
-                height: 80,
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                  child: Text(
+                    "계정 탈퇴",
+                    style: TextStyle(fontSize: 22),
+                  ),
+                  onPressed: () {
+                    OpenDelectAccountDialog(context);
+                  },
+                ),
               ),
               Text(
                 "앱 버전 : v" + versionInfo,
@@ -163,6 +167,45 @@ void OpenLogOutDialog(BuildContext context) {
         return AlertDialog(
             title: Text("로그아웃"),
             content: Text("정말 로그아웃 하실 건가요?"),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      context.read<AuthService>().signOut();
+                      prefs.setString("LoginType", "Null");
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: Text(
+                      "네",
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "아니요",
+                    ),
+                  )
+                ],
+              ),
+            ]);
+      }));
+}
+
+void OpenDelectAccountDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: ((context) {
+        return AlertDialog(
+            title: Text("계정 탈퇴"),
+            content: Text("정말 계정 탈퇴를 하실 건가요?"),
             actions: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

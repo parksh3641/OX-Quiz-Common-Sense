@@ -6,6 +6,7 @@ import 'package:gosuoflife/main.dart';
 import 'package:gosuoflife/ranking_page.dart';
 import 'package:gosuoflife/setting_page.dart';
 import 'package:gosuoflife/shop_page.dart';
+import 'package:gosuoflife/stopwatch.dart';
 
 import 'home_page.dart';
 
@@ -18,13 +19,14 @@ class MarketPage extends StatefulWidget {
   State<MarketPage> createState() => _MarketPageState();
 }
 
-class _MarketPageState extends State<MarketPage> {
+class _MarketPageState extends State<MarketPage> with WidgetsBindingObserver {
   int selectedIndex = 0;
 
   final List<Widget> widgetOptions = <Widget>[
     HomePage(),
-    RankingPage(),
+    //RankingPage(),
     //ShopPage(),
+    //StopWatchPage(),
     SettingPage()
   ];
 
@@ -34,6 +36,25 @@ class _MarketPageState extends State<MarketPage> {
     });
   }
 
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        PlayMusic();
+        break;
+      case AppLifecycleState.inactive:
+        StopMusic();
+        break;
+      case AppLifecycleState.detached:
+        StopMusic();
+        break;
+      case AppLifecycleState.paused:
+        StopMusic();
+        break;
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     _assetsAudioPlayer.open(
@@ -50,6 +71,14 @@ class _MarketPageState extends State<MarketPage> {
     } else {
       if (_assetsAudioPlayer.isPlaying.value) _assetsAudioPlayer.pause();
     }
+
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
@@ -64,13 +93,17 @@ class _MarketPageState extends State<MarketPage> {
               icon: Icon(Icons.home),
               label: "홈",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              label: "랭킹",
-            ),
             // BottomNavigationBarItem(
-            //   icon: Icon(Icons.shop),
+            //   icon: Icon(Icons.star),
+            //   label: "랭킹",
+            // ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.shopping_cart),
             //   label: "상점",
+            // ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.watch),
+            //   label: "스톱워치",
             // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
@@ -93,5 +126,7 @@ void StopMusic() {
 }
 
 void PlayMusic() {
-  _assetsAudioPlayer.play();
+  if (!_assetsAudioPlayer.isPlaying.value && music) {
+    _assetsAudioPlayer.play();
+  }
 }

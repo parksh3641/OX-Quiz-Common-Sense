@@ -13,8 +13,6 @@ class RankService extends ChangeNotifier {
     QuerySnapshot querySnapshot = await quizType1.get();
 
     final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-
-    print(allData);
   }
 
   Future<QuerySnapshot> read(String uid) async {

@@ -70,7 +70,7 @@ class MyApp extends StatelessWidget {
     rankService = context.read<RankService>();
     return MaterialApp(
       theme: ThemeData(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.lightBlue,
         textTheme: GoogleFonts.getTextTheme('Nanum Gothic'),
       ),
       debugShowCheckedModeBanner: false,

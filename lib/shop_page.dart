@@ -20,7 +20,7 @@ class _ShopPageState extends State<ShopPage> {
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> dataList = [
       {
-        "title": "상식 퀴즈 구매",
+        "title": "MBTI 퀴즈 구매",
         "price": "코인 1000",
       },
       {
@@ -45,9 +45,19 @@ class _ShopPageState extends State<ShopPage> {
       ),
       body: SafeArea(
         child: Column(children: [
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            "현재 코인 : 0",
+            style: TextStyle(fontSize: 26),
+          ),
+          SizedBox(
+            height: 10,
+          ),
           Expanded(
               child: ListView.builder(
-            itemCount: 4,
+            itemCount: 1,
             itemBuilder: (context, index) {
               Map<String, dynamic> data = dataList[index];
               String title = data["title"];

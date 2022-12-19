@@ -66,6 +66,14 @@ class _HomePageState extends State<HomePage> {
         "category": "OX 퀴즈",
         "imgUrl": "https://picsum.photos/250?image=40",
       },
+      {
+        "category": "숫자 퀴즈",
+        "imgUrl": "https://picsum.photos/250?image=50",
+      },
+      {
+        "category": "초성 퀴즈",
+        "imgUrl": "https://picsum.photos/250?image=60",
+      },
     ];
 
     List<int> quizScore = [];

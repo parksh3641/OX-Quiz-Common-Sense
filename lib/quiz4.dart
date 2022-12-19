@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,6 +21,10 @@ class Quiz4 extends StatefulWidget {
   @override
   State<Quiz4> createState() => _Quiz4State();
 }
+
+late StreamSubscription<int> subscription;
+int? _currentTick;
+bool _isPaused = false;
 
 int index = 0;
 int score = 0;
@@ -92,6 +98,40 @@ class _Quiz4State extends State<Quiz4> {
 
     index = 1;
     score = 0;
+
+    _currentTick = 300;
+    _startTimer(300);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void _startTimer(int duration) {
+    subscription = Ticker().tick(ticks: duration).listen((value) {
+      if (value <= 1) {
+        TimeOver(context);
+      }
+      setState(() {
+        _isPaused = false;
+        _currentTick = value;
+      });
+    });
+  }
+
+  void _resumeTimer() {
+    setState(() {
+      _isPaused = false;
+    });
+    subscription.resume();
+  }
+
+  void _pauseTimer() {
+    setState(() {
+      _isPaused = true;
+    });
+    subscription.pause();
   }
 
   @override
@@ -119,7 +159,14 @@ class _Quiz4State extends State<Quiz4> {
               height: 10,
             ),
             Text(
-              "$index 번째 문제",
+              "남은 시간 : " + _currentTick.toString(),
+              style: TextStyle(fontSize: 26, color: Colors.red),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              "$index /15 번째 문제",
               style: TextStyle(color: Colors.black, fontSize: 36),
             ),
             SizedBox(
@@ -152,7 +199,7 @@ class _Quiz4State extends State<Quiz4> {
                     if ("O" == answer[numberList[index - 1]]) {
                       Success(context);
                     } else {
-                      Failed(context);
+                      Failed(context, answer[numberList[index - 1]]);
                     }
                     Initialize(context);
                   });
@@ -178,7 +225,7 @@ class _Quiz4State extends State<Quiz4> {
                     if ("X" == answer[numberList[index - 1]]) {
                       Success(context);
                     } else {
-                      Failed(context);
+                      Failed(context, answer[numberList[index - 1]]);
                     }
 
                     Initialize(context);
@@ -228,12 +275,52 @@ void Success(BuildContext context) {
   score++;
 }
 
-void Failed(BuildContext context) {
+void Failed(BuildContext context, String answer) {
   if (vibration) Vibration.vibrate(duration: 1000);
-  ScaffoldMessenger.of(context).clearSnackBars();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text("오답입니다"),
-  ));
+  // ScaffoldMessenger.of(context).clearSnackBars();
+  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //   content: Text("오답입니다"),
+  // ));
+  Incorrect(context, answer);
+}
+
+void Incorrect(BuildContext context, String answer) {
+  showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: ((context) {
+        return AlertDialog(
+            title: Column(children: <Widget>[
+              Text(
+                "오답!",
+                style: TextStyle(fontSize: 30),
+              ),
+            ]),
+            content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "정답 : " + answer,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ]),
+            actions: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(
+                      "다음",
+                    ),
+                  ),
+                ],
+              ),
+            ]);
+      }));
 }
 
 void OpenDialog(BuildContext context) {
@@ -242,11 +329,24 @@ void OpenDialog(BuildContext context) {
       barrierDismissible: true,
       builder: ((context) {
         return AlertDialog(
-            title: Text("중단하기"),
-            content: Text("퀴즈를 종료할까요?"),
+            title: Column(children: <Widget>[
+              Text(
+                "중단하기",
+                style: TextStyle(fontSize: 30),
+              ),
+            ]),
+            content: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    "퀴즈를 종료할까요?",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ]),
             actions: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
                     onPressed: () {
@@ -259,6 +359,7 @@ void OpenDialog(BuildContext context) {
                       "네",
                     ),
                   ),
+                  SizedBox(width: 20),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
@@ -283,5 +384,20 @@ void CreateUnDuplicateRandom(int max) {
       numberList.add(currentNumber);
       i++;
     }
+  }
+}
+
+void TimeOver(BuildContext context) {
+  subscription.pause();
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ResultPage(score)),
+  );
+}
+
+class Ticker {
+  const Ticker();
+  Stream<int> tick({required int ticks}) {
+    return Stream.periodic(Duration(seconds: 1), (x) => ticks - x).take(ticks);
   }
 }
