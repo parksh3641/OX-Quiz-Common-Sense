@@ -32,7 +32,7 @@ class ResultPage extends StatelessWidget {
               height: 40,
             ),
             Text(
-              "두뇌력 + 10",
+              "수고하셨습니다",
               style: TextStyle(fontSize: 26),
             ),
             Container(

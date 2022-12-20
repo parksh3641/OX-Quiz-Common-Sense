@@ -64,13 +64,7 @@ class _MarketPageState extends State<MarketPage> with WidgetsBindingObserver {
       showNotification: false,
     );
 
-    music = prefs.getBool("Music") ?? true;
-
-    if (music) {
-      if (!_assetsAudioPlayer.isPlaying.value) _assetsAudioPlayer.play();
-    } else {
-      if (_assetsAudioPlayer.isPlaying.value) _assetsAudioPlayer.pause();
-    }
+    PlayMusic();
 
     WidgetsBinding.instance.addObserver(this);
   }

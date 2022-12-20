@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -39,9 +41,9 @@ class _SettingPageState extends State<SettingPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
                 width: double.infinity,
@@ -120,7 +122,11 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(fontSize: 22),
                   ),
                   onPressed: () {
-                    OpenLogOutDialog(context);
+                    try {
+                      if (Platform.isAndroid || Platform.isIOS) {
+                        OpenLogOutDialog(context);
+                      } else {}
+                    } catch (e) {}
                   },
                 ),
               ),
@@ -136,7 +142,11 @@ class _SettingPageState extends State<SettingPage> {
                     style: TextStyle(fontSize: 22),
                   ),
                   onPressed: () {
-                    OpenDelectAccountDialog(context);
+                    try {
+                      if (Platform.isAndroid || Platform.isIOS) {
+                        OpenDelectAccountDialog(context);
+                      } else {}
+                    } catch (e) {}
                   },
                 ),
               ),

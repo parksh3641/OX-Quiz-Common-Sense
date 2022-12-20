@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -6,9 +8,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gosuoflife/home_page.dart';
 import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/rank_service.dart';
+import 'package:gosuoflife/stopwatch.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'auth_service.dart';
 import 'login_page.dart';
@@ -29,21 +32,34 @@ const Map<String, String> UNIT_ID = kReleaseMode
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  //MobileAds.instance.initialize();
 
   prefs = await SharedPreferences.getInstance();
 
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+      options: FirebaseOptions(
+          apiKey: "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs",
+          appId: "1:266701313002:android:8c5d19027cd15e5f6c1893",
+          messagingSenderId: "266701313002",
+          projectId: "touch-party-67378457"));
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (context) => AuthService()),
-        ChangeNotifierProvider(create: (context) => RankService()),
-      ],
-      child: const MyApp(),
-    ),
-  );
+  try {
+    if (Platform.isAndroid || Platform.isIOS) {
+      runApp(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (context) => AuthService()),
+            ChangeNotifierProvider(create: (context) => RankService()),
+          ],
+          child: const MyApp(),
+        ),
+      );
+    } else {
+      runApp(MyApp());
+    }
+  } catch (e) {
+    runApp(MyApp());
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -53,32 +69,40 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     TargetPlatform os = Theme.of(context).platform;
 
-    BannerAd banner = BannerAd(
-      adUnitId: UNIT_ID[os == TargetPlatform.iOS ? 'ios' : 'android']!,
-      size: AdSize.banner,
-      request: AdRequest(),
-      listener: BannerAdListener(
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {},
-        onAdLoaded: (_) {
-          print("배너 광고 로드 완료");
-        },
-      ),
-    )..load();
+    // BannerAd banner = BannerAd(
+    //   adUnitId: UNIT_ID[os == TargetPlatform.iOS ? 'ios' : 'android']!,
+    //   size: AdSize.banner,
+    //   request: AdRequest(),
+    //   listener: BannerAdListener(
+    //     onAdFailedToLoad: (Ad ad, LoadAdError error) {},
+    //     onAdLoaded: (_) {
+    //       print("배너 광고 로드 완료");
+    //     },
+    //   ),
+    // )..load();
 
-    bool isOnBoarded = prefs.getBool("isOnBoarded") ?? false;
-    final user = context.read<AuthService>().currentUser();
-    rankService = context.read<RankService>();
-    return MaterialApp(
-      theme: ThemeData(
-        backgroundColor: Colors.lightBlue,
-        textTheme: GoogleFonts.getTextTheme('Nanum Gothic'),
-      ),
-      debugShowCheckedModeBanner: false,
-      home: isOnBoarded
-          ? user == null
-              ? LoginPage()
-              : MarketPage()
-          : OnboardingPage(),
-    );
+    try {
+      if (Platform.isAndroid || Platform.isIOS) {
+        bool isOnBoarded = prefs.getBool("isOnBoarded") ?? false;
+        final user = context.read<AuthService>().currentUser();
+        rankService = context.read<RankService>();
+        return MaterialApp(
+          theme: ThemeData(
+            backgroundColor: Colors.lightBlue,
+            textTheme: GoogleFonts.getTextTheme('Nanum Gothic'),
+          ),
+          debugShowCheckedModeBanner: false,
+          home: isOnBoarded
+              ? user == null
+                  ? LoginPage()
+                  : MarketPage()
+              : OnboardingPage(),
+        );
+      } else {
+        return MaterialApp(home: MarketPage());
+      }
+    } catch (e) {
+      return MaterialApp(home: MarketPage());
+    }
   }
 }

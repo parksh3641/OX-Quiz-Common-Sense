@@ -117,7 +117,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
   }
 
   void _pause() {
-    _timer?.cancel();
+    _timer.cancel();
   }
 
   void _clickPlayButton() {
@@ -133,7 +133,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
   void _clickResetButton() {
     setState(() {
       _isRunning = false;
-      _timer?.cancel();
+      _timer.cancel();
       _lapTimeList.clear();
       _timeCount = 0;
     });

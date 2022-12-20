@@ -25,146 +25,31 @@ bool _isPaused = false;
 List<int> numberList = [];
 
 List<String> dataList = [
-  "스웨덴의 수도는?",
-  "말레이시아의 수도는?",
-  "독일의 수도는?",
-  "중국의 수도는?",
-  "가나의 수도는?",
-  "프랑스의 수도는?",
-  "스페인의 수도는?",
-  "헝가리의 수도는?",
-  "룩셈부르크의 수도는?",
-  "불가리아의 수도는?",
-  "멕시코의 수도는?",
-  "베네수엘라의 수도는?",
-  "쿠바의 수도는?",
-  "영국의 수도는?",
-  "러시아의 수도는?",
-  "태국의 수도는?",
-  "덴마크의 수도는?",
-  "브라질의 수도는?",
-  "스페인의 수도는?",
-  "대한민국의 수도는?",
-  "일본의 수도는?",
-  "체코의 수도는?",
-  "그리스의 수도는?",
-  "이집트의 수도는?"
+  "",
 ];
 
 List<String> answerList1 = [
-  "함마르비",
-  "쿠알라룸푸르",
-  "뭔헨",
-  "상하이",
-  "쿠마시",
-  "파리",
-  "바르셀로나",
-  "부쿠레슈티",
-  "릴",
-  "베오그라드",
-  "칸쿤",
-  "보고타",
-  "포르토프랭스",
-  "웰링턴",
-  "블라디보스톡",
-  "치앙마이",
-  "코펜하겐",
-  "마드리드",
-  "마드리드",
-  "도쿄",
-  "아테네",
-  "부다페스트",
-  "아테네",
-  "알렌산드리아"
+  "",
 ];
 List<String> answerList2 = [
-  "스톡홀름",
-  "마닐라",
-  "프랑크푸르트",
-  "타이베이",
-  "타말",
-  "니스",
-  "마드리드",
-  "부다페스트",
-  "룩셈부르크",
-  "소피아",
-  "멕시코시티",
-  "로조우",
-  "킹스턴",
-  "더블린",
-  "모스크바",
-  "방콕",
-  "상파울루",
-  "상파울루",
-  "프라하",
-  "서울",
-  "카이로",
-  "프라하",
-  "테살로니키",
-  "쿠알라룸푸르"
+  "",
 ];
 List<String> answerList3 = [
-  "코펜하겐",
-  "코타키나발루",
-  "베를린",
-  "베이징",
-  "아크라",
-  "리옹",
-  "그라나다",
-  "리스본",
-  "크노케",
-  "부큐레슈티",
-  "리마",
-  "카라카스",
-  "하바나",
-  "런던",
-  "상트페테르부르크",
-  "미얀마",
-  "더블린",
-  "브라질리아",
-  "바르셀로나",
-  "베이징",
-  "도쿄",
-  "테살로니키",
-  "카이로",
-  "카이로"
+  "",
 ];
 
 List<String> answer = [
-  "스톡홀름",
-  "쿠알라룸푸르",
-  "베를린",
-  "베이징",
-  "아크라",
-  "파리",
-  "마드리드",
-  "부다페스트",
-  "룩셈부르크",
-  "소피아",
-  "멕시코시티",
-  "카라카스",
-  "하바나",
-  "런던",
-  "모스크바",
-  "방콕",
-  "코펜하겐",
-  "브라질리아",
-  "마드리드",
-  "서울",
-  "도쿄",
-  "프라하",
-  "아테네",
-  "카이로"
+  "",
 ];
 
-class Quiz3 extends StatefulWidget {
-  const Quiz3({Key? key}) : super(key: key);
+class QuizExample extends StatefulWidget {
+  const QuizExample({Key? key}) : super(key: key);
 
   @override
-  State<Quiz3> createState() => _Quiz3State();
+  State<QuizExample> createState() => _QuizExampleState();
 }
 
-class _Quiz3State extends State<Quiz3> {
+class _QuizExampleState extends State<QuizExample> {
   @override
   void initState() {
     super.initState();
@@ -177,11 +62,6 @@ class _Quiz3State extends State<Quiz3> {
 
     _currentTick = 300;
     _startTimer(300);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   void _startTimer(int duration) {
@@ -211,13 +91,18 @@ class _Quiz3State extends State<Quiz3> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("수도 퀴즈"),
+          title: Text("상식 퀴즈"),
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
@@ -229,7 +114,7 @@ class _Quiz3State extends State<Quiz3> {
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(8),
           child: Column(
             children: [
               SizedBox(
@@ -243,7 +128,7 @@ class _Quiz3State extends State<Quiz3> {
                 height: 10,
               ),
               Text(
-                "$index /15 번째 문제",
+                "$index / 15 번째 문제",
                 style: TextStyle(color: Colors.black, fontSize: 36),
               ),
               SizedBox(
@@ -262,7 +147,7 @@ class _Quiz3State extends State<Quiz3> {
                 style: TextStyle(color: Colors.black, fontSize: 26),
               ),
               SizedBox(
-                height: 40,
+                height: 60,
               ),
               Container(
                 width: double.infinity,
@@ -351,17 +236,17 @@ class _Quiz3State extends State<Quiz3> {
   }
 
   void Initialize(BuildContext context) async {
-    //final user = context.read<AuthService>().currentUser()!;
+    final user = context.read<AuthService>().currentUser()!;
     if (index > maxQuiz - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
-      int number = prefs.getInt("QuizScore2") ?? 0;
+      int number = prefs.getInt("QuizScore0") ?? 0;
       if (score > number) {
-        // if (number == 0) {
-        //   rankService.create(QuizType.Quiz3, "NickName", score, user.uid);
-        // } else {
-        //   rankService.update(QuizType.Quiz3, "NickName", score, user.uid);
-        // }
-        prefs.setInt("QuizScore2", score);
+        if (number == 0) {
+          rankService.create(QuizType.Quiz1, "NickName", score, user.uid);
+        } else {
+          rankService.update(QuizType.Quiz1, "NickName", score, user.uid);
+        }
+        prefs.setInt("QuizScore0", score);
       }
 
       StopTimer();

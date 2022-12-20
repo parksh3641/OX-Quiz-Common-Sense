@@ -8,6 +8,7 @@ import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/rank_service.dart';
 import 'package:gosuoflife/result.dart';
 import 'package:gosuoflife/setting_page.dart';
+import 'package:gosuoflife/setting_quiz.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 import 'dart:math';
@@ -15,20 +16,11 @@ import 'dart:math';
 import 'login_page.dart';
 import 'main.dart';
 
-class Quiz4 extends StatefulWidget {
-  const Quiz4({Key? key}) : super(key: key);
+int index = 0;
+int maxQuiz = 15;
 
-  @override
-  State<Quiz4> createState() => _Quiz4State();
-}
-
-late StreamSubscription<int> subscription;
 int? _currentTick;
 bool _isPaused = false;
-
-int index = 0;
-int score = 0;
-int maxQuiz = 15;
 
 List<int> numberList = [];
 
@@ -88,6 +80,13 @@ List<String> answer = [
   "O",
 ];
 
+class Quiz4 extends StatefulWidget {
+  const Quiz4({Key? key}) : super(key: key);
+
+  @override
+  State<Quiz4> createState() => _Quiz4State();
+}
+
 class _Quiz4State extends State<Quiz4> {
   @override
   void initState() {
@@ -141,19 +140,19 @@ class _Quiz4State extends State<Quiz4> {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text("상식 퀴즈"),
+          title: Text("OX 퀴즈"),
           automaticallyImplyLeading: false,
           actions: [
             IconButton(
               onPressed: () {
-                OpenDialog(context);
+                ExitDialog(context);
               },
               icon: Icon(Icons.clear),
             ),
           ],
         ),
         body: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(16),
           child: Column(children: [
             SizedBox(
               height: 10,
@@ -244,19 +243,20 @@ class _Quiz4State extends State<Quiz4> {
   }
 
   void Initialize(BuildContext context) async {
-    final user = context.read<AuthService>().currentUser()!;
+    //final user = context.read<AuthService>().currentUser()!;
     if (index > maxQuiz - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
       int number = prefs.getInt("QuizScore3") ?? 0;
       if (score > number) {
-        if (number == 0) {
-          rankService.create(QuizType.Quiz4, "NickName", score, user.uid);
-        } else {
-          rankService.update(QuizType.Quiz4, "NickName", score, user.uid);
-        }
+        // if (number == 0) {
+        //   rankService.create(QuizType.Quiz4, "NickName", score, user.uid);
+        // } else {
+        //   rankService.update(QuizType.Quiz4, "NickName", score, user.uid);
+        // }
         prefs.setInt("QuizScore3", score);
       }
 
+      StopTimer();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => ResultPage(score)),
@@ -265,113 +265,6 @@ class _Quiz4State extends State<Quiz4> {
       index++;
     }
   }
-}
-
-void Success(BuildContext context) {
-  ScaffoldMessenger.of(context).clearSnackBars();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text("정답입니다!"),
-  ));
-  score++;
-}
-
-void Failed(BuildContext context, String answer) {
-  if (vibration) Vibration.vibrate(duration: 1000);
-  // ScaffoldMessenger.of(context).clearSnackBars();
-  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-  //   content: Text("오답입니다"),
-  // ));
-  Incorrect(context, answer);
-}
-
-void Incorrect(BuildContext context, String answer) {
-  showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: ((context) {
-        return AlertDialog(
-            title: Column(children: <Widget>[
-              Text(
-                "오답!",
-                style: TextStyle(fontSize: 30),
-              ),
-            ]),
-            content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "정답 : " + answer,
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ]),
-            actions: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "다음",
-                    ),
-                  ),
-                ],
-              ),
-            ]);
-      }));
-}
-
-void OpenDialog(BuildContext context) {
-  showDialog(
-      context: context,
-      barrierDismissible: true,
-      builder: ((context) {
-        return AlertDialog(
-            title: Column(children: <Widget>[
-              Text(
-                "중단하기",
-                style: TextStyle(fontSize: 30),
-              ),
-            ]),
-            content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "퀴즈를 종료할까요?",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ]),
-            actions: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => MarketPage()),
-                      );
-                    },
-                    child: Text(
-                      "네",
-                    ),
-                  ),
-                  SizedBox(width: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "아니요",
-                    ),
-                  )
-                ],
-              ),
-            ]);
-      }));
 }
 
 void CreateUnDuplicateRandom(int max) {
@@ -384,20 +277,5 @@ void CreateUnDuplicateRandom(int max) {
       numberList.add(currentNumber);
       i++;
     }
-  }
-}
-
-void TimeOver(BuildContext context) {
-  subscription.pause();
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => ResultPage(score)),
-  );
-}
-
-class Ticker {
-  const Ticker();
-  Stream<int> tick({required int ticks}) {
-    return Stream.periodic(Duration(seconds: 1), (x) => ticks - x).take(ticks);
   }
 }
