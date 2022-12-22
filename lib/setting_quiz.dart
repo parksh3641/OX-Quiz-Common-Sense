@@ -44,7 +44,7 @@ void IncorrectDialog(BuildContext context, String answer) {
             title: Column(children: <Widget>[
               Text(
                 "오답!",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 26),
               ),
             ]),
             content: Column(
@@ -53,22 +53,22 @@ void IncorrectDialog(BuildContext context, String answer) {
                 children: <Widget>[
                   Text(
                     "정답 : " + answer,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 22),
                   ),
                 ]),
             actions: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "다음",
-                    ),
+              Container(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "다음",
+                    style: TextStyle(fontSize: 20),
                   ),
-                ],
+                ),
               ),
             ]);
       }));
@@ -83,7 +83,7 @@ void ExitDialog(BuildContext context) {
             title: Column(children: <Widget>[
               Text(
                 "중단하기",
-                style: TextStyle(fontSize: 30),
+                style: TextStyle(fontSize: 26),
               ),
             ]),
             content: Column(
@@ -92,34 +92,43 @@ void ExitDialog(BuildContext context) {
                 children: <Widget>[
                   Text(
                     "퀴즈를 종료할까요?",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 22),
                   ),
                 ]),
             actions: <Widget>[
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      StopTimer();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => MarketPage()),
-                      );
-                    },
-                    child: Text(
-                      "네",
+                  Container(
+                    width: 120,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        StopTimer();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => MarketPage()),
+                        );
+                      },
+                      child: Text(
+                        "네",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                   ),
-                  SizedBox(width: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "아니요",
+                  Container(
+                    width: 120,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        "아니요",
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ]);

@@ -1,4 +1,3 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,8 +9,6 @@ import 'package:gosuoflife/stopwatch.dart';
 
 import 'home_page.dart';
 
-late AssetsAudioPlayer _assetsAudioPlayer = AssetsAudioPlayer.newPlayer();
-
 class MarketPage extends StatefulWidget {
   const MarketPage({Key? key}) : super(key: key);
 
@@ -19,7 +16,7 @@ class MarketPage extends StatefulWidget {
   State<MarketPage> createState() => _MarketPageState();
 }
 
-class _MarketPageState extends State<MarketPage> with WidgetsBindingObserver {
+class _MarketPageState extends State<MarketPage> {
   int selectedIndex = 0;
 
   final List<Widget> widgetOptions = <Widget>[
@@ -37,42 +34,13 @@ class _MarketPageState extends State<MarketPage> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch (state) {
-      case AppLifecycleState.resumed:
-        PlayMusic();
-        break;
-      case AppLifecycleState.inactive:
-        StopMusic();
-        break;
-      case AppLifecycleState.detached:
-        StopMusic();
-        break;
-      case AppLifecycleState.paused:
-        StopMusic();
-        break;
-    }
-  }
-
-  @override
   void initState() {
     super.initState();
-    _assetsAudioPlayer.open(
-      Audio("assets/audios/Background.mp3"),
-      loopMode: LoopMode.single,
-      autoStart: false,
-      showNotification: false,
-    );
-
-    PlayMusic();
-
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
     super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
@@ -112,15 +80,5 @@ class _MarketPageState extends State<MarketPage> with WidgetsBindingObserver {
         ),
       ),
     );
-  }
-}
-
-void StopMusic() {
-  _assetsAudioPlayer.pause();
-}
-
-void PlayMusic() {
-  if (!_assetsAudioPlayer.isPlaying.value && music) {
-    _assetsAudioPlayer.play();
   }
 }

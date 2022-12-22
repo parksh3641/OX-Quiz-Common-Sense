@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gosuoflife/color_schemes.g.dart';
 import 'package:gosuoflife/home_page.dart';
 import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/rank_service.dart';
@@ -36,12 +37,12 @@ void main() async {
 
   prefs = await SharedPreferences.getInstance();
 
-  await Firebase.initializeApp(
-      options: FirebaseOptions(
-          apiKey: "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs",
-          appId: "1:266701313002:android:8c5d19027cd15e5f6c1893",
-          messagingSenderId: "266701313002",
-          projectId: "touch-party-67378457"));
+  await Firebase.initializeApp();
+  // options: FirebaseOptions(
+  //     apiKey: "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs",
+  //     appId: "1:266701313002:android:8c5d19027cd15e5f6c1893",
+  //     messagingSenderId: "266701313002",
+  //     projectId: "touch-party-67378457"));
 
   try {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -68,35 +69,24 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TargetPlatform os = Theme.of(context).platform;
-
-    // BannerAd banner = BannerAd(
-    //   adUnitId: UNIT_ID[os == TargetPlatform.iOS ? 'ios' : 'android']!,
-    //   size: AdSize.banner,
-    //   request: AdRequest(),
-    //   listener: BannerAdListener(
-    //     onAdFailedToLoad: (Ad ad, LoadAdError error) {},
-    //     onAdLoaded: (_) {
-    //       print("배너 광고 로드 완료");
-    //     },
-    //   ),
-    // )..load();
-
     try {
       if (Platform.isAndroid || Platform.isIOS) {
-        bool isOnBoarded = prefs.getBool("isOnBoarded") ?? false;
+        //bool isOnBoarded = prefs.getBool("isOnBoarded") ?? false;
         final user = context.read<AuthService>().currentUser();
         rankService = context.read<RankService>();
         return MaterialApp(
           theme: ThemeData(
-            backgroundColor: Colors.lightBlue,
-            textTheme: GoogleFonts.getTextTheme('Nanum Gothic'),
+            useMaterial3: false,
+            //colorScheme: lightColorScheme,
+            //textTheme: GoogleFonts.getTextTheme('Jua'),
           ),
+          darkTheme: ThemeData(
+            useMaterial3: false,
+            //colorScheme: darkColorScheme,
+          ),
+          themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
-          home: isOnBoarded
-              ? user == null
-                  ? LoginPage()
-                  : MarketPage()
-              : OnboardingPage(),
+          home: (user == null) ? LoginPage() : MarketPage(),
         );
       } else {
         return MaterialApp(home: MarketPage());

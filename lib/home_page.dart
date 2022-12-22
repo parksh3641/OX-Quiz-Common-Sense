@@ -67,14 +67,14 @@ class _HomePageState extends State<HomePage> {
         "category": "OX 퀴즈",
         "imgUrl": "https://picsum.photos/250?image=40",
       },
-      // {
-      //   "category": "숫자 퀴즈",
-      //   "imgUrl": "https://picsum.photos/250?image=50",
-      // },
-      // {
-      //   "category": "초성 퀴즈",
-      //   "imgUrl": "https://picsum.photos/250?image=60",
-      // },
+      {
+        "category": "숫자 퀴즈",
+        "imgUrl": "https://picsum.photos/250?image=50",
+      },
+      {
+        "category": "초성 퀴즈",
+        "imgUrl": "https://picsum.photos/250?image=60",
+      },
     ];
 
     List<int> quizScore = [];
@@ -85,25 +85,33 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          //automaticallyImplyLeading: false,
-          title: Center(
-            child: Text(
-              "퀴즈 선택",
-            ),
+        elevation: 0,
+        //centerTitle: true,
+        //automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        title: Transform(
+          transform: Matrix4.translationValues(-50, 0, 0),
+          child: Text(
+            "퀴즈 선택",
+            style: TextStyle(color: Colors.black),
           ),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.help),
-              onPressed: () {
-                //prefs.clear();
-                ScaffoldMessenger.of(context).clearSnackBars();
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: Text("퀴즈를 선택하세요!"),
-                ));
-              },
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              Icons.help,
+              color: Colors.black,
             ),
-          ]),
+            onPressed: () {
+              //prefs.clear();
+              ScaffoldMessenger.of(context).clearSnackBars();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("퀴즈를 선택하세요!"),
+              ));
+            },
+          ),
+        ],
+      ),
       body: Column(children: [
         Expanded(
             child: ListView.builder(
@@ -163,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                         Container(
                             width: double.infinity,
                             height: 130,
-                            color: Colors.black.withOpacity(0.3),
+                            color: Colors.black.withOpacity(0.4),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
@@ -190,84 +198,51 @@ class _HomePageState extends State<HomePage> {
           },
         ))
       ]),
-      drawer: Drawer(
-        child: Column(children: [
-          DrawerHeader(
-            margin: EdgeInsets.all(0),
-            decoration: BoxDecoration(color: Colors.amber),
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 36,
-                    backgroundColor: Colors.white,
-                    child: Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Image.asset(imagePath),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  //Text("${user.email}님 안녕하세요")
-                  Text(
-                    "환영합니다",
-                    style: TextStyle(fontSize: 26),
-                  )
-                ],
-              ),
-            ),
-          ),
-          // AspectRatio(
-          //   aspectRatio: 12 / 4,
-          //   child: PageView(
-          //     children: [
-          //       Image.network(
-          //         "https://i.ibb.co/Q97cmkg/sale-event-banner1.jpg",
-          //       ),
-          //       Image.network(
-          //         "https://i.ibb.co/GV78j68/sale-event-banner2.jpg",
-          //       ),
-          //       Image.network(
-          //         "https://i.ibb.co/R3P3RHw/sale-event-banner3.jpg",
-          //       ),
-          //       Image.network(
-          //         "https://i.ibb.co/LRb1VYs/sale-event-banner4.jpg",
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          ListTile(
-            title: Text(
-              '내 정보',
-              style: TextStyle(fontSize: 18),
-            ),
-            trailing: Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.black,
-            ),
-            onTap: () {
-              // 클릭시 drawer 닫기
-              Navigator.pop(context);
-            },
-          ),
-          // ListTile(
-          //   title: Text(
-          //     '설정',
-          //     style: TextStyle(fontSize: 18),
-          //   ),
-          //   trailing: Icon(
-          //     Icons.arrow_forward_ios,
-          //     color: Colors.black,
-          //   ),
-          //   onTap: () {
-          //     // 클릭시 drawer 닫기
-          //     Navigator.pop(context);
-          //   },
-          // ),
-        ]),
-      ),
+      // drawer: Drawer(
+      //   child: Column(children: [
+      //     DrawerHeader(
+      //       margin: EdgeInsets.all(0),
+      //       decoration: BoxDecoration(color: Colors.amber),
+      //       child: SizedBox(
+      //         width: double.infinity,
+      //         child: Column(
+      //           children: [
+      //             CircleAvatar(
+      //               radius: 36,
+      //               backgroundColor: Colors.white,
+      //               child: Padding(
+      //                 padding: EdgeInsets.all(8),
+      //                 child: Image.asset(imagePath),
+      //               ),
+      //             ),
+      //             SizedBox(
+      //               height: 16,
+      //             ),
+      //             //Text("${user.email}님 안녕하세요")
+      //             Text(
+      //               "환영합니다",
+      //               style: TextStyle(fontSize: 26),
+      //             )
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //     ListTile(
+      //       title: Text(
+      //         '내 정보',
+      //         style: TextStyle(fontSize: 18),
+      //       ),
+      //       trailing: Icon(
+      //         Icons.arrow_forward_ios,
+      //         color: Colors.black,
+      //       ),
+      //       onTap: () {
+      //         // 클릭시 drawer 닫기
+      //         Navigator.pop(context);
+      //       },
+      //     ),
+      //   ]),
+      // ),
     );
   }
 }

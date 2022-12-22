@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -12,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'login_page.dart';
 import 'main.dart';
 
-late bool music = prefs.getBool("Music") ?? true;
 late bool vibration = prefs.getBool(("Vibration")) ?? true;
 
 class SettingPage extends StatefulWidget {
@@ -35,9 +33,17 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: Text("설정"),
-        automaticallyImplyLeading: false,
+        elevation: 0,
+        //centerTitle: true,
+        //automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        title: Transform(
+          transform: Matrix4.translationValues(-50, 0, 0),
+          child: Text(
+            "설정",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
       ),
       body: SafeArea(
         child: Padding(
@@ -45,33 +51,6 @@ class _SettingPageState extends State<SettingPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: (music) ? Colors.blue : Colors.grey,
-                  ),
-                  child: (music)
-                      ? Text(
-                          "음악 ON",
-                          style: TextStyle(fontSize: 22),
-                        )
-                      : Text("음악 OFF", style: TextStyle(fontSize: 22)),
-                  onPressed: () {
-                    setState(() {
-                      if (music) {
-                        music = false;
-                        StopMusic();
-                      } else {
-                        music = true;
-                        PlayMusic();
-                      }
-                      prefs.setBool("Music", music);
-                    });
-                  },
-                ),
-              ),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -215,7 +194,7 @@ void OpenDelectAccountDialog(BuildContext context) {
       builder: ((context) {
         return AlertDialog(
             title: Text("계정 탈퇴"),
-            content: Text("정말 계정 탈퇴를 하실 건가요?"),
+            content: Text("정말 계정을 탈퇴를 하실 건가요?"),
             actions: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
