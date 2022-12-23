@@ -36,113 +36,22 @@ class _RankingPageState extends State<RankingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("랭킹"),
-        automaticallyImplyLeading: false,
-      ),
-      body: SafeArea(
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              DefaultTabController(
-                  length: 4, // length of tabs
-                  initialIndex: 0,
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-                        Container(
-                          child: TabBar(
-                            labelColor: Colors.green,
-                            unselectedLabelColor: Colors.black,
-                            tabs: [
-                              Tab(text: '상식'),
-                              Tab(text: '사자성어'),
-                              Tab(text: '수도'),
-                              Tab(text: 'OX'),
-                            ],
-                          ),
-                        ),
-                        Container(
-                            height: 400, //height of TabBarView
-                            decoration: BoxDecoration(
-                                border: Border(
-                                    top: BorderSide(
-                                        color: Colors.grey, width: 0.5))),
-                            child: TabBarView(children: <Widget>[
-                              // Container(
-                              //     child: ListView.builder(
-                              //         itemCount: rankContentList.length,
-                              //         itemBuilder: ((context, index) {
-                              //           RankContent content =
-                              //               rankContentList[index];
-                              //           return Container(
-                              //             height: 80,
-                              //             child: Card(
-                              //               shape: RoundedRectangleBorder(
-                              //                 borderRadius:
-                              //                     BorderRadius.circular(16.0),
-                              //               ),
-                              //               margin: const EdgeInsets.all(8.0),
-                              //               child: Center(
-                              //                 child: Row(
-                              //                   mainAxisAlignment:
-                              //                       MainAxisAlignment.spaceEvenly,
-                              //                   children: [
-                              //                     Text(
-                              //                       (index + 1).toString(),
-                              //                       style: TextStyle(fontSize: 26),
-                              //                     ),
-                              //                     Text(
-                              //                       content.id,
-                              //                       style: TextStyle(fontSize: 26),
-                              //                     ),
-                              //                     Text(
-                              //                       content.score.toString(),
-                              //                       style: TextStyle(fontSize: 26),
-                              //                     ),
-                              //                   ],
-                              //                 ),
-                              //               ),
-                              //             ),
-                              //           );
-                              //         }))),
-                              Container(
-                                child: Center(
-                                  child: Text('정보 없음',
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                      )),
-                                ),
-                              ),
-                              Container(
-                                child: Center(
-                                  child: Text('정보 없음',
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                      )),
-                                ),
-                              ),
-                              Container(
-                                child: Center(
-                                  child: Text('정보 없음',
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                      )),
-                                ),
-                              ),
-                              Container(
-                                child: Center(
-                                  child: Text('정보 없음',
-                                      style: TextStyle(
-                                        fontSize: 22,
-                                      )),
-                                ),
-                              ),
-                            ]))
-                      ])),
-            ]),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          title: Text(
+            "랭킹",
+            style: TextStyle(color: Colors.black),
+          ),
+        ),
+        body: Center(
+            child: Text(
+          "준비중입니다",
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+        )),
       ),
     );
   }

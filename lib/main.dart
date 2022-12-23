@@ -21,6 +21,8 @@ import 'onboard_page.dart';
 late SharedPreferences prefs;
 late RankService rankService;
 
+late Color primaryColor = Color.fromRGBO(60, 179, 113, 1);
+
 const Map<String, String> UNIT_ID = kReleaseMode
     ? {
         'ios': 'ca-app-pub-6754544778509872/9486325432',
@@ -37,12 +39,25 @@ void main() async {
 
   prefs = await SharedPreferences.getInstance();
 
-  await Firebase.initializeApp();
-  // options: FirebaseOptions(
-  //     apiKey: "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs",
-  //     appId: "1:266701313002:android:8c5d19027cd15e5f6c1893",
-  //     messagingSenderId: "266701313002",
-  //     projectId: "touch-party-67378457"));
+  try {
+    if (Platform.isAndroid || Platform.isIOS) {
+      await Firebase.initializeApp();
+    } else {
+      await Firebase.initializeApp(
+          options: FirebaseOptions(
+              apiKey: "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs",
+              appId: "1:266701313002:android:8c5d19027cd15e5f6c1893",
+              messagingSenderId: "266701313002",
+              projectId: "touch-party-67378457"));
+    }
+  } catch (e) {
+    await Firebase.initializeApp(
+        options: FirebaseOptions(
+            apiKey: "AIzaSyDwSvChjV2rfAqPEZ8_dcVm-brZxj08UQs",
+            appId: "1:266701313002:android:8c5d19027cd15e5f6c1893",
+            messagingSenderId: "266701313002",
+            projectId: "touch-party-67378457"));
+  }
 
   try {
     if (Platform.isAndroid || Platform.isIOS) {
@@ -76,13 +91,13 @@ class MyApp extends StatelessWidget {
         rankService = context.read<RankService>();
         return MaterialApp(
           theme: ThemeData(
-            useMaterial3: false,
-            //colorScheme: lightColorScheme,
+            useMaterial3: true,
+            colorScheme: lightColorScheme,
             //textTheme: GoogleFonts.getTextTheme('Jua'),
           ),
           darkTheme: ThemeData(
-            useMaterial3: false,
-            //colorScheme: darkColorScheme,
+            useMaterial3: true,
+            colorScheme: darkColorScheme,
           ),
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,

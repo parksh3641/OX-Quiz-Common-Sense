@@ -17,22 +17,6 @@ class MarketPage extends StatefulWidget {
 }
 
 class _MarketPageState extends State<MarketPage> {
-  int selectedIndex = 0;
-
-  final List<Widget> widgetOptions = <Widget>[
-    HomePage(),
-    //RankingPage(),
-    //ShopPage(),
-    //StopWatchPage(),
-    SettingPage()
-  ];
-
-  void ChangePage(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -43,40 +27,57 @@ class _MarketPageState extends State<MarketPage> {
     super.dispose();
   }
 
+  int currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: Center(child: widgetOptions.elementAt(selectedIndex)),
+        body: IndexedStack(
+          index: currentIndex, // index 순서에 해당하는 child를 맨 위에 보여줌
+          children: [
+            HomePage(),
+            ShopPage(),
+            //RankingPage(),
+            SettingPage(),
+          ],
+        ),
         bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
+          currentIndex: currentIndex,
+          onTap: (newIndex) {
+            setState(() {
+              currentIndex = newIndex;
+            });
+          },
+          selectedItemColor: Colors.green, // 선택된 아이콘 색상
+          unselectedItemColor: Colors.grey, // 선택되지 않은 아이콘 색상
+          showSelectedLabels: false, // 선택된 항목 label 숨기기
+          showUnselectedLabels: false, // 선택되지 않은 항목 label 숨기기
+          type: BottomNavigationBarType.fixed, // 선택시 아이콘 움직이지 않기
+          backgroundColor: Colors.white.withOpacity(0.8),
+          items: [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: "홈",
             ),
             // BottomNavigationBarItem(
+            //   icon: Icon(Icons.credit_card_rounded),
+            //   label: "",
+            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.store),
+              label: "",
+            ),
+            // BottomNavigationBarItem(
             //   icon: Icon(Icons.star),
-            //   label: "랭킹",
-            // ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.shopping_cart),
-            //   label: "상점",
-            // ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.watch),
-            //   label: "스톱워치",
+            //   label: "",
             // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: "설정",
+              label: "",
             ),
           ],
-          currentIndex: selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.lightGreen,
-          backgroundColor: Colors.white,
-          onTap: ChangePage,
         ),
       ),
     );

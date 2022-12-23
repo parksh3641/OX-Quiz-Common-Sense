@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -42,13 +41,12 @@ class _LoginPageState extends State<LoginPage> {
           child: Scaffold(
             appBar: AppBar(
               elevation: 0,
-              //centerTitle: true,
-              //automaticallyImplyLeading: false,
-              backgroundColor: Colors.white,
+              centerTitle: true,
+              automaticallyImplyLeading: false,
               title: Transform(
-                transform: Matrix4.translationValues(-50, 0, 0),
+                transform: Matrix4.translationValues(0, 0, 0),
                 child: Text(
-                  "로그인",
+                  "퀴즈의 고수 로그인",
                   style: TextStyle(color: Colors.black),
                 ),
               ),
@@ -92,9 +90,15 @@ class _LoginPageState extends State<LoginPage> {
                           width: 170,
                           height: 50,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: primaryColor,
+                            ),
                             child: Text(
                               "로그인",
-                              style: TextStyle(fontSize: 21),
+                              style: TextStyle(
+                                  fontSize: 21,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
                               // 로그인
@@ -133,8 +137,14 @@ class _LoginPageState extends State<LoginPage> {
                           height: 50,
                           child: Container(
                             child: ElevatedButton(
-                              child:
-                                  Text("회원가입", style: TextStyle(fontSize: 21)),
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                              ),
+                              child: Text("회원가입",
+                                  style: TextStyle(
+                                      fontSize: 21,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold)),
                               onPressed: () {
                                 // 회원가입
                                 authService.signUp(
@@ -170,9 +180,15 @@ class _LoginPageState extends State<LoginPage> {
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              primary: primaryColor,
+                            ),
                             child: Text(
-                              "게스트 로그인",
-                              style: TextStyle(fontSize: 22),
+                              "게스트 입장",
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
                             ),
                             onPressed: () async {
                               await authService.signInWithGuest();
@@ -200,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                           height: 50,
                           child: ElevatedButton.icon(
                             style: ElevatedButton.styleFrom(
-                              primary: (!ios) ? Colors.blue : Colors.black,
+                              primary: (!ios) ? primaryColor : Colors.black,
                             ),
                             icon: (!ios)
                                 ? ImageIcon(AssetImage("images/Google.png"))
@@ -208,10 +224,16 @@ class _LoginPageState extends State<LoginPage> {
                             label: (!ios)
                                 ? Text(
                                     "구글 로그인",
-                                    style: TextStyle(fontSize: 22),
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
                                   )
                                 : Text("Sign ln with Apple",
-                                    style: TextStyle(fontSize: 22)),
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
                             onPressed: () async {
                               if (!ios) {
                                 await authService.signInWithGoogle();

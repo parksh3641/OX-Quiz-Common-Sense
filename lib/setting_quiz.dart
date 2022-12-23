@@ -11,6 +11,8 @@ import 'market_page.dart';
 late StreamSubscription<int> subscription;
 
 int score = 0;
+int heart = 0;
+int quizTime = 0;
 
 class SettingQuizPage extends StatefulWidget {
   const SettingQuizPage({Key? key}) : super(key: key);
@@ -41,25 +43,20 @@ void IncorrectDialog(BuildContext context, String answer) {
       barrierDismissible: true,
       builder: ((context) {
         return AlertDialog(
-            title: Column(children: <Widget>[
+            title: Column(children: [
               Text(
                 "오답!",
                 style: TextStyle(fontSize: 26),
               ),
             ]),
-            content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "정답 : " + answer,
-                    style: TextStyle(fontSize: 22),
-                  ),
-                ]),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                "정답 : " + answer,
+                style: TextStyle(fontSize: 22),
+              ),
+            ]),
             actions: <Widget>[
               Container(
-                width: double.infinity,
-                height: 50,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -80,28 +77,23 @@ void ExitDialog(BuildContext context) {
       barrierDismissible: true,
       builder: ((context) {
         return AlertDialog(
-            title: Column(children: <Widget>[
+            title: Column(children: [
               Text(
-                "중단하기",
+                "그만하기",
                 style: TextStyle(fontSize: 26),
               ),
             ]),
-            content: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    "퀴즈를 종료할까요?",
-                    style: TextStyle(fontSize: 22),
-                  ),
-                ]),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                "퀴즈 푸는 것을 그만둘까요?",
+                style: TextStyle(fontSize: 22),
+              ),
+            ]),
             actions: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: 120,
-                    height: 50,
                     child: ElevatedButton(
                       onPressed: () {
                         StopTimer();
@@ -117,8 +109,6 @@ void ExitDialog(BuildContext context) {
                     ),
                   ),
                   Container(
-                    width: 120,
-                    height: 50,
                     child: ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -135,12 +125,16 @@ void ExitDialog(BuildContext context) {
       }));
 }
 
+int GetHeart() {
+  heart = prefs.getInt("Heart") ?? 0;
+  return heart;
+}
+
 void Success(BuildContext context) {
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
     content: Text("정답입니다!"),
   ));
-  score++;
 }
 
 void Failed(BuildContext context, String answer) {
@@ -155,11 +149,32 @@ class Ticker {
   }
 }
 
+int GetQuizTime() {
+  quizTime = prefs.getInt("QuizTime") ?? 0;
+  return quizTime;
+}
+
+void EndGame(BuildContext context) {
+  StopTimer();
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ResultPage()),
+  );
+}
+
 void TimeOver(BuildContext context) {
   StopTimer();
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => ResultPage(score)),
+    MaterialPageRoute(builder: (context) => ResultPage()),
+  );
+}
+
+void HeartOver(BuildContext context) {
+  StopTimer();
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ResultPage()),
   );
 }
 

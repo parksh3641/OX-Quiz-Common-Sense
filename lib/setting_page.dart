@@ -7,11 +7,13 @@ import 'package:gosuoflife/auth_service.dart';
 import 'package:gosuoflife/market_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
+import 'package:settings_ui/settings_ui.dart';
 
 import 'login_page.dart';
 import 'main.dart';
 
 late bool vibration = prefs.getBool(("Vibration")) ?? true;
+late bool darkMode = prefs.getBool(("DarkMode")) ?? false;
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -31,110 +33,99 @@ class _SettingPageState extends State<SettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        //centerTitle: true,
-        //automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        title: Transform(
-          transform: Matrix4.translationValues(-50, 0, 0),
-          child: Text(
-            "설정",
-            style: TextStyle(color: Colors.black),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          title: Transform(
+            transform: Matrix4.translationValues(0, 0, 0),
+            child: Text(
+              "설정",
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: (vibration) ? Colors.blue : Colors.grey,
-                  ),
-                  child: (vibration)
-                      ? Text(
-                          "진동 ON",
-                          style: TextStyle(fontSize: 22),
-                        )
-                      : Text("진동 OFF", style: TextStyle(fontSize: 22)),
-                  onPressed: () {
-                    setState(() {
-                      if (vibration) {
-                        vibration = false;
-                      } else {
-                        vibration = true;
-                      }
-                      prefs.setBool("Vibration", vibration);
-                    });
-                  },
-                ),
+        body: SettingsList(
+          sections: [
+            SettingsSection(
+              title: Text(
+                '공통',
               ),
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  child: Text(
-                    "언어 선택",
-                    style: TextStyle(fontSize: 22),
-                  ),
-                  onPressed: () {
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: Icon(Icons.language),
+                  title: Text('언어'),
+                  value: Text('한국어'),
+                  onPressed: ((context) {
                     OpenLanguageDialog(context);
-                  },
+                  }),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                  child: Text(
-                    "로그아웃",
-                    style: TextStyle(fontSize: 22),
-                  ),
-                  onPressed: () {
+                SettingsTile.switchTile(
+                  title: Text('진동'),
+                  initialValue: vibration,
+                  onToggle: (value) {
+                    setState(() {
+                      vibration = !vibration;
+                    });
+                    prefs.setBool("Vibration", vibration);
+                  },
+                  leading: Icon(Icons.vibration),
+                ),
+                // SettingsTile.switchTile(
+                //   title: Text('다크 모드'),
+                //   initialValue: darkMode,
+                //   onToggle: (value) {
+                //     setState(() {
+                //       darkMode = !darkMode;
+                //     });
+                //     prefs.setBool("DarkMode", darkMode);
+                //   },
+                //   leading: Icon(Icons.dark_mode),
+                // ),
+              ],
+            ),
+            SettingsSection(
+              title: Text('계정'),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: Icon(Icons.logout),
+                  title: Text('로그 아웃'),
+                  onPressed: ((context) {
                     try {
                       if (Platform.isAndroid || Platform.isIOS) {
                         OpenLogOutDialog(context);
                       } else {}
                     } catch (e) {}
-                  },
+                  }),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
-                  ),
-                  child: Text(
-                    "계정 탈퇴",
-                    style: TextStyle(fontSize: 22),
-                  ),
-                  onPressed: () {
+                SettingsTile.navigation(
+                  leading: Icon(Icons.person_off),
+                  title: Text('계정 탈퇴'),
+                  onPressed: ((context) {
                     try {
                       if (Platform.isAndroid || Platform.isIOS) {
                         OpenDelectAccountDialog(context);
                       } else {}
                     } catch (e) {}
-                  },
-                ),
-              ),
-              Text(
-                "앱 버전 : v" + versionInfo,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-              ),
-            ],
-          ),
+                  }),
+                )
+              ],
+            ),
+            SettingsSection(
+              title: Text('기타'),
+              tiles: <SettingsTile>[
+                SettingsTile.navigation(
+                  leading: Icon(Icons.system_update),
+                  title: Text('앱 버전'),
+                  value: Text(versionInfo),
+                  onPressed: ((context) {}),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );
@@ -154,8 +145,18 @@ void OpenLogOutDialog(BuildContext context) {
       barrierDismissible: true,
       builder: ((context) {
         return AlertDialog(
-            title: Text("로그아웃"),
-            content: Text("정말 로그아웃 하실 건가요?"),
+            title: Column(children: [
+              Text(
+                "로그아웃",
+                style: TextStyle(fontSize: 26),
+              ),
+            ]),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                "로그아웃 하시겠습니까?",
+                style: TextStyle(fontSize: 22),
+              ),
+            ]),
             actions: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -171,6 +172,7 @@ void OpenLogOutDialog(BuildContext context) {
                     },
                     child: Text(
                       "네",
+                      style: TextStyle(fontSize: 20),
                     ),
                   ),
                   ElevatedButton(
@@ -179,6 +181,7 @@ void OpenLogOutDialog(BuildContext context) {
                     },
                     child: Text(
                       "아니요",
+                      style: TextStyle(fontSize: 20),
                     ),
                   )
                 ],
@@ -193,8 +196,18 @@ void OpenDelectAccountDialog(BuildContext context) {
       barrierDismissible: true,
       builder: ((context) {
         return AlertDialog(
-            title: Text("계정 탈퇴"),
-            content: Text("정말 계정을 탈퇴를 하실 건가요?"),
+            title: Column(children: [
+              Text(
+                "계정 탈퇴",
+                style: TextStyle(fontSize: 26),
+              ),
+            ]),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                "계정을 탈퇴하시겠습니까?",
+                style: TextStyle(fontSize: 22),
+              ),
+            ]),
             actions: <Widget>[
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -208,17 +221,13 @@ void OpenDelectAccountDialog(BuildContext context) {
                         MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
-                    child: Text(
-                      "네",
-                    ),
+                    child: Text("네", style: TextStyle(fontSize: 20)),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text(
-                      "아니요",
-                    ),
+                    child: Text("아니요", style: TextStyle(fontSize: 20)),
                   )
                 ],
               ),
@@ -232,19 +241,35 @@ void OpenLanguageDialog(BuildContext context) {
       barrierDismissible: true,
       builder: (context) {
         return AlertDialog(
-            title: Text("언어 선택"),
-            content: Text("언어를 선택해주세요"),
+            title: Column(children: [
+              Text(
+                "언어 선택",
+                style: TextStyle(fontSize: 26),
+              ),
+            ]),
+            content: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                "언어를 선택해주세요",
+                style: TextStyle(fontSize: 22),
+              ),
+            ]),
             actions: <Widget>[
               Column(
                 children: [
                   Container(
                     width: double.infinity,
                     child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(400, 60),
+                      ),
                       onPressed: () {
                         SetSnackBar(context, "한국어로 변경됨");
                         Navigator.of(context).pop();
                       },
-                      child: Text("한국어"),
+                      child: Text(
+                        "한국어",
+                        style: TextStyle(fontSize: 22),
+                      ),
                     ),
                   ),
                   // Container(
