@@ -9,6 +9,7 @@ import 'package:gosuoflife/color_schemes.g.dart';
 import 'package:gosuoflife/home_page.dart';
 import 'package:gosuoflife/market_page.dart';
 import 'package:gosuoflife/rank_service.dart';
+import 'package:gosuoflife/splash_Screen.dart';
 import 'package:gosuoflife/stopwatch.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -87,9 +88,15 @@ class MyApp extends StatelessWidget {
     try {
       if (Platform.isAndroid || Platform.isIOS) {
         //bool isOnBoarded = prefs.getBool("isOnBoarded") ?? false;
-        final user = context.read<AuthService>().currentUser();
+        //final user = context.read<AuthService>().currentUser();
         rankService = context.read<RankService>();
         return MaterialApp(
+          builder: ((context, child) {
+            return MediaQuery(
+              data: MediaQuery.of(context).copyWith(textScaleFactor: 1),
+              child: child!,
+            );
+          }),
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: lightColorScheme,
@@ -101,7 +108,7 @@ class MyApp extends StatelessWidget {
           ),
           themeMode: ThemeMode.system,
           debugShowCheckedModeBanner: false,
-          home: (user == null) ? LoginPage() : MarketPage(),
+          home: SplashScreenPage(),
         );
       } else {
         return MaterialApp(home: MarketPage());

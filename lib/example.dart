@@ -19,6 +19,9 @@ class _ExamplePageState extends State<ExamplePage> {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold();
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(),
+    );
   }
 }

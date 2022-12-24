@@ -8,6 +8,7 @@ import 'package:gosuoflife/market_page.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'login_page.dart';
 import 'main.dart';
@@ -35,19 +36,19 @@ class _SettingPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.white,
-          title: Transform(
-            transform: Matrix4.translationValues(0, 0, 0),
-            child: Text(
-              "설정",
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
+        // appBar: AppBar(
+        //   elevation: 0,
+        //   centerTitle: true,
+        //   automaticallyImplyLeading: false,
+        //   backgroundColor: Colors.white,
+        //   title: Transform(
+        //     transform: Matrix4.translationValues(0, 0, 0),
+        //     child: Text(
+        //       "설정",
+        //       style: TextStyle(color: Colors.black),
+        //     ),
+        //   ),
+        // ),
         body: SettingsList(
           sections: [
             SettingsSection(
@@ -92,7 +93,7 @@ class _SettingPageState extends State<SettingPage> {
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
                   leading: Icon(Icons.logout),
-                  title: Text('로그 아웃'),
+                  title: Text('로그아웃'),
                   onPressed: ((context) {
                     try {
                       if (Platform.isAndroid || Platform.isIOS) {
@@ -118,13 +119,31 @@ class _SettingPageState extends State<SettingPage> {
               title: Text('기타'),
               tiles: <SettingsTile>[
                 SettingsTile.navigation(
+                  leading: Icon(Icons.star),
+                  title: Text('앱 평가하기'),
+                  onPressed: ((context) {
+                    launchUrl(Uri.parse(
+                        'https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US'));
+                  }),
+                ),
+                SettingsTile.navigation(
+                  leading: Icon(Icons.account_circle),
+                  title: Text('개인정보처리방침'),
+                  onPressed: ((context) {
+                    launchUrl(
+                      Uri.parse(
+                          'https://sites.google.com/view/spnkprivacy/%ED%99%88'),
+                    );
+                  }),
+                ),
+                SettingsTile.navigation(
                   leading: Icon(Icons.system_update),
                   title: Text('앱 버전'),
                   value: Text(versionInfo),
                   onPressed: ((context) {}),
                 )
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -167,7 +186,15 @@ void OpenLogOutDialog(BuildContext context) {
                       prefs.setString("LoginType", "Null");
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        PageRouteBuilder(
+                          pageBuilder: (BuildContext context,
+                              Animation<double> animation1,
+                              Animation<double> animation2) {
+                            return LoginPage();
+                          },
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
                       );
                     },
                     child: Text(
@@ -218,7 +245,15 @@ void OpenDelectAccountDialog(BuildContext context) {
                       prefs.setString("LoginType", "Null");
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        PageRouteBuilder(
+                          pageBuilder: (BuildContext context,
+                              Animation<double> animation1,
+                              Animation<double> animation2) {
+                            return LoginPage();
+                          },
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ),
                       );
                     },
                     child: Text("네", style: TextStyle(fontSize: 20)),

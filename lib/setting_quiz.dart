@@ -37,6 +37,34 @@ class _SettingQuizPageState extends State<SettingQuizPage> {
   }
 }
 
+void correctDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: ((context) {
+        return AlertDialog(
+            title: Column(children: [
+              Text(
+                "정답!",
+                style: TextStyle(fontSize: 26),
+              ),
+            ]),
+            actions: <Widget>[
+              Container(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    "다음",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ]);
+      }));
+}
+
 void IncorrectDialog(BuildContext context, String answer) {
   showDialog(
       context: context,
@@ -99,7 +127,15 @@ void ExitDialog(BuildContext context) {
                         StopTimer();
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => MarketPage()),
+                          PageRouteBuilder(
+                            pageBuilder: (BuildContext context,
+                                Animation<double> animation1,
+                                Animation<double> animation2) {
+                              return MarketPage();
+                            },
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ),
                         );
                       },
                       child: Text(
@@ -131,10 +167,11 @@ int GetHeart() {
 }
 
 void Success(BuildContext context) {
-  ScaffoldMessenger.of(context).clearSnackBars();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    content: Text("정답입니다!"),
-  ));
+  // ScaffoldMessenger.of(context).clearSnackBars();
+  // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //   content: Text("정답입니다!"),
+  // ));
+  correctDialog(context);
 }
 
 void Failed(BuildContext context, String answer) {
@@ -156,25 +193,46 @@ int GetQuizTime() {
 
 void EndGame(BuildContext context) {
   StopTimer();
-  Navigator.push(
+  Navigator.pushReplacement(
     context,
-    MaterialPageRoute(builder: (context) => ResultPage()),
+    PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation1,
+          Animation<double> animation2) {
+        return ResultPage();
+      },
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+    ),
   );
 }
 
 void TimeOver(BuildContext context) {
   StopTimer();
-  Navigator.push(
+  Navigator.pushReplacement(
     context,
-    MaterialPageRoute(builder: (context) => ResultPage()),
+    PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation1,
+          Animation<double> animation2) {
+        return ResultPage();
+      },
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+    ),
   );
 }
 
 void HeartOver(BuildContext context) {
   StopTimer();
-  Navigator.push(
+  Navigator.pushReplacement(
     context,
-    MaterialPageRoute(builder: (context) => ResultPage()),
+    PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation<double> animation1,
+          Animation<double> animation2) {
+        return ResultPage();
+      },
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+    ),
   );
 }
 

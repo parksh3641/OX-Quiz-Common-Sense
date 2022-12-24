@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,6 +17,9 @@ import 'dart:math';
 import 'login_page.dart';
 import 'main.dart';
 
+late AssetsAudioPlayer _success = AssetsAudioPlayer.newPlayer();
+late AssetsAudioPlayer _fail = AssetsAudioPlayer.newPlayer();
+
 int index = 0;
 int score = 0;
 int heart = 0;
@@ -31,12 +35,12 @@ List<int> numberList = [];
 
 List<String> dataList = [
   "불로장생을 꿈꿔 전 세계를 뒤져 불로초를 찾았던 왕의 이름은?",
-  "평창동계올림픽이 열렸던 해는 몇 년도인가요?",
+  "평창 동계올림픽이 열렸던 해는 몇 년도인가요?",
   "제주도는 삼다도라고 불리기도 하는데 삼다에 해당되는 것은?",
   "국보 1호였던 문화재의 이름은?",
   "우리나라 최초의 한글 소설로 전해지는 이 고전소설의 이름은?",
   "물건을 구입하거나, 각종 서비스를 제공받을 때 그 가격에 일정비율 붙게 하는 세금은?",
-  "e-mail의 e는 무엇의 약자일까?",
+  "e-mail의 e는 무엇의 약자일까요?",
   "지구 온난화의 주범이자 소가 내뿜는 가스는?",
   "우리 몸에 필요한 3대 영양소가 아닌것은?",
   "세계 최초로 달에 착륙한 사람은?",
@@ -52,7 +56,13 @@ List<String> dataList = [
   "대한민국에서 가장 큰 섬은?",
   "글피는 며칠 후를 나타낸 말일까?",
   "화력발전에서 가장 많이 사용되는 연료는 무엇일까?",
-  "소리의 측정 단위는 무엇일까?"
+  "소리의 측정 단위는 무엇일까?",
+  "한때 브라질을 식민지로 삼았던 유럽 국가는?",
+  "다음 중 빌보드 뮤직 어워드 상을 받은 그룹은?",
+  "트로이온스는 무엇을 측정하는 단위일까요?",
+  "악어가 눈물을 흘리는 이유는?",
+  "다음 중 3개의 심장과 파란색 피를 가진 동물은?",
+  "가난하고 병든 인도 사람들을 위해 헌신/봉사하며 산 여성은?"
 ];
 
 List<String> answerList1 = [
@@ -78,7 +88,13 @@ List<String> answerList1 = [
   "독도",
   "2일",
   "석유",
-  "dB(데시벨)"
+  "dB(데시벨)",
+  "몰도바",
+  "빅톤",
+  "귀금속",
+  "너무 행복해서",
+  "연어",
+  "마리 퀴리"
 ];
 List<String> answerList2 = [
   "혜문왕",
@@ -103,7 +119,13 @@ List<String> answerList2 = [
   "울릉도",
   "5일",
   "석탄",
-  "yd(야드)"
+  "yd(야드)",
+  "포르투갈",
+  "엑소",
+  "아기",
+  "눈이 건조해져 상하지 않게 하기 위해",
+  "문어",
+  "안네 프랑크"
 ];
 List<String> answerList3 = [
   "효문왕",
@@ -128,7 +150,13 @@ List<String> answerList3 = [
   "제주도",
   "3일",
   "LPG",
-  "ft(피트)"
+  "ft(피트)",
+  "모나코",
+  "방탄소년단",
+  "과일",
+  "먹이를 놓치고 속상해서",
+  "해마",
+  "마더 테레사"
 ];
 
 List<String> answer = [
@@ -154,7 +182,13 @@ List<String> answer = [
   "제주도",
   "3일",
   "석탄",
-  "dB(데시벨)"
+  "dB(데시벨)",
+  "포르투갈",
+  "방탄소년단",
+  "귀금속",
+  "눈이 건조해져 상하지 않게 하기 위해",
+  "문어",
+  "마더 테레사"
 ];
 
 class Quiz1 extends StatefulWidget {
@@ -168,6 +202,20 @@ class _Quiz1State extends State<Quiz1> {
   @override
   void initState() {
     super.initState();
+
+    _success.open(
+      Audio("assets/audios/Success.mp3"),
+      loopMode: LoopMode.none,
+      autoStart: false,
+      showNotification: false,
+    );
+
+    _fail.open(
+      Audio("assets/audios/Fail.wav"),
+      loopMode: LoopMode.none,
+      autoStart: false,
+      showNotification: false,
+    );
 
     numberList.clear();
     CreateUnDuplicateRandom(dataList.length);
@@ -248,7 +296,7 @@ class _Quiz1State extends State<Quiz1> {
                 onPressed: () {
                   ExitDialog(context);
                 },
-                icon: Icon(Icons.dangerous),
+                icon: Icon(Icons.cancel),
               ),
             ],
           ),
@@ -270,7 +318,7 @@ class _Quiz1State extends State<Quiz1> {
                 ),
                 Text(
                   "$index / 15 번째 문제",
-                  style: TextStyle(color: Colors.black, fontSize: 36),
+                  style: TextStyle(color: Colors.black, fontSize: 30),
                 ),
                 SizedBox(
                   height: 10,
@@ -307,7 +355,9 @@ class _Quiz1State extends State<Quiz1> {
                             answer[numberList[index - 1]]) {
                           Success(context);
                           score++;
+                          PlaySuccess();
                         } else {
+                          PlayFail();
                           Failed(context, answer[numberList[index - 1]]);
                           MinusHeart(context);
                         }
@@ -315,6 +365,7 @@ class _Quiz1State extends State<Quiz1> {
                       });
                     },
                     child: Text(
+                      textAlign: TextAlign.center,
                       answerList1[numberList[index - 1]],
                       style: TextStyle(
                           fontSize: 22,
@@ -338,7 +389,9 @@ class _Quiz1State extends State<Quiz1> {
                             answer[numberList[index - 1]]) {
                           Success(context);
                           score++;
+                          PlaySuccess();
                         } else {
+                          PlayFail();
                           Failed(context, answer[numberList[index - 1]]);
                           MinusHeart(context);
                         }
@@ -347,6 +400,7 @@ class _Quiz1State extends State<Quiz1> {
                       });
                     },
                     child: Text(
+                      textAlign: TextAlign.center,
                       answerList2[numberList[index - 1]],
                       style: TextStyle(
                           fontSize: 22,
@@ -370,7 +424,9 @@ class _Quiz1State extends State<Quiz1> {
                             answer[numberList[index - 1]]) {
                           Success(context);
                           score++;
+                          PlaySuccess();
                         } else {
+                          PlayFail();
                           Failed(context, answer[numberList[index - 1]]);
                           MinusHeart(context);
                         }
@@ -379,6 +435,7 @@ class _Quiz1State extends State<Quiz1> {
                       });
                     },
                     child: Text(
+                      textAlign: TextAlign.center,
                       answerList3[numberList[index - 1]],
                       style: TextStyle(
                           fontSize: 22,
@@ -443,4 +500,14 @@ void SaveHighScore() {
   }
 
   prefs.setInt("Score", score);
+}
+
+void PlaySuccess() {
+  _success.stop();
+  _success.play();
+}
+
+void PlayFail() {
+  _fail.stop();
+  _fail.play();
 }

@@ -115,8 +115,15 @@ class _LoginPageState extends State<LoginPage> {
                                   // HomePage로 이동
                                   Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MarketPage()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return MarketPage();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                 },
                                 onError: (err) {
@@ -199,10 +206,18 @@ class _LoginPageState extends State<LoginPage> {
                                   content: Text("게스트 로그인 성공"),
                                 ));
                                 prefs.setString("LoginType", "Guest");
+                                // ignore: use_build_context_synchronously
                                 Navigator.pushReplacement(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MarketPage()),
+                                  PageRouteBuilder(
+                                    pageBuilder: (BuildContext context,
+                                        Animation<double> animation1,
+                                        Animation<double> animation2) {
+                                      return MarketPage();
+                                    },
+                                    transitionDuration: Duration.zero,
+                                    reverseTransitionDuration: Duration.zero,
+                                  ),
                                 );
                               }
                             },
@@ -219,8 +234,14 @@ class _LoginPageState extends State<LoginPage> {
                               primary: (!ios) ? primaryColor : Colors.black,
                             ),
                             icon: (!ios)
-                                ? ImageIcon(AssetImage("images/Google.png"))
-                                : ImageIcon(AssetImage("images/Apple.png")),
+                                ? ImageIcon(
+                                    AssetImage("images/Google.png"),
+                                    color: Colors.white,
+                                  )
+                                : ImageIcon(
+                                    AssetImage("images/Apple.png"),
+                                    color: Colors.white,
+                                  ),
                             label: (!ios)
                                 ? Text(
                                     "구글 로그인",
@@ -244,10 +265,18 @@ class _LoginPageState extends State<LoginPage> {
                                     content: Text("구글 로그인 성공"),
                                   ));
                                   prefs.setString("LoginType", "Google");
+                                  // ignore: use_build_context_synchronously
                                   Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MarketPage()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return MarketPage();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                 }
                               } else {
@@ -259,10 +288,18 @@ class _LoginPageState extends State<LoginPage> {
                                     content: Text("애플 로그인 성공"),
                                   ));
                                   prefs.setString("LoginType", "Apple");
+                                  // ignore: use_build_context_synchronously
                                   Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => MarketPage()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return MarketPage();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                 }
                               }

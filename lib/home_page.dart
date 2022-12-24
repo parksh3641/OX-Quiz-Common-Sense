@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:gosuoflife/account.dart';
 import 'package:gosuoflife/auth_service.dart';
 import 'package:gosuoflife/login_page.dart';
 import 'package:gosuoflife/market_page.dart';
@@ -11,6 +14,8 @@ import 'package:gosuoflife/quiz3.dart';
 import 'package:gosuoflife/quiz4.dart';
 import 'package:gosuoflife/quiz5.dart';
 import 'package:gosuoflife/quiz6.dart';
+import 'package:gosuoflife/quiz7.dart';
+import 'package:gosuoflife/quiz8.dart';
 import 'package:gosuoflife/ranking_page.dart';
 import 'package:gosuoflife/setting_page.dart';
 import 'package:provider/provider.dart';
@@ -51,35 +56,51 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  List<Map<String, dynamic>> dataList = [
+    {
+      "title": "상식 퀴즈",
+      "imgUrl":
+          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+    },
+    {
+      "title": "사자성어 퀴즈",
+      "imgUrl":
+          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+    },
+    {
+      "title": "수도 퀴즈",
+      "imgUrl":
+          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+    },
+    {
+      "title": "OX 퀴즈",
+      "imgUrl":
+          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+    },
+    {
+      "title": "초성 퀴즈 [영화]",
+      "imgUrl":
+          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+    },
+    {
+      "title": "초성 퀴즈 [동물]",
+      "imgUrl":
+          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+    },
+    {
+      "title": "신조어 퀴즈",
+      "imgUrl":
+          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+    },
+    // {
+    //   "title": "MBTI 퀴즈",
+    //   "imgUrl": "https://picsum.photos/200?image=" +
+    //       Random().nextInt(300).toString(),
+    // },
+  ];
+
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> dataList = [
-      {
-        "title": "상식 퀴즈",
-        "imgUrl": "https://picsum.photos/200?image=10",
-      },
-      {
-        "title": "사자성어 퀴즈",
-        "imgUrl": "https://picsum.photos/250?image=20",
-      },
-      {
-        "title": "수도 퀴즈",
-        "imgUrl": "https://picsum.photos/250?image=30",
-      },
-      {
-        "title": "OX 퀴즈",
-        "imgUrl": "https://picsum.photos/250?image=40",
-      },
-      {
-        "title": "초성 퀴즈 [영화]",
-        "imgUrl": "https://picsum.photos/250?image=50",
-      },
-      {
-        "title": "초성 퀴즈 [동물]",
-        "imgUrl": "https://picsum.photos/250?image=60",
-      },
-    ];
-
     List<int> quizScoreEasy = [];
     List<int> quizScoreNormal = [];
     List<int> quizScoreHard = [];
@@ -109,12 +130,25 @@ class _HomePageState extends State<HomePage> {
                 style: TextStyle(color: Colors.black),
               ),
             ),
-            // actions: [
-            //   IconButton(
-            //     icon: Icon(Icons.more_horiz, color: Colors.black),
-            //     onPressed: () {},
-            //   ),
-            // ],
+            actions: [
+              IconButton(
+                icon: Icon(Icons.face, color: Colors.black),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (BuildContext context,
+                          Animation<double> animation1,
+                          Animation<double> animation2) {
+                        return AccountPage();
+                      },
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                },
+              ),
+            ],
 
             /// Tip : AppBar 하단에 TabBar를 만들어 줍니다.
             bottom: TabBar(
@@ -197,45 +231,115 @@ class _HomePageState extends State<HomePage> {
                               prefs.setString("LevelType", "Easy");
                               switch (index) {
                                 case 0:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz1()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz1();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 1:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz2()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz2();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 2:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz3()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz3();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 3:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz4()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz4();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 4:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz5()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz5();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 5:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz6()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz6();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                  break;
+                                case 6:
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz7();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                  break;
+                                case 7:
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz8();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                               }
@@ -308,45 +412,115 @@ class _HomePageState extends State<HomePage> {
                               prefs.setString("LevelType", "Normal");
                               switch (index) {
                                 case 0:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz1()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz1();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 1:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz2()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz2();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 2:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz3()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz3();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 3:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz4()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz4();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 4:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz5()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz5();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 5:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz6()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz6();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                  break;
+                                case 6:
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz7();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                  break;
+                                case 7:
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz8();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                               }
@@ -419,45 +593,115 @@ class _HomePageState extends State<HomePage> {
                               prefs.setString("LevelType", "Hard");
                               switch (index) {
                                 case 0:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz1()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz1();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 1:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz2()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz2();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 2:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz3()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz3();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 3:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz4()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz4();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 4:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz5()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz5();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                                 case 5:
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Quiz6()),
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz6();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                  break;
+                                case 6:
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz7();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
+                                  );
+                                  break;
+                                case 7:
+                                  Navigator.pushReplacement(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (BuildContext context,
+                                          Animation<double> animation1,
+                                          Animation<double> animation2) {
+                                        return Quiz8();
+                                      },
+                                      transitionDuration: Duration.zero,
+                                      reverseTransitionDuration: Duration.zero,
+                                    ),
                                   );
                                   break;
                               }

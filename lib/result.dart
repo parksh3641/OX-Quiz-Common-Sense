@@ -59,7 +59,7 @@ class _ResultPageState extends State<ResultPage> {
                 child: Text(
                   "최종 점수 : $score / 15",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 36),
+                  style: TextStyle(fontSize: 30),
                 ),
               ),
               SizedBox(
@@ -67,6 +67,13 @@ class _ResultPageState extends State<ResultPage> {
               ),
               Text(
                 "코인 획득 +" + (10 * score).toString(),
+                style: TextStyle(fontSize: 22),
+              ),
+              SizedBox(
+                height: 40,
+              ),
+              Text(
+                "수고하셨습니다",
                 style: TextStyle(fontSize: 22),
               ),
               Container(
@@ -88,9 +95,17 @@ class _ResultPageState extends State<ResultPage> {
                         fontWeight: FontWeight.bold),
                   ),
                   onPressed: () {
-                    Navigator.push(
+                    Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => MarketPage()),
+                      PageRouteBuilder(
+                        pageBuilder: (BuildContext context,
+                            Animation<double> animation1,
+                            Animation<double> animation2) {
+                          return MarketPage();
+                        },
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
                     );
                   },
                 ),

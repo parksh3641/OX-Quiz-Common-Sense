@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,6 +16,9 @@ import 'dart:math';
 
 import 'login_page.dart';
 import 'main.dart';
+
+late AssetsAudioPlayer _success = AssetsAudioPlayer.newPlayer();
+late AssetsAudioPlayer _fail = AssetsAudioPlayer.newPlayer();
 
 int index = 0;
 int score = 0;
@@ -53,7 +57,31 @@ List<String> dataList = [
   "오ㄹㄴㄱㄹ",
   "반ㄷㄱㅅㄱ",
   "목ㄷㄹㄷㅁㅂ",
-  "시ㅂㄹㅇㅎㄹㅇ"
+  "시ㅂㄹㅇㅎㄹㅇ",
+  "ㅍㅂ",
+  "ㄱㄹㄴ",
+  "ㅊㅅㅁ",
+  "ㅊㅅ",
+  "ㅈㅂㄱㄹ",
+  "ㄲㅁㄱ",
+  "ㄲ",
+  "ㄲㅊ",
+  "ㅇㅊ",
+  "ㄷㅈ",
+  "ㅇㅅ",
+  "ㅋㅃㅅ",
+  "ㄱㄹ",
+  "ㅈㅅ",
+  "ㅅㅈ",
+  "ㅂㄱㄱ",
+  "ㄷㅅㄹ",
+  "ㅍㄷ",
+  "ㅌㄲ",
+  "ㄱㅅㄷㅊ",
+  "ㄴㄱㄹ",
+  "ㅋㅇㄹ",
+  "ㅇㅍㄹ",
+  "ㅈㄱㅇ"
 ];
 
 List<String> answer = [
@@ -78,7 +106,31 @@ List<String> answer = [
   "오리너구리",
   "반달가슴곰",
   "목도리도마뱀",
-  "시베리아호랑이"
+  "시베리아호랑이",
+  "표범",
+  "고라니",
+  "청설모",
+  "참새",
+  "직박구리",
+  "까마귀",
+  "꿩",
+  "까치",
+  "어치",
+  "돼지",
+  "염소",
+  "코뿔소",
+  "기린",
+  "젖소",
+  "사자",
+  "북극곰",
+  "독수리",
+  "판다",
+  "토끼",
+  "고슴도치",
+  "너구리",
+  "코알라",
+  "임팔라",
+  "재규어"
 ];
 
 class Quiz6 extends StatefulWidget {
@@ -92,6 +144,20 @@ class _Quiz6State extends State<Quiz6> {
   @override
   void initState() {
     super.initState();
+
+    _success.open(
+      Audio("assets/audios/Success.mp3"),
+      loopMode: LoopMode.none,
+      autoStart: false,
+      showNotification: false,
+    );
+
+    _fail.open(
+      Audio("assets/audios/Fail.wav"),
+      loopMode: LoopMode.none,
+      autoStart: false,
+      showNotification: false,
+    );
 
     numberList.clear();
     CreateUnDuplicateRandom(dataList.length);
@@ -172,7 +238,7 @@ class _Quiz6State extends State<Quiz6> {
                 onPressed: () {
                   ExitDialog(context);
                 },
-                icon: Icon(Icons.dangerous),
+                icon: Icon(Icons.cancel),
               ),
             ],
           ),
@@ -197,7 +263,7 @@ class _Quiz6State extends State<Quiz6> {
                       ),
                       Text(
                         "$index / 15 번째 문제",
-                        style: TextStyle(color: Colors.black, fontSize: 36),
+                        style: TextStyle(color: Colors.black, fontSize: 30),
                       ),
                       SizedBox(
                         height: 10,
@@ -232,7 +298,9 @@ class _Quiz6State extends State<Quiz6> {
                           if (text == answer[numberList[index - 1]]) {
                             Success(context);
                             score++;
+                            PlaySuccess();
                           } else {
+                            PlayFail();
                             Failed(context, answer[numberList[index - 1]]);
                             MinusHeart(context);
                           }
@@ -290,4 +358,14 @@ void SaveHighScore() {
   }
 
   prefs.setInt("Score", score);
+}
+
+void PlaySuccess() {
+  _success.stop();
+  _success.play();
+}
+
+void PlayFail() {
+  _fail.stop();
+  _fail.play();
 }

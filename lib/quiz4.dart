@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -15,6 +16,9 @@ import 'dart:math';
 
 import 'login_page.dart';
 import 'main.dart';
+
+late AssetsAudioPlayer _success = AssetsAudioPlayer.newPlayer();
+late AssetsAudioPlayer _fail = AssetsAudioPlayer.newPlayer();
 
 int index = 0;
 int score = 0;
@@ -54,7 +58,29 @@ List<String> dataList = [
   "사람의 5가지 (시각, 후각, 미각, 청각, 촉각) 충에서 가장 먼저 나빠지는 감각기관은 시각이다",
   "물고기도 기침을 한다",
   "사슴뿔은 매년 빠졌다 다시 난다",
-  "사람의 땀은 산성이다"
+  "사람의 땀은 산성이다",
+  "색소폰은 그 이름이 최초의 연주자 이름으로부터 유래된 것이다",
+  "로댕의 생각하는 사람은 오른손으로 턱을 받치고 있다",
+  "고대 원시인들의 가장 큰 적은 공룡이었다",
+  "남자와 여자의 목소리 중 멀리 들리는 것은 여자 목소리다",
+  "탱고의 고장은 '아르헨티나'다",
+  "빵은 순수한 우리말이다",
+  "북쪽을 가리키는 별은 북극성, 남쪽을 가리키는 별은 남십자성이다",
+  "난중일기는 이순신 장군이 전사하기 한달 전까지 기록되어있다",
+  "백설공주에 나오는 일곱 난쟁이의 직업은 광부였다",
+  "서울 마사회 과천 경마장 정문 앞의 말 동상은 숫말이다",
+  "버스의 무임 승차 나이는 6세 미만이다",
+  "BUS라는 단어는 미국에서 처음 사용하였다",
+  "꺼벙이란 꿩의 새끼를 말한다",
+  "가장 강한 독을 가진 개구리 1마리의 독으로 사람을 2000명 이상을 죽일 수 있다",
+  "머리를 자주 감으면 머리카락이 빠진다",
+  "닭도 왼발잡이, 오른발잡이가 있다",
+  "색맹도 색깔이 있는 꿈을 꿀 수가 있다",
+  "사마귀가 있는 사람과 키스를 하면 자신도 사마귀가 생긴다",
+  "개발에도 땀이 난다",
+  "새는 뒤로도 날 수 있다",
+  "남극을 갈 때도 비자가 필요하다",
+  "위가 없어도 사람은 살 수 있다"
 ];
 
 List<String> answer = [
@@ -83,6 +109,28 @@ List<String> answer = [
   "O",
   "O",
   "O",
+  "O",
+  "O",
+  "X",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "O",
+  "X",
+  "O",
+  "O",
+  "X",
+  "O",
+  "X",
+  "O",
+  "X",
+  "O",
+  "X",
+  "O"
 ];
 
 class Quiz4 extends StatefulWidget {
@@ -96,6 +144,20 @@ class _Quiz4State extends State<Quiz4> {
   @override
   void initState() {
     super.initState();
+
+    _success.open(
+      Audio("assets/audios/Success.mp3"),
+      loopMode: LoopMode.none,
+      autoStart: false,
+      showNotification: false,
+    );
+
+    _fail.open(
+      Audio("assets/audios/Fail.wav"),
+      loopMode: LoopMode.none,
+      autoStart: false,
+      showNotification: false,
+    );
 
     numberList.clear();
     CreateUnDuplicateRandom(dataList.length);
@@ -176,7 +238,7 @@ class _Quiz4State extends State<Quiz4> {
                 onPressed: () {
                   ExitDialog(context);
                 },
-                icon: Icon(Icons.dangerous),
+                icon: Icon(Icons.cancel),
               ),
             ],
           ),
@@ -197,7 +259,7 @@ class _Quiz4State extends State<Quiz4> {
               ),
               Text(
                 "$index / 15 번째 문제",
-                style: TextStyle(color: Colors.black, fontSize: 36),
+                style: TextStyle(color: Colors.black, fontSize: 30),
               ),
               SizedBox(
                 height: 10,
@@ -233,7 +295,9 @@ class _Quiz4State extends State<Quiz4> {
                       if ("O" == answer[numberList[index - 1]]) {
                         Success(context);
                         score++;
+                        PlaySuccess();
                       } else {
+                        PlayFail();
                         Failed(context, answer[numberList[index - 1]]);
                         MinusHeart(context);
                       }
@@ -263,7 +327,9 @@ class _Quiz4State extends State<Quiz4> {
                       if ("X" == answer[numberList[index - 1]]) {
                         Success(context);
                         score++;
+                        PlaySuccess();
                       } else {
+                        PlayFail();
                         Failed(context, answer[numberList[index - 1]]);
                         MinusHeart(context);
                       }
@@ -328,4 +394,14 @@ void SaveHighScore() {
   }
 
   prefs.setInt("Score", score);
+}
+
+void PlaySuccess() {
+  _success.stop();
+  _success.play();
+}
+
+void PlayFail() {
+  _fail.stop();
+  _fail.play();
 }
