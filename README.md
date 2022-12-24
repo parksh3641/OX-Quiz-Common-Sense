@@ -8,6 +8,6 @@
 
 **[구글 플레이 스토어 다운 받기](https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US)**
 
-**[앱 스토어 다운 받기]()**
+**[앱 스토어 다운 받기](https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EC%9D%98-%EA%B3%A0%EC%88%98/id1660371017)**
 
 -------------
