@@ -22,11 +22,11 @@ class _ShopPageState extends State<ShopPage> {
 
   List<Map<String, dynamic>> dataList = [
     {
-      "title": "추가 목숨 +1 (최대 5)",
+      "title": "추가 목숨 +1",
       "imgUrl": 'images/Heart.png',
     },
     {
-      "title": "추가 시간 +10초 (최대 400초)",
+      "title": "추가 시간 +10초",
       "imgUrl": 'images/Timer.png',
     },
   ];
@@ -38,8 +38,9 @@ class _ShopPageState extends State<ShopPage> {
         appBar: AppBar(
           centerTitle: true,
           automaticallyImplyLeading: false,
+          elevation: 0,
           title: Text(
-            "현재 보유 코인 : " + money.toString(),
+            "보유 코인 : " + money.toString(),
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Colors.white,
@@ -139,7 +140,7 @@ void BuyProductDialog(BuildContext context, String title, int index) {
                         switch (index) {
                           case 0:
                             int heart = prefs.getInt("Heart") ?? 0;
-                            if (heart + 1 > 5) {
+                            if (heart + 1 > 10) {
                               MaxBuy(context);
                               return;
                             } else {
@@ -149,7 +150,7 @@ void BuyProductDialog(BuildContext context, String title, int index) {
                             break;
                           case 1:
                             int quizTime = prefs.getInt("QuizTime") ?? 0;
-                            if (quizTime + 10 > 100) {
+                            if (quizTime + 10 > 300) {
                               MaxBuy(context);
                               return;
                             } else {

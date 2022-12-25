@@ -287,6 +287,7 @@ class _Quiz1State extends State<Quiz1> {
           appBar: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             title: Text(
               "상식 퀴즈 (" + levelStr + ")",
               style: TextStyle(color: Colors.black),

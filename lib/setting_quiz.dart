@@ -175,7 +175,7 @@ void Success(BuildContext context) {
 }
 
 void Failed(BuildContext context, String answer) {
-  if (vibration) Vibration.vibrate(duration: 1000);
+  if (vibration) Vibration.vibrate(duration: 500);
   IncorrectDialog(context, answer);
 }
 

@@ -242,6 +242,7 @@ class _Quiz7State extends State<Quiz7> {
           appBar: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             title: Text(
               "신조어 퀴즈 (" + levelStr + ")",
               style: TextStyle(color: Colors.black),

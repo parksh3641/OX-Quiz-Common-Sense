@@ -219,6 +219,7 @@ class _Quiz5State extends State<Quiz5> {
           appBar: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             title: Text(
               "초성 퀴즈 [영화] (" + levelStr + ")",
               style: TextStyle(color: Colors.black),

@@ -147,6 +147,7 @@ class _Quiz8State extends State<Quiz8> {
           appBar: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             title: Text(
               "MBTI 퀴즈 (" + levelStr + ")",
               style: TextStyle(color: Colors.black),

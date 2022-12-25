@@ -50,10 +50,10 @@ class _MarketPageState extends State<MarketPage> {
               currentIndex = newIndex;
             });
           },
-          selectedItemColor: Colors.green, // 선택된 아이콘 색상
+          selectedItemColor: primaryColor, // 선택된 아이콘 색상
           unselectedItemColor: Colors.grey, // 선택되지 않은 아이콘 색상
-          showSelectedLabels: false, // 선택된 항목 label 숨기기
-          showUnselectedLabels: false, // 선택되지 않은 항목 label 숨기기
+          showSelectedLabels: true, // 선택된 항목 label 숨기기
+          showUnselectedLabels: true, // 선택되지 않은 항목 label 숨기기
           type: BottomNavigationBarType.fixed, // 선택시 아이콘 움직이지 않기
           backgroundColor: Colors.white.withOpacity(0.8),
           items: [
@@ -67,7 +67,7 @@ class _MarketPageState extends State<MarketPage> {
             // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.store),
-              label: "",
+              label: "상점",
             ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.star),
@@ -75,7 +75,7 @@ class _MarketPageState extends State<MarketPage> {
             // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: "",
+              label: "설정",
             ),
           ],
         ),

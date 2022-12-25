@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -25,6 +26,8 @@ import 'main.dart';
 String loginType = "";
 String imagePath = "";
 String levelType = "";
+
+late AssetsAudioPlayer _click = AssetsAudioPlayer.newPlayer();
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -54,6 +57,13 @@ class _HomePageState extends State<HomePage> {
         imagePath = "images/Guest.png";
         break;
     }
+
+    _click.open(
+      Audio("assets/audios/Click.wav"),
+      loopMode: LoopMode.none,
+      autoStart: false,
+      showNotification: false,
+    );
   }
 
   List<Map<String, dynamic>> dataList = [
@@ -134,6 +144,7 @@ class _HomePageState extends State<HomePage> {
               IconButton(
                 icon: Icon(Icons.face, color: Colors.black),
                 onPressed: () {
+                  _click.play();
                   Navigator.pushReplacement(
                     context,
                     PageRouteBuilder(
@@ -228,6 +239,7 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
+                              _click.play();
                               prefs.setString("LevelType", "Easy");
                               switch (index) {
                                 case 0:
@@ -409,6 +421,7 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
+                              _click.play();
                               prefs.setString("LevelType", "Normal");
                               switch (index) {
                                 case 0:
@@ -590,6 +603,7 @@ class _HomePageState extends State<HomePage> {
                                   fontWeight: FontWeight.bold),
                             ),
                             onPressed: () {
+                              _click.play();
                               prefs.setString("LevelType", "Hard");
                               switch (index) {
                                 case 0:

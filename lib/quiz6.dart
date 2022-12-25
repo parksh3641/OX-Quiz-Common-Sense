@@ -229,6 +229,7 @@ class _Quiz6State extends State<Quiz6> {
           appBar: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             title: Text(
               "초성 퀴즈 [동물] (" + levelStr + ")",
               style: TextStyle(color: Colors.black),

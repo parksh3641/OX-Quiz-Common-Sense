@@ -37,6 +37,7 @@ class _AccountPageState extends State<AccountPage> {
           appBar: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
+            elevation: 0,
             backgroundColor: Colors.white,
             title: Transform(
               transform: Matrix4.translationValues(0, 0, 0),
@@ -65,7 +66,7 @@ class _AccountPageState extends State<AccountPage> {
           ),
           body: Column(children: [
             DrawerHeader(
-              margin: EdgeInsets.all(8),
+              margin: EdgeInsets.all(16),
               decoration: BoxDecoration(color: Colors.white),
               child: SizedBox(
                 width: double.infinity,

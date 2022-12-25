@@ -14,7 +14,6 @@ import 'login_page.dart';
 import 'main.dart';
 
 late bool vibration = prefs.getBool(("Vibration")) ?? true;
-late bool darkMode = prefs.getBool(("DarkMode")) ?? false;
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);

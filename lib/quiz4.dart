@@ -229,6 +229,7 @@ class _Quiz4State extends State<Quiz4> {
           appBar: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             title: Text(
               "OX 퀴즈 (" + levelStr + ")",
               style: TextStyle(color: Colors.black),
