@@ -272,7 +272,10 @@ class _Quiz3State extends State<Quiz3> {
                 onPressed: () {
                   ExitDialog(context);
                 },
-                icon: Icon(Icons.cancel),
+                icon: Icon(
+                  Icons.cancel,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),

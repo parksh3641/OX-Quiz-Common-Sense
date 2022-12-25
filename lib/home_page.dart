@@ -133,6 +133,7 @@ class _HomePageState extends State<HomePage> {
             centerTitle: true,
             automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
+            elevation: 0,
             title: Transform(
               transform: Matrix4.translationValues(0, 0, 0),
               child: Text(

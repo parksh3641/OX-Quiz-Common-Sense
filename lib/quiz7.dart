@@ -252,7 +252,10 @@ class _Quiz7State extends State<Quiz7> {
                 onPressed: () {
                   ExitDialog(context);
                 },
-                icon: Icon(Icons.cancel),
+                icon: Icon(
+                  Icons.cancel,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),

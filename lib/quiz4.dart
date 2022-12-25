@@ -239,7 +239,10 @@ class _Quiz4State extends State<Quiz4> {
                 onPressed: () {
                   ExitDialog(context);
                 },
-                icon: Icon(Icons.cancel),
+                icon: Icon(
+                  Icons.cancel,
+                  color: Colors.black,
+                ),
               ),
             ],
           ),
