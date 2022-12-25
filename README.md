@@ -2,7 +2,7 @@
 ### 개발 기간 : 2022/12 ~
 ### 사용된 툴 : VSCode, Android Stuido
 ### 작성된 언어 : Dart
-### 출시된 기기 : Android, IOS(출시 예정)
+### 출시된 기기 : Android, IOS, Web
 -------------
 **[웹으로 열기](https://touch-party-67378457.firebaseapp.com/#/)**
 
