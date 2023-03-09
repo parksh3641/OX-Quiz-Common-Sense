@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:gosuoflife/main.dart';
-import 'package:gosuoflife/ranking_page.dart';
 import 'package:gosuoflife/setting_page.dart';
 import 'package:gosuoflife/shop_page.dart';
 import 'package:gosuoflife/stopwatch.dart';
+import 'package:gosuoflife/todolist.dart';
 
 import 'home_page.dart';
 
@@ -39,7 +37,8 @@ class _MarketPageState extends State<MarketPage> {
           children: [
             HomePage(),
             ShopPage(),
-            //RankingPage(),
+            StopWatchPage(),
+            ToDoListPage(),
             SettingPage(),
           ],
         ),
@@ -61,18 +60,18 @@ class _MarketPageState extends State<MarketPage> {
               icon: Icon(Icons.home),
               label: "홈",
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.credit_card_rounded),
-            //   label: "",
-            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.store),
               label: "상점",
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.star),
-            //   label: "",
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.timer),
+              label: "스톱워치",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list),
+              label: "할일",
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
               label: "설정",

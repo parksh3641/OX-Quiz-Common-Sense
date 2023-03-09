@@ -1,7 +1,5 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:gosuoflife/main.dart';
 
 class StopWatchPage extends StatefulWidget {
   const StopWatchPage({Key? key}) : super(key: key);
@@ -67,16 +65,25 @@ class _StopWatchPageState extends State<StopWatchPage> {
                   children: <Widget>[
                     Text(
                       '$secondCount',
-                      style: TextStyle(fontSize: 50.0),
+                      style: TextStyle(fontSize: 70),
                     ),
-                    Text('$hundredthCount'),
+                    Text(
+                      '.' + '$hundredthCount',
+                      style: TextStyle(fontSize: 30),
+                    ),
                   ],
                 ),
                 Container(
-                  width: 100,
-                  height: 200,
+                  width: double.infinity,
+                  height: 450,
                   child: ListView(
-                    children: _lapTimeList.map((time) => Text(time)).toList(),
+                    children: _lapTimeList
+                        .map((time) => Text(
+                              time,
+                              style: TextStyle(fontSize: 30),
+                              textAlign: TextAlign.center,
+                            ))
+                        .toList(),
                   ),
                 )
               ],
@@ -87,13 +94,13 @@ class _StopWatchPageState extends State<StopWatchPage> {
               child: FloatingActionButton(
                 backgroundColor: Colors.deepOrange,
                 onPressed: _clickResetButton,
-                child: Icon(Icons.rotate_left),
+                child: Icon(Icons.restart_alt),
               ),
             ),
             Positioned(
               right: 10,
               bottom: 10,
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   setState(() {
                     _recordLapTime('$secondCount.$hundredthCount');
@@ -140,6 +147,6 @@ class _StopWatchPageState extends State<StopWatchPage> {
   }
 
   void _recordLapTime(String time) {
-    _lapTimeList.insert(0, '${_lapTimeList.length + 1}등 $time');
+    _lapTimeList.insert(0, '${_lapTimeList.length + 1}등   $time');
   }
 }

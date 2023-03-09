@@ -203,6 +203,8 @@ class _Quiz1State extends State<Quiz1> {
   void initState() {
     super.initState();
 
+    _success.setVolume(0.7);
+
     _success.open(
       Audio("assets/audios/Success.mp3"),
       loopMode: LoopMode.none,
@@ -311,7 +313,14 @@ class _Quiz1State extends State<Quiz1> {
               children: [
                 Text(
                   ("♥" * heart),
-                  style: TextStyle(fontSize: 30, color: Colors.red),
+                  style: TextStyle(
+                    fontSize: 50,
+                    color: Colors.red,
+                    // foreground: Paint()
+                    //   ..style = PaintingStyle.stroke
+                    //   ..strokeWidth = 2.0
+                    //   ..color = Colors.red,
+                  ),
                 ),
                 Text(
                   "남은 시간 : " + _currentTick.toString(),
@@ -464,6 +473,9 @@ class _Quiz1State extends State<Quiz1> {
   // }
 
   void Initialize(BuildContext context) async {
+    _success.stop();
+    _fail.stop();
+
     if (index > maxQuiz - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
       SaveHighScore();

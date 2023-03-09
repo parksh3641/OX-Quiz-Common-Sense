@@ -145,6 +145,8 @@ class _Quiz4State extends State<Quiz4> {
   void initState() {
     super.initState();
 
+    _success.setVolume(0.7);
+
     _success.open(
       Audio("assets/audios/Success.mp3"),
       loopMode: LoopMode.none,
@@ -252,7 +254,7 @@ class _Quiz4State extends State<Quiz4> {
                 Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               Text(
                 ("♥" * heart),
-                style: TextStyle(fontSize: 30, color: Colors.red),
+                style: TextStyle(fontSize: 50, color: Colors.red),
               ),
               Text(
                 "남은 시간 : " + _currentTick.toString(),

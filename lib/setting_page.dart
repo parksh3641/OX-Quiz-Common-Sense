@@ -28,6 +28,7 @@ class _SettingPageState extends State<SettingPage> {
   @override
   void initState() {
     super.initState();
+
     getVersionInfo();
   }
 
@@ -121,8 +122,19 @@ class _SettingPageState extends State<SettingPage> {
                   leading: Icon(Icons.star),
                   title: Text('앱 평가하기'),
                   onPressed: ((context) {
-                    launchUrl(Uri.parse(
-                        'https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US'));
+                    try {
+                      if (Platform.isIOS) {
+                        launchUrl(
+                          Uri.parse(
+                              'https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EC%9D%98-%EA%B3%A0%EC%88%98/id1660371017'),
+                        );
+                      } else {
+                        launchUrl(
+                          Uri.parse(
+                              'https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US'),
+                        );
+                      }
+                    } catch (e) {}
                   }),
                 ),
                 SettingsTile.navigation(

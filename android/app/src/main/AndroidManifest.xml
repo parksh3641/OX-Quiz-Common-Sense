@@ -7,7 +7,7 @@
         </intent>
     </queries>
    <application
-        android:label="Gosu of Quiz"
+        android:label="@string/appname"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
