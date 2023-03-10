@@ -1,8 +1,8 @@
-# 퀴즈의 고수 
-### 개발 기간 : 2022/12 ~
+# OX 퀴즈 : 일반 상식
+### 개발 기간 : 2022/12 ~ 2023/03
 ### 사용된 툴 : VSCode, Android Stuido
 ### 작성된 언어 : Dart
-### 출시된 기기 : Android, IOS, Web
+### 출시된 플랫폼 : Android, IOS, Web
 -------------
 **[웹으로 열기](https://touch-party-67378457.firebaseapp.com/#/)**
 
