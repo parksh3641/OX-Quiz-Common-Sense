@@ -145,7 +145,7 @@ class _Quiz6State extends State<Quiz6> {
   void initState() {
     super.initState();
 
-    _success.setVolume(0.7);
+    _success.setVolume(0.4);
 
     _success.open(
       Audio("assets/audios/Success.mp3"),

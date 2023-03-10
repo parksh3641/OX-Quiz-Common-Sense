@@ -66,7 +66,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
                   height: 15,
                 ),
                 Container(
-                  child: Text("퀴즈의 고수",
+                  child: Text("OX 퀴즈 : 일반 상식",
                       style: TextStyle(fontSize: 36, color: Colors.black)),
                 ),
               ],

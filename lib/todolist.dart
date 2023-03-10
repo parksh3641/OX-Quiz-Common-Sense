@@ -26,6 +26,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
       appBar: AppBar(
         centerTitle: true,
         title: Text('할일 목록'),
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: <Widget>[

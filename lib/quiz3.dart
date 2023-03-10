@@ -178,7 +178,7 @@ class _Quiz3State extends State<Quiz3> {
   void initState() {
     super.initState();
 
-    _success.setVolume(0.7);
+    _success.setVolume(0.4);
 
     _success.open(
       Audio("assets/audios/Success.mp3"),
