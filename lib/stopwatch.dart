@@ -75,7 +75,7 @@ class _StopWatchPageState extends State<StopWatchPage> {
                 ),
                 Container(
                   width: double.infinity,
-                  height: 450,
+                  height: 300,
                   child: ListView(
                     children: _lapTimeList
                         .map((time) => Text(

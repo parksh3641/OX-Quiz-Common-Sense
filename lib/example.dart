@@ -1,33 +1,44 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
-class ExamplePage extends StatefulWidget {
-  const ExamplePage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<ExamplePage> createState() => _ExamplePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _ExamplePageState extends State<ExamplePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class _HomePageState extends State<HomePage> {
+  late DateTime _lastPressedAt;
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: ElevatedButton(
-        child: Text(
-          "스낵 바 열기",
+    return WillPopScope(
+      onWillPop: () async {
+        final now = DateTime.now();
+        if (now.difference(_lastPressedAt) > Duration(seconds: 2)) {
+          _lastPressedAt = now;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('한번 더 뒤로가기를 누를 시 종료됩니다'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Demo"),
         ),
-        onPressed: () {
-        },
+        body: Center(
+          child: Text(
+            '뒤로가기를 2초 안에 2번 누르면 종료됩니다',
+            style: TextStyle(fontSize: 20),
+          ),
+        ),
       ),
-    ));
+    );
   }
 }

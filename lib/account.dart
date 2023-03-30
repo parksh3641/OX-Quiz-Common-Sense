@@ -30,69 +30,67 @@ class _AccountPageState extends State<AccountPage> {
       number += prefs.getInt("QuizScoreNormal$i") ?? 0;
       number += prefs.getInt("QuizScoreHard$i") ?? 0;
     }
-    return SafeArea(
-      child: WillPopScope(
-        onWillPop: () async => false,
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            elevation: 0,
-            backgroundColor: Colors.white,
-            title: Transform(
-              transform: Matrix4.translationValues(0, 0, 0),
-              child: Text(
-                "프로필",
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (BuildContext context,
-                        Animation<double> animation1,
-                        Animation<double> animation2) {
-                      return MarketPage();
-                    },
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+          elevation: 0,
+          backgroundColor: Colors.white,
+          title: Transform(
+            transform: Matrix4.translationValues(0, 0, 0),
+            child: Text(
+              "프로필",
+              style: TextStyle(color: Colors.black),
             ),
           ),
-          body: Column(children: [
-            DrawerHeader(
-              margin: EdgeInsets.all(16),
-              decoration: BoxDecoration(color: Colors.white),
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 36,
-                      backgroundColor: Colors.black,
-                      child: Padding(
-                        padding: EdgeInsets.all(2),
-                        child: Image.asset('images/Guest.png'),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      "최고 점수 총합 : " + number.toString(),
-                      style: TextStyle(fontSize: 26),
-                    ),
-                  ],
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.black),
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (BuildContext context,
+                      Animation<double> animation1,
+                      Animation<double> animation2) {
+                    return MarketPage();
+                  },
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
                 ),
+              );
+            },
+          ),
+        ),
+        body: Column(children: [
+          DrawerHeader(
+            margin: EdgeInsets.all(16),
+            decoration: BoxDecoration(color: Colors.white),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  CircleAvatar(
+                    radius: 36,
+                    backgroundColor: Colors.black,
+                    child: Padding(
+                      padding: EdgeInsets.all(2),
+                      child: Image.asset('images/Guest.png'),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "최고 점수 총합 : " + number.toString(),
+                    style: TextStyle(fontSize: 22),
+                  ),
+                ],
               ),
             ),
-          ]),
-        ),
+          ),
+        ]),
       ),
     );
   }

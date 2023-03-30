@@ -313,14 +313,7 @@ class _Quiz1State extends State<Quiz1> {
               children: [
                 Text(
                   ("♥" * heart),
-                  style: TextStyle(
-                    fontSize: 50,
-                    color: Colors.red,
-                    // foreground: Paint()
-                    //   ..style = PaintingStyle.stroke
-                    //   ..strokeWidth = 2.0
-                    //   ..color = Colors.red,
-                  ),
+                  style: TextStyle(fontSize: 30, color: Colors.red),
                 ),
                 Text(
                   "남은 시간 : " + _currentTick.toString(),

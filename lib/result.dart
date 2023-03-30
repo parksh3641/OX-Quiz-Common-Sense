@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:gosuoflife/home_page.dart';
 import 'package:gosuoflife/main.dart';
 import 'package:gosuoflife/market_page.dart';
@@ -11,6 +14,9 @@ int money = 0;
 int score = 0;
 
 String shareText = "";
+String urlText = "";
+
+AdManagerInterstitialAd? _interstitialAd;
 
 class ResultPage extends StatefulWidget {
   ResultPage({Key? key}) : super(key: key);
@@ -22,11 +28,10 @@ class ResultPage extends StatefulWidget {
 class _ResultPageState extends State<ResultPage> {
   Future<void> share() async {
     await FlutterShare.share(
-        title: "퀴즈의 고수를 다운 받으세요!",
+        title: "OX 퀴즈 : 상식 문제를 다운받으세요!",
         text: shareText,
-        linkUrl:
-            'https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US',
-        chooserTitle: '퀴즈의 고수 공유하기');
+        linkUrl: urlText,
+        chooserTitle: 'OX 퀴즈 : 상식 문제 공유하기');
   }
 
   @override
@@ -38,6 +43,33 @@ class _ResultPageState extends State<ResultPage> {
     money = prefs.getInt("Money") ?? 0;
     money += (10 * score);
     prefs.setInt("Money", money);
+
+    if (Platform.isAndroid) {
+      urlText =
+          "https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US";
+    } else {
+      urlText =
+          "https://apps.apple.com/kr/app/ox-%ED%80%B4%EC%A6%88-%EC%9D%BC%EB%B0%98-%EC%83%81%EC%8B%9D/id1660371017";
+    }
+
+    loadAd();
+  }
+
+  void loadAd() {
+    AdManagerInterstitialAd.load(
+        adUnitId: Platform.isAndroid
+            ? 'ca-app-pub-6754544778509872/5259001239'
+            : 'ca-app-pub-6754544778509872/5472707939',
+        request: const AdManagerAdRequest(),
+        adLoadCallback: AdManagerInterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            debugPrint('$ad loaded.');
+            _interstitialAd = ad;
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            debugPrint('AdManagerInterstitialAd failed to load: $error');
+          },
+        ));
   }
 
   @override
@@ -59,7 +91,7 @@ class _ResultPageState extends State<ResultPage> {
                 Container(
                   width: double.infinity,
                   child: Text(
-                    "최종 점수 : $score / 15",
+                    "최고 점수 : $score/15",
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 30),
                   ),
@@ -97,6 +129,7 @@ class _ResultPageState extends State<ResultPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
+                      _interstitialAd?.show();
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
@@ -131,7 +164,7 @@ class _ResultPageState extends State<ResultPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      shareText = "최종 점수 : $score / 15 를 달성했어요!";
+                      shareText = "최고 점수 : $score/15 점을 달성했어요!";
                       share();
                     },
                   ),

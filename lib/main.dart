@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:gosuoflife/color_schemes.g.dart';
 import 'package:gosuoflife/home_page.dart';
 import 'package:gosuoflife/market_page.dart';
@@ -24,19 +25,9 @@ late RankService rankService;
 
 late Color primaryColor = Color.fromRGBO(60, 179, 113, 1);
 
-const Map<String, String> UNIT_ID = kReleaseMode
-    ? {
-        'ios': 'ca-app-pub-6754544778509872/9486325432',
-        'android': 'ca-app-pub-6754544778509872/5889861206',
-      }
-    : {
-        'ios': 'ca-app-pub-3940256099942544/2934735716',
-        'android': 'ca-app-pub-3940256099942544/6300978111',
-      };
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  //MobileAds.instance.initialize();
+  MobileAds.instance.initialize();
 
   prefs = await SharedPreferences.getInstance();
 

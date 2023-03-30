@@ -125,610 +125,652 @@ class _HomePageState extends State<HomePage> {
       quizScoreHard.add(prefs.getInt("QuizScoreHard$i") ?? 0);
     }
 
-    return DefaultTabController(
-      length: 3,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
-            elevation: 0,
-            title: Transform(
-              transform: Matrix4.translationValues(0, 0, 0),
-              child: Text(
-                "퀴즈 선택",
-                style: TextStyle(color: Colors.black),
+    late DateTime lastPressedAt;
+
+    return WillPopScope(
+      onWillPop: () async {
+        final now = DateTime.now();
+        if (now.difference(lastPressedAt) > Duration(seconds: 2)) {
+          lastPressedAt = now;
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('뒤로 버튼을 한번 더 누르시면 종료됩니다'),
+              duration: Duration(seconds: 2),
+            ),
+          );
+          return false;
+        }
+        return true;
+      },
+      child: DefaultTabController(
+        length: 3,
+        child: SafeArea(
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              automaticallyImplyLeading: false,
+              backgroundColor: Colors.white,
+              elevation: 0,
+              title: Transform(
+                transform: Matrix4.translationValues(0, 0, 0),
+                child: Text(
+                  "퀴즈 선택",
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.face, color: Colors.black),
+                  onPressed: () {
+                    _click.play();
+                    Navigator.pushReplacement(
+                      context,
+                      PageRouteBuilder(
+                        pageBuilder: (BuildContext context,
+                            Animation<double> animation1,
+                            Animation<double> animation2) {
+                          return AccountPage();
+                        },
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ),
+                    );
+                  },
+                ),
+              ],
+
+              /// Tip : AppBar 하단에 TabBar를 만들어 줍니다.
+              bottom: TabBar(
+                isScrollable: false,
+                indicatorColor: Colors.blue,
+                indicatorWeight: 4,
+                labelColor: Colors.black,
+                unselectedLabelColor: Colors.grey,
+                labelStyle: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                tabs: [
+                  Tab(text: "쉬움"),
+                  Tab(text: "보통"),
+                  Tab(text: "어려움"),
+                ],
               ),
             ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.face, color: Colors.black),
-                onPressed: () {
-                  _click.play();
-                  Navigator.pushReplacement(
-                    context,
-                    PageRouteBuilder(
-                      pageBuilder: (BuildContext context,
-                          Animation<double> animation1,
-                          Animation<double> animation2) {
-                        return AccountPage();
-                      },
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ),
-                  );
-                },
-              ),
-            ],
+            body: TabBarView(
+              children: [
+                /// 전체 메뉴
+                ListView.builder(
+                  itemCount: dataList.length,
+                  itemBuilder: (context, index) {
+                    final item = dataList[index % dataList.length];
+                    final title = item["title"] ?? "";
+                    final imgUrl = item["imgUrl"] ?? "";
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 21,
+                      ),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 52,
+                            // Tip : circleAvatar 배경에 맞춰서 동그랗게 이미지 넣는 방법
+                            backgroundImage: NetworkImage(imgUrl),
+                            backgroundColor: Colors.transparent,
+                          ),
+                          SizedBox(height: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                title + " (쉬움)",
+                                style: TextStyle(
+                                  fontSize: 21,
+                                  //fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                "최고 점수 : " + quizScoreEasy[index].toString(),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                                minimumSize: const Size(180, 50),
+                              ),
+                              child: Text(
+                                "문제 풀기",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                _click.play();
+                                prefs.setString("LevelType", "Easy");
+                                switch (index) {
+                                  case 0:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz1();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 1:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz2();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 2:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz3();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 3:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz4();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 4:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz5();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 5:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz6();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 6:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz7();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 7:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz8();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
 
-            /// Tip : AppBar 하단에 TabBar를 만들어 줍니다.
-            bottom: TabBar(
-              isScrollable: false,
-              indicatorColor: Colors.blue,
-              indicatorWeight: 4,
-              labelColor: Colors.black,
-              unselectedLabelColor: Colors.grey,
-              labelStyle: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-              tabs: [
-                Tab(text: "쉬움"),
-                Tab(text: "보통"),
-                Tab(text: "어려움"),
+                ListView.builder(
+                  itemCount: dataList.length,
+                  itemBuilder: (context, index) {
+                    final item = dataList[index % dataList.length];
+                    final title = item["title"] ?? "";
+                    final imgUrl = item["imgUrl"] ?? "";
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 21,
+                      ),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 52,
+                            // Tip : circleAvatar 배경에 맞춰서 동그랗게 이미지 넣는 방법
+                            backgroundImage: NetworkImage(imgUrl),
+                            backgroundColor: Colors.transparent,
+                          ),
+                          SizedBox(height: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                title + " (보통)",
+                                style: TextStyle(
+                                  fontSize: 21,
+                                  //fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                "최고 점수 : " + quizScoreNormal[index].toString(),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                                minimumSize: const Size(180, 50),
+                              ),
+                              child: Text(
+                                "문제 풀기",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                _click.play();
+                                prefs.setString("LevelType", "Normal");
+                                switch (index) {
+                                  case 0:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz1();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 1:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz2();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 2:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz3();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 3:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz4();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 4:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz5();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 5:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz6();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 6:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz7();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 7:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz8();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+
+                ListView.builder(
+                  itemCount: dataList.length,
+                  itemBuilder: (context, index) {
+                    final item = dataList[index % dataList.length];
+                    final title = item["title"] ?? "";
+                    final imgUrl = item["imgUrl"] ?? "";
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 16,
+                        horizontal: 21,
+                      ),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: 52,
+                            // Tip : circleAvatar 배경에 맞춰서 동그랗게 이미지 넣는 방법
+                            backgroundImage: NetworkImage(imgUrl),
+                            backgroundColor: Colors.transparent,
+                          ),
+                          SizedBox(height: 16),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                title + " (어려움)",
+                                style: TextStyle(
+                                  fontSize: 21,
+                                  //fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 6),
+                              Text(
+                                "최고 점수 : " + quizScoreHard[index].toString(),
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: primaryColor,
+                                minimumSize: const Size(180, 50),
+                              ),
+                              child: Text(
+                                "문제 풀기",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                _click.play();
+                                prefs.setString("LevelType", "Hard");
+                                switch (index) {
+                                  case 0:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz1();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 1:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz2();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 2:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz3();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 3:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz4();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 4:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz5();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 5:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz6();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 6:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz7();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                  case 7:
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (BuildContext context,
+                                            Animation<double> animation1,
+                                            Animation<double> animation2) {
+                                          return Quiz8();
+                                        },
+                                        transitionDuration: Duration.zero,
+                                        reverseTransitionDuration:
+                                            Duration.zero,
+                                      ),
+                                    );
+                                    break;
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ],
             ),
-          ),
-          body: TabBarView(
-            children: [
-              /// 전체 메뉴
-              ListView.builder(
-                itemCount: dataList.length,
-                itemBuilder: (context, index) {
-                  final item = dataList[index % dataList.length];
-                  final title = item["title"] ?? "";
-                  final imgUrl = item["imgUrl"] ?? "";
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 21,
-                    ),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 52,
-                          // Tip : circleAvatar 배경에 맞춰서 동그랗게 이미지 넣는 방법
-                          backgroundImage: NetworkImage(imgUrl),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        SizedBox(height: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              title + " (쉬움)",
-                              style: TextStyle(
-                                fontSize: 21,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                            Text(
-                              "최고 점수 : " + quizScoreEasy[index].toString(),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: primaryColor,
-                              minimumSize: const Size(180, 50),
-                            ),
-                            child: Text(
-                              "문제 풀기",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              _click.play();
-                              prefs.setString("LevelType", "Easy");
-                              switch (index) {
-                                case 0:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz1();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 1:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz2();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 2:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz3();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 3:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz4();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 4:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz5();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 5:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz6();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 6:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz7();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 7:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz8();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-
-              ListView.builder(
-                itemCount: dataList.length,
-                itemBuilder: (context, index) {
-                  final item = dataList[index % dataList.length];
-                  final title = item["title"] ?? "";
-                  final imgUrl = item["imgUrl"] ?? "";
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 21,
-                    ),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 52,
-                          // Tip : circleAvatar 배경에 맞춰서 동그랗게 이미지 넣는 방법
-                          backgroundImage: NetworkImage(imgUrl),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        SizedBox(height: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              title + " (보통)",
-                              style: TextStyle(
-                                fontSize: 21,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                            Text(
-                              "최고 점수 : " + quizScoreNormal[index].toString(),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: primaryColor,
-                              minimumSize: const Size(180, 50),
-                            ),
-                            child: Text(
-                              "문제 풀기",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              _click.play();
-                              prefs.setString("LevelType", "Normal");
-                              switch (index) {
-                                case 0:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz1();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 1:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz2();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 2:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz3();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 3:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz4();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 4:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz5();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 5:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz6();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 6:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz7();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 7:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz8();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-
-              ListView.builder(
-                itemCount: dataList.length,
-                itemBuilder: (context, index) {
-                  final item = dataList[index % dataList.length];
-                  final title = item["title"] ?? "";
-                  final imgUrl = item["imgUrl"] ?? "";
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 16,
-                      horizontal: 21,
-                    ),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 52,
-                          // Tip : circleAvatar 배경에 맞춰서 동그랗게 이미지 넣는 방법
-                          backgroundImage: NetworkImage(imgUrl),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        SizedBox(height: 16),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              title + " (어려움)",
-                              style: TextStyle(
-                                fontSize: 21,
-                                //fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                            Text(
-                              "최고 점수 : " + quizScoreHard[index].toString(),
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: primaryColor,
-                              minimumSize: const Size(180, 50),
-                            ),
-                            child: Text(
-                              "문제 풀기",
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              _click.play();
-                              prefs.setString("LevelType", "Hard");
-                              switch (index) {
-                                case 0:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz1();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 1:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz2();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 2:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz3();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 3:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz4();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 4:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz5();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 5:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz6();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 6:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz7();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                                case 7:
-                                  Navigator.pushReplacement(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (BuildContext context,
-                                          Animation<double> animation1,
-                                          Animation<double> animation2) {
-                                        return Quiz8();
-                                      },
-                                      transitionDuration: Duration.zero,
-                                      reverseTransitionDuration: Duration.zero,
-                                    ),
-                                  );
-                                  break;
-                              }
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
           ),
         ),
       ),
