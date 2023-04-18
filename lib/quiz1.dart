@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -17,9 +16,6 @@ import 'dart:math';
 import 'login_page.dart';
 import 'main.dart';
 
-late AssetsAudioPlayer _success = AssetsAudioPlayer.newPlayer();
-late AssetsAudioPlayer _fail = AssetsAudioPlayer.newPlayer();
-
 int index = 0;
 int score = 0;
 int heart = 0;
@@ -35,7 +31,7 @@ List<int> numberList = [];
 
 List<String> dataList = [
   "불로장생을 꿈꿔 전 세계를 뒤져 불로초를 찾았던 왕의 이름은?",
-  "평창 동계올림픽이 열렸던 해는 몇 년도인가요?",
+  "평창 동계올림픽이 열렸던 해는 몇 년도일까?",
   "제주도는 삼다도라고 불리기도 하는데 삼다에 해당되는 것은?",
   "국보 1호였던 문화재의 이름은?",
   "우리나라 최초의 한글 소설로 전해지는 이 고전소설의 이름은?",
@@ -62,7 +58,12 @@ List<String> dataList = [
   "트로이온스는 무엇을 측정하는 단위일까요?",
   "악어가 눈물을 흘리는 이유는?",
   "다음 중 3개의 심장과 파란색 피를 가진 동물은?",
-  "가난하고 병든 인도 사람들을 위해 헌신/봉사하며 산 여성은?"
+  "가난하고 병든 인도 사람들을 위해 헌신/봉사하며 산 여성은?",
+  "태양계에서 가장 큰 행성은?",
+  "세계에서 가장 큰 포유류는?",
+  "세계에서 가장 큰 바다는?",
+  "아프리카에서 가장 높은 산은?",
+  "세계에서 가장 큰 사막은?"
 ];
 
 List<String> answerList1 = [
@@ -94,7 +95,12 @@ List<String> answerList1 = [
   "귀금속",
   "너무 행복해서",
   "연어",
-  "마리 퀴리"
+  "마리 퀴리",
+  "지구",
+  "코끼리",
+  "대서양",
+  "킬리만자로 산",
+  "사하라 사막"
 ];
 List<String> answerList2 = [
   "혜문왕",
@@ -125,7 +131,12 @@ List<String> answerList2 = [
   "아기",
   "눈이 건조해져 상하지 않게 하기 위해",
   "문어",
-  "안네 프랑크"
+  "안네 프랑크",
+  "목성",
+  "대왕고래",
+  "인도양",
+  "에베레스트 산",
+  "고비사막"
 ];
 List<String> answerList3 = [
   "효문왕",
@@ -156,7 +167,12 @@ List<String> answerList3 = [
   "과일",
   "먹이를 놓치고 속상해서",
   "해마",
-  "마더 테레사"
+  "마더 테레사",
+  "토성",
+  "기린",
+  "태평양",
+  "케냐 산",
+  "아라비아 사막"
 ];
 
 List<String> answer = [
@@ -188,7 +204,12 @@ List<String> answer = [
   "귀금속",
   "눈이 건조해져 상하지 않게 하기 위해",
   "문어",
-  "마더 테레사"
+  "마더 테레사",
+  "목성",
+  "대왕고래",
+  "태평양",
+  "킬리만자로 산",
+  "사하라 사막"
 ];
 
 class Quiz1 extends StatefulWidget {
@@ -202,22 +223,6 @@ class _Quiz1State extends State<Quiz1> {
   @override
   void initState() {
     super.initState();
-
-    _success.setVolume(0.4);
-
-    _success.open(
-      Audio("assets/audios/Success.mp3"),
-      loopMode: LoopMode.none,
-      autoStart: false,
-      showNotification: false,
-    );
-
-    _fail.open(
-      Audio("assets/audios/Fail.wav"),
-      loopMode: LoopMode.none,
-      autoStart: false,
-      showNotification: false,
-    );
 
     numberList.clear();
     CreateUnDuplicateRandom(dataList.length);
@@ -361,9 +366,7 @@ class _Quiz1State extends State<Quiz1> {
                             answer[numberList[index - 1]]) {
                           Success(context);
                           score++;
-                          PlaySuccess();
                         } else {
-                          PlayFail();
                           Failed(context, answer[numberList[index - 1]]);
                           MinusHeart(context);
                         }
@@ -395,9 +398,7 @@ class _Quiz1State extends State<Quiz1> {
                             answer[numberList[index - 1]]) {
                           Success(context);
                           score++;
-                          PlaySuccess();
                         } else {
-                          PlayFail();
                           Failed(context, answer[numberList[index - 1]]);
                           MinusHeart(context);
                         }
@@ -430,9 +431,7 @@ class _Quiz1State extends State<Quiz1> {
                             answer[numberList[index - 1]]) {
                           Success(context);
                           score++;
-                          PlaySuccess();
                         } else {
-                          PlayFail();
                           Failed(context, answer[numberList[index - 1]]);
                           MinusHeart(context);
                         }
@@ -466,9 +465,6 @@ class _Quiz1State extends State<Quiz1> {
   // }
 
   void Initialize(BuildContext context) async {
-    _success.stop();
-    _fail.stop();
-
     if (index > maxQuiz - 1) {
       ScaffoldMessenger.of(context).clearSnackBars();
       SaveHighScore();
@@ -509,14 +505,4 @@ void SaveHighScore() {
   }
 
   prefs.setInt("Score", score);
-}
-
-void PlaySuccess() {
-  _success.stop();
-  _success.play();
-}
-
-void PlayFail() {
-  _fail.stop();
-  _fail.play();
 }

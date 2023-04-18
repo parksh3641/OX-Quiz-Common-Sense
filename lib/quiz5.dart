@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -16,9 +15,6 @@ import 'dart:math';
 
 import 'login_page.dart';
 import 'main.dart';
-
-late AssetsAudioPlayer _success = AssetsAudioPlayer.newPlayer();
-late AssetsAudioPlayer _fail = AssetsAudioPlayer.newPlayer();
 
 int index = 0;
 int score = 0;
@@ -134,22 +130,6 @@ class _Quiz5State extends State<Quiz5> {
   @override
   void initState() {
     super.initState();
-
-    _success.setVolume(0.4);
-
-    _success.open(
-      Audio("assets/audios/Success.mp3"),
-      loopMode: LoopMode.none,
-      autoStart: false,
-      showNotification: false,
-    );
-
-    _fail.open(
-      Audio("assets/audios/Fail.wav"),
-      loopMode: LoopMode.none,
-      autoStart: false,
-      showNotification: false,
-    );
 
     numberList.clear();
     CreateUnDuplicateRandom(dataList.length);
@@ -294,9 +274,7 @@ class _Quiz5State extends State<Quiz5> {
                           if (text == answer[numberList[index - 1]]) {
                             Success(context);
                             score++;
-                            PlaySuccess();
                           } else {
-                            PlayFail();
                             Failed(context, answer[numberList[index - 1]]);
                             MinusHeart(context);
                           }
@@ -354,14 +332,4 @@ void SaveHighScore() {
   }
 
   prefs.setInt("Score", score);
-}
-
-void PlaySuccess() {
-  _success.stop();
-  _success.play();
-}
-
-void PlayFail() {
-  _fail.stop();
-  _fail.play();
 }

@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -26,8 +25,6 @@ import 'main.dart';
 String loginType = "";
 String imagePath = "";
 String levelType = "";
-
-late AssetsAudioPlayer _click = AssetsAudioPlayer.newPlayer();
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -57,45 +54,38 @@ class _HomePageState extends State<HomePage> {
         imagePath = "images/Guest.png";
         break;
     }
-
-    _click.open(
-      Audio("assets/audios/Click.wav"),
-      loopMode: LoopMode.none,
-      autoStart: false,
-      showNotification: false,
-    );
   }
 
   List<Map<String, dynamic>> dataList = [
     {
       "title": "상식 퀴즈",
       "imgUrl":
-          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+          "https://picsum.photos/200?image=" + Random().nextInt(199).toString(),
     },
     {
       "title": "사자성어 퀴즈",
       "imgUrl":
-          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+          "https://picsum.photos/200?image=" + Random().nextInt(199).toString(),
     },
     {
       "title": "수도 퀴즈",
       "imgUrl":
-          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+          "https://picsum.photos/200?image=" + Random().nextInt(199).toString(),
     },
     {
       "title": "OX 퀴즈",
       "imgUrl":
-          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+          "https://picsum.photos/200?image=" + Random().nextInt(199).toString(),
     },
     {
       "title": "초성 퀴즈 [영화]",
       "imgUrl":
-          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+          "https://picsum.photos/200?image=" + Random().nextInt(199).toString(),
     },
     {
       "title": "초성 퀴즈 [동물]",
       "imgUrl":
-          "https://picsum.photos/200?image=" + Random().nextInt(300).toString(),
+          "https://picsum.photos/200?image=" + Random().nextInt(199).toString(),
     },
     {
       "title": "신조어 퀴즈",
@@ -162,7 +152,6 @@ class _HomePageState extends State<HomePage> {
                 IconButton(
                   icon: Icon(Icons.face, color: Colors.black),
                   onPressed: () {
-                    _click.play();
                     Navigator.pushReplacement(
                       context,
                       PageRouteBuilder(
@@ -257,7 +246,6 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
-                                _click.play();
                                 prefs.setString("LevelType", "Easy");
                                 switch (index) {
                                   case 0:
@@ -447,7 +435,6 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
-                                _click.play();
                                 prefs.setString("LevelType", "Normal");
                                 switch (index) {
                                   case 0:
@@ -637,7 +624,6 @@ class _HomePageState extends State<HomePage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
-                                _click.play();
                                 prefs.setString("LevelType", "Hard");
                                 switch (index) {
                                   case 0:

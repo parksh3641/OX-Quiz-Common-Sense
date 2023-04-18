@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
               title: Transform(
                 transform: Matrix4.translationValues(0, 0, 0),
                 child: Text(
-                  "퀴즈의 고수 로그인",
+                  "OX 퀴즈 : 일반 상식 로그인",
                   style: TextStyle(color: Colors.black),
                 ),
               ),
