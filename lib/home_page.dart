@@ -221,7 +221,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(height: 6),
                               Text(
-                                "최고 점수 : " + quizScoreEasy[index].toString(),
+                                "최고 점수 : " +
+                                    quizScoreEasy[index].toString() +
+                                    "/15",
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.grey,
@@ -410,7 +412,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(height: 6),
                               Text(
-                                "최고 점수 : " + quizScoreNormal[index].toString(),
+                                "최고 점수 : " +
+                                    quizScoreNormal[index].toString() +
+                                    "/15",
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.grey,
@@ -599,7 +603,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                               SizedBox(height: 6),
                               Text(
-                                "최고 점수 : " + quizScoreHard[index].toString(),
+                                "최고 점수 : " +
+                                    quizScoreHard[index].toString() +
+                                    "/15",
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.grey,

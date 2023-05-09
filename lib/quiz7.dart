@@ -44,12 +44,19 @@ List<String> dataList = [
   "다음 중 '무슨 일이야?'라는 의미를 가진 것은?",
   "다음 중 사귀기 전 썸 단계를 말하는 것은?",
   "다음 중 '어쩔티비'를 받아칠 수 있는 것은?",
-  "다음 중 '무불보'의 뜻으로 옳바른 것은?",
-  "다음 중 '저메추'의 뜻으로 옳바른 것은?",
-  "다음 중 '알잘딱깔센'의 뜻으로 옳바른 것은?",
-  "다음 중 '만잘부'의 뜻으로 옳바른 것은?",
-  "다음 중 '좋댓구알'의 뜻으로 옳바른 것은?",
-  "다음 중 '반모'의 뜻으로 옳바른 것은?",
+  "다음 중 '무불보'의 뜻으로 올바른 것은?",
+  "다음 중 '저메추'의 뜻으로 올바른 것은?",
+  "다음 중 '알잘딱깔센'의 뜻으로 올바른 것은?",
+  "다음 중 '만잘부'의 뜻으로 올바른 것은?",
+  "다음 중 '좋댓구알'의 뜻으로 올바른 것은?",
+  "다음 중 '반모'의 뜻으로 올바른 것은?",
+  "다음 중 '갈비'의 뜻으로 올바른 것은?",
+  "다음 중 '군싹'의 뜻으로 올바른 것은?",
+  "다음 중 '꾸안꾸'의 뜻으로 올바른 것은?",
+  "다음 중 '갑통알'의 뜻으로 올바른 것은?",
+  "다음 중 '700'의 뜻으로 올바른 것은?",
+  "다음 중 '나심비'의 뜻으로 올바른 것은?",
+  "다음 중 '남아공'의 뜻으로 올바른 것은?",
 ];
 
 List<String> answerList1 = [
@@ -72,7 +79,14 @@ List<String> answerList1 = [
   "알아서 잘 딱 깔쌈하고 센스있게",
   "만나서 반갑고 잘 부탁해",
   "좋아요 댓글 구독 알림 설정",
-  "반대 모양"
+  "반대 모양",
+  "갈수록 비호감",
+  "군대에 갈 생각에 오싹하다",
+  "꾸밀 듯 안 꾸밀 듯",
+  "갑자기 통장을 보니 알바를 해야겠다",
+  "행운의 숫자",
+  "나의 심리적 가치",
+  "남아공 월드컵"
 ];
 List<String> answerList2 = [
   "GOD : 신",
@@ -94,7 +108,14 @@ List<String> answerList2 = [
   "알아서 잘 딱 깔끔하고 센스있게",
   "만나서 신나고 잘 부탁해",
   "좋구요 댓글 구독 알림 설정",
-  "반지하 모집"
+  "반지하 모집",
+  "갈수록 비빔밥",
+  "군침이 싹 돈다",
+  "꾸민듯 안 꾸밀 듯",
+  "갑자기 통장을 보니 알이 베긴다",
+  "귀여워",
+  "나의 심리적 가치관",
+  "남아서 공놀이"
 ];
 List<String> answerList3 = [
   "갓 : 머리에 쓰는 의관",
@@ -116,7 +137,14 @@ List<String> answerList3 = [
   "알아서 잘 딱 깔끔하고 센치하게",
   "만나서 반갑고 잘 부탁해",
   "좋아욧 댓글 구독 알림 설정",
-  "반말 모드"
+  "반말 모드",
+  "갈수록 비비빅",
+  "군고구마 싹이 좋다",
+  "꾸민 듯 안 꾸민 듯",
+  "갑자기 통장을 보니 알탕 먹고 싶다",
+  "007 빵",
+  "나의 심리적 가성비",
+  "남아서 공부하고 있어"
 ];
 
 List<String> answer = [
@@ -140,6 +168,13 @@ List<String> answer = [
   "만나서 반갑고 잘 부탁해",
   "좋아요 댓글 구독 알림 설정",
   "반말 모드",
+  "갈수록 비호감",
+  "군침이 싹 돈다",
+  "꾸민 듯 안 꾸민 듯",
+  "갑자기 통장을 보니 알바를 해야겠다",
+  "귀여워",
+  "나의 심리적 가성비",
+  "남아서 공부하고 있어"
 ];
 
 class Quiz7 extends StatefulWidget {
@@ -307,7 +342,7 @@ class _Quiz7State extends State<Quiz7> {
                       textAlign: TextAlign.center,
                       answerList1[numberList[index - 1]],
                       style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
@@ -340,7 +375,7 @@ class _Quiz7State extends State<Quiz7> {
                       textAlign: TextAlign.center,
                       answerList2[numberList[index - 1]],
                       style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
@@ -373,7 +408,7 @@ class _Quiz7State extends State<Quiz7> {
                       textAlign: TextAlign.center,
                       answerList3[numberList[index - 1]],
                       style: TextStyle(
-                          fontSize: 22,
+                          fontSize: 20,
                           color: Colors.white,
                           fontWeight: FontWeight.bold),
                     ),
