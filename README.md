@@ -1,4 +1,5 @@
 # OX 퀴즈 : 일반 상식
+![아이콘](https://github.com/parksh3641/OX-Quiz-Common-Sense/assets/62498013/af40bd89-ee52-48e3-9874-3f855ad7f3d6)
 ### 개발 기간 : 2022/12 ~ 2023/03
 ### 사용된 툴 : VSCode, Android Stuido
 ### 작성된 언어 : Dart
