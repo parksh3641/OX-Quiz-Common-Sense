@@ -118,25 +118,25 @@ class _SettingPageState extends State<SettingPage> {
             SettingsSection(
               title: Text('기타'),
               tiles: <SettingsTile>[
-                SettingsTile.navigation(
-                  leading: Icon(Icons.star),
-                  title: Text('앱 평가하기'),
-                  onPressed: ((context) {
-                    try {
-                      if (Platform.isIOS) {
-                        launchUrl(
-                          Uri.parse(
-                              'https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EC%9D%98-%EA%B3%A0%EC%88%98/id1660371017'),
-                        );
-                      } else {
-                        launchUrl(
-                          Uri.parse(
-                              'https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US'),
-                        );
-                      }
-                    } catch (e) {}
-                  }),
-                ),
+                // SettingsTile.navigation(
+                //   leading: Icon(Icons.star),
+                //   title: Text('앱 평가하기'),
+                //   onPressed: ((context) {
+                //     try {
+                //       if (Platform.isIOS) {
+                //         launchUrl(
+                //           Uri.parse(
+                //               'https://apps.apple.com/kr/app/%ED%80%B4%EC%A6%88%EC%9D%98-%EA%B3%A0%EC%88%98/id1660371017'),
+                //         );
+                //       } else {
+                //         launchUrl(
+                //           Uri.parse(
+                //               'https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US'),
+                //         );
+                //       }
+                //     } catch (e) {}
+                //   }),
+                // ),
                 SettingsTile.navigation(
                   leading: Icon(Icons.account_circle),
                   title: Text('개인정보처리방침'),

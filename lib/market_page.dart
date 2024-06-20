@@ -37,7 +37,7 @@ class _MarketPageState extends State<MarketPage> {
           children: [
             HomePage(),
             ShopPage(),
-            StopWatchPage(),
+            //StopWatchPage(),
             //ToDoListPage(),
             SettingPage(),
           ],
@@ -64,10 +64,10 @@ class _MarketPageState extends State<MarketPage> {
               icon: Icon(Icons.store),
               label: "상점",
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.timer),
-              label: "스톱워치",
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.timer),
+            //   label: "스톱워치",
+            // ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.list),
             //   label: "할일",
