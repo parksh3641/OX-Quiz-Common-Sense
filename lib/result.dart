@@ -46,7 +46,7 @@ class _ResultPageState extends State<ResultPage> {
 
     if (Platform.isAndroid) {
       urlText =
-          "https://play.google.com/store/apps/details?id=com.flutter.gosuoflife&hl=ko&gl=US";
+          "https://play.google.com/store/apps/details?id=com.flutter.gosuoflife";
     } else {
       urlText =
           "https://apps.apple.com/kr/app/ox-%ED%80%B4%EC%A6%88-%EC%9D%BC%EB%B0%98-%EC%83%81%EC%8B%9D/id1660371017";
@@ -129,7 +129,7 @@ class _ResultPageState extends State<ResultPage> {
                           fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
-                      _interstitialAd?.show();
+                      //_interstitialAd?.show();
                       Navigator.pushReplacement(
                         context,
                         PageRouteBuilder(
